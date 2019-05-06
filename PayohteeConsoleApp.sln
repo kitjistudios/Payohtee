@@ -7,6 +7,8 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeConsoleApp", "Payoh
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayohteeWebApp", "PayohteeWebApp\PayohteeWebApp.csproj", "{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayohteeWebApi", "PayohteeWebApi\PayohteeWebApi.csproj", "{DCCE2DC4-58BB-40E8-9746-E3B81897F6A3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Release|Any CPU.Build.0 = Release|Any CPU
+		{DCCE2DC4-58BB-40E8-9746-E3B81897F6A3}.Debug|Any CPU.ActiveCfg = Release|Any CPU
+		{DCCE2DC4-58BB-40E8-9746-E3B81897F6A3}.Debug|Any CPU.Build.0 = Release|Any CPU
+		{DCCE2DC4-58BB-40E8-9746-E3B81897F6A3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{DCCE2DC4-58BB-40E8-9746-E3B81897F6A3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
