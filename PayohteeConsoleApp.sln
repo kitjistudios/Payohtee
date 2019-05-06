@@ -5,7 +5,7 @@ VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeConsoleApp", "PayohteeConsoleApp\PayohteeConsoleApp.csproj", "{83486165-3A9A-49DF-922E-5B3B279C15B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeWeb", "C:\Users\Shayne Marshall\Desktop\POT\POT\Payohtee\PayohteeWeb\PayohteeWeb.csproj", "{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayohteeWebApp", "PayohteeWebApp\PayohteeWebApp.csproj", "{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -17,10 +17,10 @@ Global
 		{83486165-3A9A-49DF-922E-5B3B279C15B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83486165-3A9A-49DF-922E-5B3B279C15B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83486165-3A9A-49DF-922E-5B3B279C15B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Release|Any CPU.Build.0 = Release|Any CPU
+		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{F16C5FFE-E0DD-47F7-91C7-CEFAC01636BB}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
