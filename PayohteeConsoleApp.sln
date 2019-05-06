@@ -3,11 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 15
 VisualStudioVersion = 15.0.28307.572
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PayohteeConsoleApp", "PayohteeConsoleApp\PayohteeConsoleApp.csproj", "{83486165-3A9A-49DF-922E-5B3B279C15B9}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeConsoleApp", "PayohteeConsoleApp\PayohteeConsoleApp.csproj", "{83486165-3A9A-49DF-922E-5B3B279C15B9}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeWebApp", "C:\Users\Shayne Marshall\Desktop\POT\PayohteeWebApp\PayohteeWebApp.csproj", "{F3C0049F-5DD8-4A29-8D3A-428355E686C9}"
-EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeWebApi", "C:\Users\Shayne Marshall\Desktop\POT\PayohteeWebApi\PayohteeWebApi.csproj", "{506F0A9B-AF74-46B6-B47B-50899D0BADE7}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "PayohteeWeb", "C:\Users\Shayne Marshall\Desktop\POT\POT\Payohtee\PayohteeWeb\PayohteeWeb.csproj", "{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,14 +17,10 @@ Global
 		{83486165-3A9A-49DF-922E-5B3B279C15B9}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{83486165-3A9A-49DF-922E-5B3B279C15B9}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{83486165-3A9A-49DF-922E-5B3B279C15B9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{F3C0049F-5DD8-4A29-8D3A-428355E686C9}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{F3C0049F-5DD8-4A29-8D3A-428355E686C9}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{F3C0049F-5DD8-4A29-8D3A-428355E686C9}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{F3C0049F-5DD8-4A29-8D3A-428355E686C9}.Release|Any CPU.Build.0 = Release|Any CPU
-		{506F0A9B-AF74-46B6-B47B-50899D0BADE7}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{506F0A9B-AF74-46B6-B47B-50899D0BADE7}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{506F0A9B-AF74-46B6-B47B-50899D0BADE7}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{506F0A9B-AF74-46B6-B47B-50899D0BADE7}.Release|Any CPU.Build.0 = Release|Any CPU
+		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{A30D8FA8-40DB-43C0-88F1-B86E75FC7E83}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
