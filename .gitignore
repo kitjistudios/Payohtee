@@ -266,3 +266,4 @@ __pycache__/
 /PayohteeWebApp/Properties/Resources.Designer.cs
 /PayohteeWebApi/appsettings.json
 /PayohteeWebApi/appsettings.Development.json
+/PayohteeWebApp/Migrations
