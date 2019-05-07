@@ -45,6 +45,7 @@ namespace Payohtee.Controllers
             //return Content("Hi There");
             return Json(result);
         }
+
         // GET: Admin/Details/5
         public ActionResult Details(string companyname)
         {
@@ -56,6 +57,7 @@ namespace Payohtee.Controllers
             //return Json(result);
             return null;
         }
+
         // GET: Admin/Create
         public ActionResult Create()
         {

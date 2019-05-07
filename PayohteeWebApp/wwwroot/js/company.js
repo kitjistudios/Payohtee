@@ -1,7 +1,7 @@
 ﻿
-$('#searchcomp').on('keyup input', function () {
+$('#searchmodel').on('keyup input', function () {
     /* Get input value on change */
-    //alert('hello');
+    //alert('search');
     var inputVal = $(this).val();
     var resultdropdown = $(this).siblings(".resultcomp");
 
@@ -10,7 +10,7 @@ $('#searchcomp').on('keyup input', function () {
 
     if (inputVal.length) {
         if (isalpha.test(inputVal)) {
-            $.get("Admin/Lookup", { charinput: inputVal }, function (data) {
+            $.get("/Company/Lookup", { charinput: inputVal }, function (data) {
                 var htmlresult = '';
                 for (var i = 0; i < data.length; i++) {
                     htmlresult = htmlresult + '<p><strong>' + data[i] + '</strong></p>';
