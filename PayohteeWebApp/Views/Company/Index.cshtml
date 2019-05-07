@@ -1,0 +1,61 @@
+﻿@model IEnumerable<Payohtee.Models.Customer.Company>
+
+@{
+    ViewData["Title"] = "Index";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+@*<script type="text/javascript">
+                            alert('hello');
+                            var request = new XMLHttpRequest()
+
+                            // Open a new connection, using the GET request on the URL endpoint
+                            request.open('GET', 'https://localhost:44334/Company/Lookup', true)
+                            request.onreadystatechange = function () {
+                                if (request.readyState === 4) {
+                                    if (request.status === 200) {
+                                        // OK
+                                        alert('response:' + request.responseText);
+                                        // here you can use the result (cli.responseText)
+                                    } else {
+                                        // not OK
+                                        alert('failure!');
+                                    }
+                                }
+                            };
+</script>*@
+<div class="row">
+    <div class="col-2"></div>
+    <div class="col-8">
+        <!-- Topbar Search -->
+        <div class="input-group">
+            <input id="searchmodel" type="text" class="form-control bg-light border-0 small" placeholder="Search for company by name or id" aria-label="Search" aria-describedby="basic-addon2">
+            <div class="input-group-append">
+                <button class="btn btn-primary" type="button">
+                    <i class="fas fa-search fa-sm"></i>
+                </button>
+            </div>
+        </div>
+    </div><div class="col-2"></div>
+    @*<div class="form-group">
+        <div class="row">
+            <div class="col">
+                <div class="input-group mb-3">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text"><i class="fa fa-search"></i></span>
+                    </div>
+                    <input class="form-control" type="text" id="searchcomp" />
+                    <div class="resultcomp" id="txtHintcomp">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>*@
+</div>
+
+@*<p>
+    <a asp-action="Create">Create New</a>
+</p>
+
+<a asp-action="Edit" asp-route-id="@item.CompanyId">Edit</a> |
+<a asp-action="Details" asp-route-id="@item.CompanyId">Details</a> |
+<a asp-action="Delete" asp-route-id="@item.CompanyId">Delete</a>*@

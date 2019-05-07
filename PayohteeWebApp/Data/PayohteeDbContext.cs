@@ -34,7 +34,7 @@ namespace PayohteeWebApp.Data
                 //use this string to target remote environment
                 var connremote = Resources.connremote;
 #if DEBUG
-                optionsBuilder.UseSqlServer(connlocal,
+                optionsBuilder.UseSqlServer(connremote,
                                provideroptions => provideroptions.CommandTimeout(60))
                            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 #else
