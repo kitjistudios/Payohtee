@@ -23,11 +23,10 @@ namespace PayohteeWebApp
             _context = context;
         }
 
-
         // GET: Companies
-        public async Task<IActionResult> Index()
+        public IActionResult Index(Company company)
         {
-            return View(await _context.DbContextCompany.ToListAsync());
+            return View(company);
         }
 
         // GET: Companies/Details/5
@@ -40,6 +39,24 @@ namespace PayohteeWebApp
 
             var company = await _context.DbContextCompany
                 .FirstOrDefaultAsync(m => m.CompanyId == id);
+            if (company == null)
+            {
+                return NotFound();
+            }
+
+            return View(company);
+        }
+
+        // GET: Companies/Details/companyname
+        public async Task<IActionResult> Details(string name)
+        {
+            if (name == null)
+            {
+                return NotFound();
+            }
+
+            var company = await _context.DbContextCompany
+                .FirstOrDefaultAsync(m => m.CompanyName == name);
             if (company == null)
             {
                 return NotFound();
@@ -161,7 +178,7 @@ namespace PayohteeWebApp
             //var result = new Company().GetAsyncListCompanyName(charinput);
             var client = new RestClient
             {
-                BaseUrl = new Uri(Resources.baseurllocal)
+                BaseUrl = new Uri(Resources.baseurlremote)
 
             };
             var request = new RestRequest

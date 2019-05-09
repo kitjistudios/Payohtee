@@ -1,4 +1,5 @@
-﻿@model Payohtee.Models.Customer.Company
+﻿@model  Payohtee.Models.Customer.Company
+
 
 @{
     ViewData["Title"] = "Create";
@@ -15,7 +16,7 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header py-3">
-                    <i class="fa fa-building"></i>  Company Details
+                    <i class="fa fa-building"></i>  Registered Details
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -58,7 +59,7 @@
             </div>
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fa fa-phone"></i>  Contact Details
+                    <i class="fa fa-phone"></i>  Company Details
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -83,7 +84,7 @@
                         <span asp-validation-for="CompanyEmail" class="text-danger"></span>
                     </div>
                 </div>
-            </div>     
+            </div>
         </div>
         <div class="col-md-4">
             <div class="card mb-4">
@@ -150,17 +151,32 @@
                     </div>
                 </div>
             </div>
-            <div>
-                <a asp-action="Index">Back to List</a>
-                <input type="submit" value="Create" class="btn btn-primary" />
+            <div class="row">
+                <div class="col-6">
+                    <a id="addrank" class="btn btn-success text-white" data-toggle="modal" data-target="#contactModal">
+                        <i class="fa fa-id-card"></i>     Company Contact <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div class="col-6">
+
+                </div>
             </div>
-            <div class="input-group mb-3">
-                
+            <div class="col-md-2">
+
             </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            <input type="submit" value="Create Company" class="btn btn-primary" />
         </div>
     </div>
 </form>
 
+@Html.Partial("Modals/_ContactModalPartialView")
 
 @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
