@@ -1,7 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Payohtee.Data;
-using Payohtee.Models.Banking;
 using PayohteeWebApp.Data;
 using System;
 using System.Collections.Generic;
@@ -29,7 +27,7 @@ namespace Payohtee.Models.Customer
 
         public Company()
         {
-
+         
         }
 
         #endregion
@@ -257,8 +255,8 @@ namespace Payohtee.Models.Customer
 
         #region Relationship
 
-        //public ICollection<BankAccount> Banking { get; set; }
-        //public ICollection<Contact> Contacts { get; set; }
+        public ICollection<Contact> Contacts { get; set; }
+        //public ICollection<BankAccount> Banking { get; set; } 
         //public ICollection<PolicePayment> PolicePayments { get; set; }
         //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
 

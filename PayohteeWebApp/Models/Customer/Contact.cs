@@ -4,7 +4,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 using Newtonsoft.Json;
 using Payohtee.Models.Customer;
 
-namespace Payohtee.Models
+namespace Payohtee.Models.Customer
 {
     /// <summary>
     /// Class level summary documentation goes here.
