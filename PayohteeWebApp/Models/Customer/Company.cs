@@ -215,6 +215,8 @@ namespace Payohtee.Models.Customer
 
         private string companyaddress;
         [NotMapped]
+        public Contact  Contact { get; set; }
+        [NotMapped]
         public string CompanyAddress
         {
             get { return companyaddress; }

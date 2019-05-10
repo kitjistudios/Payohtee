@@ -1,4 +1,63 @@
-﻿
+﻿var contactcount = 0;
+var contactarr = [];
+
+$('#AddContact').on('click', function () {
+    //alert("hello");
+    var contactrec = [];
+    var contactemail = $('#ContactEmail').val();
+    var contactname = $('#ContactName').val();
+    var contactnumber = $('#ContactNumber').val();
+
+    var pillcontainer = document.getElementById('pillcontainer');
+    var pillwrapper = document.getElementById('pillwrapper');
+
+    //create instance of list elements
+    var pill = document.createElement("li");
+    var contacticon = document.createElement("i");
+    var emailicon = document.createElement("i");
+    var mobileicon = document.createElement("i");
+    pill.setAttribute("id", "contactcount" + contactcount);
+    pill.setAttribute("class", "chip");
+    contacticon.setAttribute("class", "fa fa-id-card");
+    emailicon.setAttribute("class", "fa fa-envelope");
+    mobileicon.setAttribute("class", "fa fa-mobile");
+
+    var removeicon = document.createElement("span");
+    removeicon.setAttribute("class", "fa fa-minus");
+
+    var elemspan = document.createElement("span");
+    var emailanchor = document.createElement("a");
+    var phoneanchor = document.createElement("a");
+
+    emailanchor.setAttribute("href", "mailto:" + contactemail);
+    emailanchor.appendChild(document.createTextNode(contactemail));
+
+    phoneanchor.setAttribute("href", "tel:" + contactnumber);
+    phoneanchor.appendChild(document.createTextNode(contactnumber));
+
+    elemspan.appendChild(removeicon);
+    elemspan.appendChild(contacticon);
+    elemspan.appendChild(document.createTextNode(contactname));
+    elemspan.appendChild(emailicon);
+    elemspan.appendChild(emailanchor);
+    elemspan.appendChild(mobileicon);
+    elemspan.appendChild(phoneanchor);
+
+
+
+    pill.appendChild(elemspan);
+    pillwrapper.appendChild(pill);
+    pillcontainer.appendChild(pillwrapper);
+    contactrec.push("preaccount" + contactcount);
+    // acctrec.push(acctid);
+    //acctrec.push(OperationalSupportTotal);
+    // acctrec.push(document.getElementById("AccountNumber").value);
+    contactarr.push(contactrec);
+
+    contactcount++;
+
+});
+
 $('#searchmodel').on('keyup input', function () {
     /* Get input value on change */
     //alert('search');
@@ -51,3 +110,24 @@ $(document).on("click", ".resultcomp p", function () {
         //xmlhttp.send();
     }
 });
+
+$(document).on("dblclick", ".pillwrapper li", function (event) {
+
+    var key = this.id.toString();
+    var elem = document.getElementById(this.id.toString());
+    elem.parentNode.removeChild(elem);
+    RemoveInfo(key);
+});
+
+function RemoveInfo(key) {
+
+    var indextoremove;
+    for (i = 0; i < contactarr.length; i++) {
+
+        if (contactarr[i][0] === key) {
+            alert(contactarr[i][1]);
+            indextoremove = i;
+        }
+    }
+    contactarr.splice(indextoremove, 1);
+}

@@ -1,11 +1,36 @@
-﻿@model  Payohtee.Models.Customer.Company
+﻿@model Payohtee.Models.Customer.Company
 
 
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
-
+<style>
+    .chip {
+        display: inline-block;
+        padding: 0 25px;
+        height: 50px;
+        font-size: 16px;
+        line-height: 50px;
+        border-radius: 25px;
+        background-color: #f1f1f1;
+        margin: 2px 0 2px 0;
+    }
+        .chip img {
+            float: left;
+            margin: 0 10px 0 -25px;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+        .chip i,i {
+            margin: 0 5px 0 5px;
+            font-size:20px;
+        }
+        .chip a {
+            margin: 0 5px 0 5px;
+        }
+</style>
 
 <form asp-action="Create">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
@@ -161,8 +186,14 @@
 
                 </div>
             </div>
-            <div class="col-md-2">
-
+            <div class="row">
+                <div class="pillwrapper" id="pillcontainer">
+                    <ul class="nav nav-pills nav-stacked " id="pillwrapper"></ul>
+                </div>
+                @*<div class="chip">
+                        <img src="img_avatar.jpg" alt="Person" width="96" height="96">
+                        John Doe
+                    </div>*@
             </div>
         </div>
     </div>
@@ -176,7 +207,7 @@
     </div>
 </form>
 
-@Html.Partial("Modals/_ContactModalPartialView")
+@Html.Partial("Modals/_ContactModalPartialView", this.Model)
 
 @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
