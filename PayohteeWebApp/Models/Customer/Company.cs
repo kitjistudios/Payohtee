@@ -27,7 +27,7 @@ namespace Payohtee.Models.Customer
 
         public Company()
         {
-         
+            Contacts = new List<Contact>();
         }
 
         #endregion
@@ -215,7 +215,7 @@ namespace Payohtee.Models.Customer
 
         private string companyaddress;
         [NotMapped]
-        public Contact  Contact { get; set; }
+        public Contact Contact { get; set; }
         [NotMapped]
         public string CompanyAddress
         {
@@ -257,7 +257,7 @@ namespace Payohtee.Models.Customer
 
         #region Relationship
 
-        public ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
         //public ICollection<BankAccount> Banking { get; set; } 
         //public ICollection<PolicePayment> PolicePayments { get; set; }
         //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
@@ -333,6 +333,4 @@ namespace Payohtee.Models.Customer
         #endregion
 
     }
-
-
 }

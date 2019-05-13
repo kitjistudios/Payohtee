@@ -16,6 +16,7 @@
         background-color: #f1f1f1;
         margin: 2px 0 2px 0;
     }
+
         .chip img {
             float: left;
             margin: 0 10px 0 -25px;
@@ -23,16 +24,18 @@
             width: 50px;
             border-radius: 50%;
         }
-        .chip i,i {
+
+        .chip i, i {
             margin: 0 5px 0 5px;
-            font-size:20px;
+            font-size: 20px;
         }
+
         .chip a {
             margin: 0 5px 0 5px;
         }
 </style>
 
-<form asp-action="Create">
+<form asp-action="Create" method="post" name="CreateCompany" id="CreateCompany">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-md-2">
@@ -190,10 +193,6 @@
                 <div class="pillwrapper" id="pillcontainer">
                     <ul class="nav nav-pills nav-stacked " id="pillwrapper"></ul>
                 </div>
-                @*<div class="chip">
-                        <img src="img_avatar.jpg" alt="Person" width="96" height="96">
-                        John Doe
-                    </div>*@
             </div>
         </div>
     </div>
@@ -207,7 +206,7 @@
     </div>
 </form>
 
-@Html.Partial("Modals/_ContactModalPartialView", this.Model)
+@Html.Partial("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts);
 
 @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}

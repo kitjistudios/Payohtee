@@ -76,11 +76,14 @@ namespace PayohteeWebApp
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CompanyId,PayohteeId,CompanyName,CompanyAlias,CompanyTaxId,CompanyIndustry,Address1,Address2,Address3,Address4,Parish,Country,PostalCode,CompanyPhoneNumber,FaxNumber,CompanyEmail,Status")] Company company)
+        public async Task<IActionResult> Create([Bind("CompanyId,PayohteeId,CompanyName,CompanyAlias,CompanyTaxId,CompanyIndustry,Address1,Address2,Address3,Address4,Parish,Country,PostalCode,CompanyPhoneNumber,FaxNumber,CompanyEmail,Status")] Company company, Contact contact)
         {
+            //loop through list of contacts and add to collection of contact in company model
+            //check to see if model is valid
             if (ModelState.IsValid)
             {
                 _context.Add(company);
+                _context.Add(contact);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
@@ -197,5 +200,6 @@ namespace PayohteeWebApp
             //return Content("Hi There");
             return Json(result);
         }
+
     }
 }
