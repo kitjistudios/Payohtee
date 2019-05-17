@@ -17,6 +17,7 @@ namespace Payohtee.Models.Customer
     /// the remarks tag.
     /// </remarks>
     [Table("Company")]
+    [JsonObject("Company")]
     public class Company : ICRUDCompany
     {
         #region Variables
@@ -27,7 +28,7 @@ namespace Payohtee.Models.Customer
 
         public Company()
         {
-         
+            Contacts = new List<Contact>();
         }
 
         #endregion
@@ -215,6 +216,8 @@ namespace Payohtee.Models.Customer
 
         private string companyaddress;
         [NotMapped]
+        public Contact Contact { get; set; }
+        [NotMapped]
         public string CompanyAddress
         {
             get { return companyaddress; }
@@ -255,7 +258,7 @@ namespace Payohtee.Models.Customer
 
         #region Relationship
 
-        public ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
         //public ICollection<BankAccount> Banking { get; set; } 
         //public ICollection<PolicePayment> PolicePayments { get; set; }
         //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
@@ -330,7 +333,52 @@ namespace Payohtee.Models.Customer
 
         #endregion
 
+        #region Snippets
+
+        //json string should look like :
+        //        {
+        //  "payohteeId": "POT0001",
+        //  "CompanyName": "Kitjimanitou Studios",
+        //  "CompanyAlias": "Kitji Studios",
+        //  "CompanyTaxId": "0000000001",
+        //  "CompanyIndustry": "Information Technology",
+        //  "Address1": null,
+        //  "Address2": null,
+        //  "Address3": null,
+        //  "Address4": null,
+        //  "Parish": null,
+        //  "Country": null,
+        //  "PostalCode": null,
+        //  "CompanyPhoneNumber": "246-666-8745",
+        //  "FaxNumber": null,
+        //  "CompanyEmail": "smarshall@kitjistudios.com",
+        //  "status": null,
+        //  "contact": null,
+        //  "companyAddress": null,
+        //  "recEnteredBy": null,
+        //  "recEntered": "0001-01-01T00:00:00",
+        //  "recModifiedBy": null,
+        //  "recModified": "0001-01-01T00:00:00",
+        //  "contacts": [
+        //  	{
+        //  		"ContactName":"Shayne",
+        //  		"ContactMobile":"254-5106",
+        //  		"ContactEmail":"john_shayne@hotmail.com",
+        //  		"ContactTitle":"founder",
+        //  		"SocialMedia":"sguz3m4n|bdbtwitnit"
+
+        //      },
+        //  	{
+        //  		"ContactName":"Guzman",
+        //  		"ContactMobile":"428-1982",
+        //  		"ContactEmail":"shaynie@hotmail.com",
+        //  		"ContactTitle":"founder",
+        //  		"SocialMedia":"sguz3m4n|bdbtwitnit"
+        //  	}
+
+        //  ]
+        //}
+
+        #endregion
     }
-
-
 }

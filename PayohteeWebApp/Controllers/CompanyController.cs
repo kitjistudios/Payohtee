@@ -78,6 +78,8 @@ namespace PayohteeWebApp
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> Create([Bind("CompanyId,PayohteeId,CompanyName,CompanyAlias,CompanyTaxId,CompanyIndustry,Address1,Address2,Address3,Address4,Parish,Country,PostalCode,CompanyPhoneNumber,FaxNumber,CompanyEmail,Status")] Company company)
         {
+            //loop through list of contacts and add to collection of contact in company model
+            //check to see if model is valid
             if (ModelState.IsValid)
             {
                 _context.Add(company);
@@ -179,7 +181,6 @@ namespace PayohteeWebApp
             var client = new RestClient
             {
                 BaseUrl = new Uri(Resources.baseurlremote)
-
             };
             var request = new RestRequest
             {
@@ -191,11 +192,37 @@ namespace PayohteeWebApp
             IRestResponse Iresponse = client.Execute(request);
             var response = Iresponse.Content;
             var result = JsonConvert.DeserializeObject<List<String>>(response);
-
-
             //return Content(result.ToString());
             //return Content("Hi There");
             return Json(result);
         }
+
+        [HttpPost]
+        public ActionResult Register(string companyjson)
+        {
+            Company company = JsonConvert.DeserializeObject<Company>(companyjson);
+            company.Status = "Active";
+            companyjson = JsonConvert.SerializeObject(company);
+
+            var client = new RestClient
+            {
+                BaseUrl = new Uri(Resources.baseurllocal)
+            };
+
+            var request = new RestRequest
+            {
+                Resource = "/company/register/",
+                Method = Method.POST
+            };
+
+            request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
+            request.RequestFormat = DataFormat.Json;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+
+            return View(companyjson);
+
+        }
+
     }
 }
