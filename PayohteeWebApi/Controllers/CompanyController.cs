@@ -1,7 +1,7 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
-using PayohteeWebApp.Data;
 using Payohtee.Models.Customer;
+using PayohteeWebApp.Data;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -63,13 +63,24 @@ namespace PayohteeApi.Controllers
         [Route("api/company/[action]")]
         [ActionName("register")]
         [HttpPost]
-        public async Task<ActionResult<Company>> PostCompItem(Company company)
+        public async Task<ActionResult<Company>> RegisterCompany(Company company)
         {
-            _context.DbContextCompany.Add(company);
-            await _context.SaveChangesAsync();
-
+            if (ModelState.IsValid)
+            {
+                if (company != null)
+                {
+                    _context.DbContextCompany.Add(company);
+                    if (company.Contacts.Count != 0)
+                    {
+                        foreach (var item in company.Contacts)
+                        {
+                            _context.DbContextContacts.Add(item);
+                        }
+                    }
+                }
+                await _context.SaveChangesAsync();
+            }
             return CreatedAtAction(nameof(Company), new { id = company.CompanyId }, company);
         }
-
     }
 }

@@ -1,6 +1,5 @@
 ﻿@model Payohtee.Models.Customer.Company
 
-
 @{
     ViewData["Title"] = "Create";
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
@@ -35,11 +34,10 @@
         }
 </style>
 
-<form asp-action="Create" method="post" name="CreateCompany" id="CreateCompany">
+<div class="form" id="company">
     <div asp-validation-summary="ModelOnly" class="text-danger"></div>
     <div class="row">
         <div class="col-md-2">
-
         </div>
         <div class="col-md-4">
             <div class="card mb-4">
@@ -51,39 +49,38 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">CAIPO ID</span>
                         </div>
-                        <input asp-for="PayohteeId" class="form-control" placeholder="Registered Caipo Id" />
-                        <span asp-validation-for="PayohteeId" class="text-danger"></span>
+                        <input id="PayohteeId" name="PayohteeId" class="form-control" placeholder="Registered Caipo Id" autocomplete="off" />
+                        @*<span asp-validation-for="PayohteeId" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Company Name</span>
                         </div>
-                        <input asp-for="CompanyName" class="form-control" placeholder="Registered Company Name" />
-                        <span asp-validation-for="CompanyName" class="text-danger"></span>
+                        <input id="CompanyName" name="CompanyName" class="form-control" placeholder="Registered Company Name" autocomplete="off" />
+                        @*<span asp-validation-for="CompanyName" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Company Alias</span>
                         </div>
-                        <input asp-for="CompanyAlias" class="form-control" />
-                        <span asp-validation-for="CompanyAlias" class="text-danger"></span>
+                        <input id="CompanyAlias" name="CompanyAlias" class="form-control" autocomplete="off" />
+                        @*<span asp-validation-for="CompanyAlias" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Company Tax Id</span>
                         </div>
-                        <input asp-for="CompanyTaxId" class="form-control" />
-                        <span asp-validation-for="CompanyTaxId" class="text-danger"></span>
+                        <input id="CompanyTaxId" name="CompanyTaxId" class="form-control" />
+                        @*<span asp-validation-for="CompanyTaxId" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">CompanyIndustry</span>
                         </div>
-                        <input asp-for="CompanyIndustry" class="form-control" />
-                        <span asp-validation-for="CompanyIndustry" class="text-danger"></span>
+                        <input id="CompanyIndustry" name="CompanyIndustry" class="form-control" />
+                        @*<span asp-validation-for="CompanyIndustry" class="text-danger"></span>*@
                     </div>
                 </div>
-
             </div>
             <div class="card mb-4">
                 <div class="card-header">
@@ -94,22 +91,22 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Phone</span>
                         </div>
-                        <input asp-for="CompanyPhoneNumber" class="form-control" placeholder="(246) 888-8888" />
-                        <span asp-validation-for="CompanyPhoneNumber" class="text-danger"></span>
+                        <input id="CompanyPhoneNumber" name="CompanyPhoneNumber" class="form-control" placeholder="(246) 888-8888" />
+                        @*<span asp-validation-for="CompanyPhoneNumber" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Fax</span>
                         </div>
-                        <input asp-for="FaxNumber" class="form-control" placeholder="(246) 888-8888" />
-                        <span asp-validation-for="FaxNumber" class="text-danger"></span>
+                        <input id="FaxNumber" name="FaxNumber" class="form-control" placeholder="(246) 888-8888" />
+                        @*<span asp-validation-for="FaxNumber" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Email</span>
                         </div>
-                        <input asp-for="CompanyEmail" class="form-control" placeholder="payohtee@payohtee.bb" />
-                        <span asp-validation-for="CompanyEmail" class="text-danger"></span>
+                        <input id="CompanyEmail" name="CompanyEmail" class="form-control" placeholder="payohtee@payohtee.bb" />
+                        @*<span asp-validation-for="CompanyEmail" class="text-danger"></span>*@
                     </div>
                 </div>
             </div>
@@ -124,69 +121,67 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Street</span>
                         </div>
-                        <input asp-for="Address1" class="form-control" />
-                        <span asp-validation-for="Address1" class="text-danger"></span>
+                        <input id="Address1" name="Address1" class="form-control" />
+                        @*<span asp-validation-for="Address1" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Apartment</span>
                         </div>
-                        <input asp-for="Address2" class="form-control" />
-                        <span asp-validation-for="Address2" class="text-danger"></span>
+                        <input id="Address2" name="Address2" class="form-control" />
+                        @*<span asp-validation-for="Address2" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">City</span>
                         </div>
-                        <input asp-for="Address3" class="form-control" />
-                        <span asp-validation-for="Address3" class="text-danger"></span>
+                        <input id="Address3" name="Address3" class="form-control" />
+                        @*<span asp-validation-for="Address3" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">District</span>
                         </div>
-                        <input asp-for="Address4" class="form-control" />
-                        <span asp-validation-for="Address4" class="text-danger"></span>
+                        <input id="Address4" name="Address4" class="form-control" />
+                        @*<span asp-validation-for="Address4" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Parish</span>
                         </div>
-                        <select class="form-control" id="sel1">
+                        <select class="form-control" id="Parish" name="Parish">
                             <option>St.Michael</option>
                             <option>Christ Church</option>
                             <option>St.Lucy</option>
-
                         </select>
-                        <span asp-validation-for="Parish" class="text-danger"></span>
+                        @*<span asp-validation-for="Parish" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Country</span>
                         </div>
-                        <select class="form-control" id="sel1">
+                        <select class="form-control" id="Country" name="Country">
                             <option>Select Country</option>
                             <option>Barbados</option>
                         </select>
-                        <span asp-validation-for="Country" class="text-danger"></span>
+                        @*<span asp-validation-for="Country" class="text-danger"></span>*@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
                             <span class="input-group-text">Postal Code</span>
                         </div>
-                        <input asp-for="PostalCode" class="form-control" />
-                        <span asp-validation-for="PostalCode" class="text-danger"></span>
+                        <input id="PostalCode" name="PostalCode" class="form-control" />
+                        @*<span asp-validation-for="PostalCode" class="text-danger"></span>*@
                     </div>
                 </div>
             </div>
             <div class="row">
                 <div class="col-6">
                     <a id="addrank" class="btn btn-success text-white" data-toggle="modal" data-target="#contactModal">
-                        <i class="fa fa-id-card"></i>     Company Contact <i class="fa fa-plus"></i>
+                        <i class="fa fa-id-card"></i>Contact<i class="fa fa-plus"></i>
                     </a>
                 </div>
                 <div class="col-6">
-
                 </div>
             </div>
             <div class="row">
@@ -198,15 +193,15 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-
         </div>
         <div class="col-md-6">
-            <input type="submit" value="Create Company" class="btn btn-primary" />
+            <a  id="btnSubmit" class="btn btn-info text-white">Submit</a>
         </div>
     </div>
-</form>
+<pre id="output"></pre>
+</div>
 
-@Html.Partial("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts);
+@Html.Partial("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts)
 
 @*@section Scripts {
         @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
