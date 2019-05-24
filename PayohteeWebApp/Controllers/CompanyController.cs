@@ -189,6 +189,7 @@ namespace PayohteeWebApp
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
