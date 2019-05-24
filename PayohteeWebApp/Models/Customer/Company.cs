@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Payohtee.Models.Customer
 {
@@ -210,14 +211,17 @@ namespace Payohtee.Models.Customer
         /// </value>
         [MaxLength]
         [Display(Name = "Company Status")]
+        [JsonIgnore]
         public string Status { get; set; }
 
         #region Full Properties
 
         private string companyaddress;
         [NotMapped]
+        [JsonIgnore]
         public Contact Contact { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public string CompanyAddress
         {
             get { return companyaddress; }
@@ -225,6 +229,7 @@ namespace Payohtee.Models.Customer
         }
         private string recenteredby;
         [NotMapped]
+        [JsonIgnore]
         public string RecEnteredBy
         {
             get { return recenteredby; }
@@ -232,6 +237,7 @@ namespace Payohtee.Models.Customer
         }
         private DateTime recentereDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecEntered
         {
             get { return recentereDateTime; }
@@ -239,6 +245,7 @@ namespace Payohtee.Models.Customer
         }
         private string remodifiedby;
         [NotMapped]
+        [JsonIgnore]
         public string RecModifiedBy
         {
             get { return remodifiedby; }
@@ -246,11 +253,15 @@ namespace Payohtee.Models.Customer
         }
         private DateTime recmodifiedDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecModified
         {
             get { return recmodifiedDateTime; }
             set { recmodifiedDateTime = value; }
         }
+
+ 
+
 
         #endregion
 
@@ -277,12 +288,12 @@ namespace Payohtee.Models.Customer
             throw new NotImplementedException();
         }
 
-        public List<string> GetAsyncListCompanyName(string c)
+        public Task<List<string>> GetAsyncListCompanyName(string c)
         {
             var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
-            List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c))
+            List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c)&& x.Status=="Active")
                                  select a.CompanyName).ToList();
-            return list;
+            return Task.FromResult<List<string>>(list);
         }
 
         public void DeleteCompany(int id)
@@ -315,14 +326,6 @@ namespace Payohtee.Models.Customer
             throw new NotImplementedException();
         }
 
-        //public void GetCompany(string companyname)
-        //{
-        //    var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
-        //    List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c))
-        //                         select a.CompanyName).ToList();
-        //    return list;
-        //}
-
         Company ICRUDCompany.GetCompany(string companyname)
         {
             Company company = new Company();
@@ -335,50 +338,27 @@ namespace Payohtee.Models.Customer
 
         #region Snippets
 
-        //json string should look like :
-        //        {
-        //  "payohteeId": "POT0001",
-        //  "CompanyName": "Kitjimanitou Studios",
-        //  "CompanyAlias": "Kitji Studios",
-        //  "CompanyTaxId": "0000000001",
-        //  "CompanyIndustry": "Information Technology",
-        //  "Address1": null,
-        //  "Address2": null,
-        //  "Address3": null,
-        //  "Address4": null,
-        //  "Parish": null,
-        //  "Country": null,
-        //  "PostalCode": null,
-        //  "CompanyPhoneNumber": "246-666-8745",
-        //  "FaxNumber": null,
-        //  "CompanyEmail": "smarshall@kitjistudios.com",
-        //  "status": null,
-        //  "contact": null,
-        //  "companyAddress": null,
-        //  "recEnteredBy": null,
-        //  "recEntered": "0001-01-01T00:00:00",
-        //  "recModifiedBy": null,
-        //  "recModified": "0001-01-01T00:00:00",
-        //  "contacts": [
-        //  	{
-        //  		"ContactName":"Shayne",
-        //  		"ContactMobile":"254-5106",
-        //  		"ContactEmail":"john_shayne@hotmail.com",
-        //  		"ContactTitle":"founder",
-        //  		"SocialMedia":"sguz3m4n|bdbtwitnit"
-
-        //      },
-        //  	{
-        //  		"ContactName":"Guzman",
-        //  		"ContactMobile":"428-1982",
-        //  		"ContactEmail":"shaynie@hotmail.com",
-        //  		"ContactTitle":"founder",
-        //  		"SocialMedia":"sguz3m4n|bdbtwitnit"
-        //  	}
-
-        //  ]
+        //    {
+        //    "companyId": 125,
+        //    "payohteeId": "12345",
+        //    "CompanyName": "Kitjimanitou Studios",
+        //    "CompanyAlias": "Kitji Studios",
+        //    "CompanyTaxId": "00000",
+        //    "CompanyIndustry": "IT",
+        //    "Address1": "Breedys Land",
+        //    "Address2": "",
+        //    "Address3": "Silver Sands",
+        //    "Address4": "Silver Sands",
+        //    "Parish": "Christ Church",
+        //    "Country": "Barbados",
+        //    "PostalCode": "",
+        //    "CompanyPhoneNumber": "246-254-5106",
+        //    "FaxNumber": "",
+        //    "CompanyEmail": "smarshall@kitjistudios.com",
+        //    "contacts": []
         //}
 
         #endregion
     }
 }
+

@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace Payohtee.Models.Formatter.Json
 {
-    public class JsonPayohtee
+    public class JsonPayohtee 
     {
 
     }

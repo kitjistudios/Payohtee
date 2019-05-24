@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
-using Payohtee.Models;
 using Payohtee.Models.Customer;
 using PayohteeWebApp.Properties;
 

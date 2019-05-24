@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Payohtee.Models.Customer;
+using PayohteeWebApp.Controllers;
 using PayohteeWebApp.Data;
 using PayohteeWebApp.Properties;
 using RestSharp;
@@ -30,40 +31,40 @@ namespace PayohteeWebApp
         }
 
         // GET: Companies/Details/5
-        public async Task<IActionResult> Details(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(int? id)
+        //{
+        //    if (id == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var company = await _context.DbContextCompany
-                .FirstOrDefaultAsync(m => m.CompanyId == id);
-            if (company == null)
-            {
-                return NotFound();
-            }
+        //    var company = await _context.DbContextCompany
+        //        .FirstOrDefaultAsync(m => m.CompanyId == id);
+        //    if (company == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(company);
-        }
+        //    return View(company);
+        //}
 
         // GET: Companies/Details/companyname
-        public async Task<IActionResult> Details(string name)
-        {
-            if (name == null)
-            {
-                return NotFound();
-            }
+        //public async Task<IActionResult> Details(string name)
+        //{
+        //    if (name == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            var company = await _context.DbContextCompany
-                .FirstOrDefaultAsync(m => m.CompanyName == name);
-            if (company == null)
-            {
-                return NotFound();
-            }
+        //    var company = await _context.DbContextCompany
+        //        .FirstOrDefaultAsync(m => m.CompanyName == name);
+        //    if (company == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            return View(company);
-        }
+        //    return View(company);
+        //}
 
         // GET: Companies/Create
         public IActionResult Create()
@@ -177,51 +178,70 @@ namespace PayohteeWebApp
         [HttpGet]
         public ActionResult Lookup(string charinput)
         {
-            //var result = new Company().GetAsyncListCompanyName(charinput);
-            var client = new RestClient
-            {
-                BaseUrl = new Uri(Resources.baseurlremote)
-            };
-            var request = new RestRequest
-            {
-                Resource = "/company/suggestive/" + charinput,
-                Method = Method.GET
-
-            };
-            //request.AddParameter("charinput", charinput);
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/company/suggestive/" + charinput);
+            request.Method = Method.GET;
             IRestResponse Iresponse = client.Execute(request);
             var response = Iresponse.Content;
             var result = JsonConvert.DeserializeObject<List<String>>(response);
-            //return Content(result.ToString());
-            //return Content("Hi There");
             return Json(result);
         }
 
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public ActionResult Register(string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
             company.Status = "Active";
             companyjson = JsonConvert.SerializeObject(company);
 
-            var client = new RestClient
-            {
-                BaseUrl = new Uri(Resources.baseurllocal)
-            };
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/company/register/");
 
-            var request = new RestRequest
-            {
-                Resource = "/company/register/",
-                Method = Method.POST
-            };
-
+            request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
             IRestResponse Iresponse = client.Execute(request);
             var response = Iresponse.Content;
 
             return View(companyjson);
+        }
 
+        [HttpGet]
+        public ActionResult Details(int? id)
+        {
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/company/fetch/" + id);
+
+            request.Method = Method.POST;
+
+            request.RequestFormat = DataFormat.Json;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+            var companyjson = JsonConvert.SerializeObject(response);
+            return View(companyjson);
+        }
+
+        [HttpPost]
+        public ActionResult Update(int? id, string companyjson)
+        {
+            Company company = JsonConvert.DeserializeObject<Company>(companyjson);
+            companyjson = JsonConvert.SerializeObject(company);
+
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/company/update/");
+
+            request.Method = Method.POST;
+            request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
+            request.RequestFormat = DataFormat.Json;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+
+            return View(companyjson);
         }
 
     }

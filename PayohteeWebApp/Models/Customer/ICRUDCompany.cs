@@ -1,12 +1,20 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Payohtee.Models.Customer
 {
     interface ICRUDCompany
     {
+        /// <summary>
+        /// My contract should create a new company record
+        /// </summary>
+        /// <value>
+        /// this should create a new company
+        /// </value>
+        void CreateCompany(Company company);
 
         /// <summary>
-        /// Get list of company records
+        /// My contract should get a list of company objects
         /// </summary>
         /// <value>
         /// this should return a list of all company records
@@ -14,7 +22,7 @@ namespace Payohtee.Models.Customer
         List<Company> GetListCompany();
 
         /// <summary>
-        /// Get list of company names
+        /// My contract should get a list of company names
         /// </summary>
         /// <value>
         /// this should return a list of company names
@@ -22,56 +30,43 @@ namespace Payohtee.Models.Customer
         List<string> GetListCompanyName();
 
         /// <summary>
-        /// Get list asynchronously
+        /// My contract should get a suggestive list of companies
         /// </summary>
         /// <value>
         /// this should allow the asynch list search of company names
         /// this is for the asynchronous search for suggestive search in UI
         /// </value>
-        List<string> GetAsyncListCompanyName(string c);
+        Task<List<string>> GetAsyncListCompanyName(string c);
 
         /// <summary>
-        /// Company Status
+        /// My contract should get company object 
         /// </summary>
         /// <value>
-        /// Value should refer to the status of the company
-        /// This should be pipe delimited to allow range of states
+        /// this should select the company object by id
         /// </value>
-        void DeleteCompany(int id);
+        Company GetCompany(string companyname);
 
         /// <summary>
-        /// Company Status
+        /// My contract should select a company to be edited
         /// </summary>
         /// <value>
-        /// Value should refer to the status of the company
-        /// This should be pipe delimited to allow range of states
+        /// this should select the record to be edited by id
         /// </value>
         void EditCompany(int id);
 
         /// <summary>
-        /// Company Status
+        /// My contract should flag a company for deletion
         /// </summary>
         /// <value>
-        /// Value should refer to the status of the company
-        /// This should be pipe delimited to allow range of states
+        /// this should flag the record for deletion
         /// </value>
-        //void GetCompany(int? id);
-        Company GetCompany(string companyname);
-        /// <summary>
-        /// Company Status
-        /// </summary>
-        /// <value>
-        /// Value should refer to the status of the company
-        /// This should be pipe delimited to allow range of states
-        /// </value>
-        void CreateCompany(Company company);
+        void DeleteCompany(int id);
 
         /// <summary>
-        /// Company Status
+        /// My contract should check to see if the company exists
         /// </summary>
         /// <value>
-        /// Value should refer to the status of the company
-        /// This should be pipe delimited to allow range of states
+        /// this should check to see it the company exists
         /// </value>
         bool CompanyExists(int id);
     }
