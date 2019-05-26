@@ -1,156 +1,167 @@
 ﻿@model Payohtee.Models.Customer.Company
 
-<div class="row">
-    <div class="col-2">
+@if (Model != null)
+{
 
-    </div>
-    <div class="col-8">
-        <div class="card">
-            <div class="card-header bg-info ">
+        <div class="row">
+            <div class="col-2">
 
-                <div class="row">
-                    @*<i class="fa fa-building" style="font-size:40px"></i>*@
-                    <div class="col-sm-4">
-                        <h4 class="text-white">   @Html.DisplayNameFor(model => model.CompanyName)</h4>
+            </div>
+            <div class="col-8">
+                <div class="card">
+                    <div class="card-header bg-info ">
+
+                        <div class="row">
+                            @*<i class="fa fa-building" style="font-size:40px"></i>*@
+                            <div class="col-sm-4">
+                                <h4> </h4>
+
+                                <p>hello   </p>
+                            </div>
+                            <div class="col-sm-8">
+                                <h4 class="text-white"> Hello  @* @Model.CompanyName*@</h4>
+                            </div>
+                        </div>
                     </div>
-                    <div class="col-sm-8">
-                        <h4>    @Html.DisplayFor(model => model.CompanyName)</h4>
+                    @*<div class="card-body">
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.PayohteeId)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.PayohteeId)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.CompanyAlias)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.CompanyAlias)
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.CompanyIndustry)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.CompanyIndustry)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.CompanyTaxId)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.CompanyTaxId)
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-3">
+
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.Address1)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.Address1)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.Address2)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.Address2)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.Address3)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.Address3)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.Address4)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.Address4)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.Parish)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.Parish)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.Country)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.Country)
+                                        </dd>
+                                    </div>
+
+
+                                </div>
+                                <div class="col-3">
+
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-6">
+                                    <div class="row">
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.PostalCode)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            @Html.DisplayFor(model => model.PostalCode)
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.CompanyPhoneNumber)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            <a href="tel:@Html.DisplayFor(model => model.CompanyPhoneNumber)">@Html.DisplayFor(model => model.CompanyPhoneNumber)</a>
+                                        </dd>
+                                    </div>
+                                </div>
+                                <div class="col-6">
+                                    <div class="row">
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.FaxNumber)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            <a href="tel: @Html.DisplayFor(model => model.FaxNumber)"> @Html.DisplayFor(model => model.FaxNumber)</a>
+                                        </dd>
+                                        <dt class="col-sm-6">
+                                            @Html.DisplayNameFor(model => model.CompanyEmail)
+                                        </dt>
+                                        <dd class="col-sm-6">
+                                            <a href="mailto: @Html.DisplayFor(model => model.CompanyEmail)">@Html.DisplayFor(model => model.CompanyEmail)</a>
+                                        </dd>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>*@
+                    <div class="card-footer bg-info ">
+                        <div>
+                            @*<a asp-action="Edit" asp-route-id="@Model.CompanyId" class="text-white">Edit</a>*@ |
+                            <a asp-action="Index" class="text-white">Back to List</a>
+                        </div>
                     </div>
+
                 </div>
             </div>
-            <div class="card-body">
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row">
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.PayohteeId)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.PayohteeId)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.CompanyAlias)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.CompanyAlias)
-                            </dd>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.CompanyIndustry)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.CompanyIndustry)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.CompanyTaxId)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.CompanyTaxId)
-                            </dd>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-3">
+            <div class="col-2">
 
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.Address1)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.Address1)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.Address2)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.Address2)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.Address3)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.Address3)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.Address4)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.Address4)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.Parish)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.Parish)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.Country)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.Country)
-                            </dd>
-                        </div>
-
-
-                    </div>
-                    <div class="col-3">
-
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-6">
-                        <div class="row">
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.PostalCode)
-                            </dt>
-                            <dd class="col-sm-6">
-                                @Html.DisplayFor(model => model.PostalCode)
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.CompanyPhoneNumber)
-                            </dt>
-                            <dd class="col-sm-6">
-                                <a href="tel:@Html.DisplayFor(model => model.CompanyPhoneNumber)">@Html.DisplayFor(model => model.CompanyPhoneNumber)</a>
-                            </dd>
-                        </div>
-                    </div>
-                    <div class="col-6">
-                        <div class="row">
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.FaxNumber)
-                            </dt>
-                            <dd class="col-sm-6">
-                                <a href="tel: @Html.DisplayFor(model => model.FaxNumber)"> @Html.DisplayFor(model => model.FaxNumber)</a>
-                            </dd>
-                            <dt class="col-sm-6">
-                                @Html.DisplayNameFor(model => model.CompanyEmail)
-                            </dt>
-                            <dd class="col-sm-6">
-                                <a href="mailto: @Html.DisplayFor(model => model.CompanyEmail)">@Html.DisplayFor(model => model.CompanyEmail)</a>
-                            </dd>
-                        </div>
-                    </div>
-                </div>
             </div>
-            <div class="card-footer bg-info ">
-                <div >
-                    <a asp-action="Edit" asp-route-id="@Model.CompanyId"class="text-white">Edit</a> |
-                    <a asp-action="Index"class="text-white">Back to List</a>
-                </div>
-            </div>
-
+            <hr />
+            <dl class="row"></dl>
         </div>
-    </div>
-    <div class="col-2">
 
-    </div>
-    <hr />
-    <dl class="row"></dl>
-</div>
+
+
+}
+
+
 

@@ -82,13 +82,13 @@ document.addEventListener('DOMContentLoaded', function () {
     //    e.preventDefault();
     //    var json = toJSONString(this);
     //    output.innerHTML = json;
-   
+
     //}, false);
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
         var json = toJSONString(form);
         output.innerHTML = json;
-         $.post("/Company/Register", { companyjson: json }, function (data) {
+        $.post("/Company/Register", { companyjson: json }, function (data) {
 
         });
     });
@@ -99,7 +99,6 @@ $('#searchmodel').on('keyup input', function () {
     /* Get input value on change */
     var inputVal = $(this).val();
     var resultdropdown = $(this).siblings(".resultcomp");
-
     var isnum = /[0-9]/;
     var isalpha = /[a-zA-Z]/;
 
@@ -107,10 +106,12 @@ $('#searchmodel').on('keyup input', function () {
         if (isalpha.test(inputVal)) {
             $.get("/Company/Lookup", { charinput: inputVal }, function (data) {
                 var htmlresult = '';
+                var listul;
                 for (var i = 0; i < data.length; i++) {
-                    htmlresult = htmlresult + '<p><strong>' + data[i] + '</strong></p>';
+                    htmlresult = htmlresult + '<li><p><strong>' + data[i] + '</strong></p></li>';
                 }
-                resultdropdown.html(htmlresult);
+                listul = '<ul style="list-style:none;">' + htmlresult + '</ul>';
+                resultdropdown.html(listul);
             });
         } else
             if (isnum.test(inputVal)) {
@@ -122,7 +123,8 @@ $('#searchmodel').on('keyup input', function () {
 });
 
 $(document).on('click', '.resultcomp p', function () {
-    var result = document.getElementById('searchcomp').value = $(this).text();
+    //alert('hello');
+    var result = document.getElementById('searchmodel').value = $(this).text();
     if (result == "") {
         document.getElementById("txtHintcomp").innerHTML = "";
         return;
@@ -139,12 +141,14 @@ $(document).on('click', '.resultcomp p', function () {
                 document.getElementById("txtHintcomp").innerHTML = this.responseText;
             }
         };
-        $.post("Admin/Details", { companyname: result }, function (data) {
+        //$.get("/Company/Edit", { companyname: result }, function (data) {
 
-        });
+        //});
+        xmlhttp.open("GET", "/Company/DetailsName?companyname=" + result, true);
         //xmlhttp.open("GET", "../Views/Shared/Controls/CompanySearch/getuserwm.php?q=" + $test, true);
-        //xmlhttp.send();
+        xmlhttp.send();
     }
+    $(this).parent(".result").empty();
 });
 
 function RemoveInfo(key) {

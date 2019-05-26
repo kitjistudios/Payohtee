@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using Payohtee.Models.Customer;
 using PayohteeWebApp.Data;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -49,28 +51,35 @@ namespace PayohteeApi.Controllers
         [Route("api/company/[action]")]
         [ActionName("fetchall")]
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Company>>> GetCompanies()
+        public async Task<ActionResult<String>> GetCompanies()
         {
-            return await _context.DbContextCompany.Where(x => x.Status == "Active").ToListAsync();
+            var company = await _context.DbContextCompany.Where(x => x.Status == "Active").ToListAsync();
+            var contact = await _context.DbContextContacts.Include(x => x.Company).ToListAsync<Contact>();
+            if (company == null)
+            {
+                return NotFound();
+            }
+            var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+            string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
+            return companyjson;
         }
 
         // GET: api/company/fetch/id
         [Route("api/company/[action]/{id}")]
         [ActionName("fetch")]
         [HttpGet("{id}")]
-        public async Task<ActionResult<Company>> GetCompany(int id)
+        public async Task<ActionResult<String>> GetCompany(int id)
         {
-
-            var company = await _context.DbContextCompany.FindAsync(id);
-            var contact = _context.DbContextContacts.Where(t => t.Company.CompanyId == company.CompanyId).Include(x => x.Company).ToList<Contact>();
+            var company = await _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").ToListAsync();
+            var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
 
             if (company == null)
             {
                 return NotFound();
             }
-
-            //company.Contacts = contact;
-            return company;
+            var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+            string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
+            return companyjson;
         }
 
         // GET: api/company/suggestive/<char>
@@ -98,11 +107,41 @@ namespace PayohteeApi.Controllers
             {
                 if (company != null)
                 {
+                    company.CompanyId = id;
+                    //var existingParent =  _context.DbContextCompany.Where(p => p.CompanyId == id).Include(p => p.Contact).SingleOrDefault();
+                    //if (existingParent != null)
+                    //{
+                    //    _context.Entry(existingParent).CurrentValues.SetValues(company);
+                    //}
+                    //var entity = _context.DbContextCompany.FirstOrDefault(x=>x.CompanyId==id);
+                    //entity = company;
+                    //var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
+                    //foreach (var item in contact)
+                    //{
+                    //foreach (var t in company.Contacts)
+                    //{
+                    //    //var r = t;
+                    //    //r = item;
+                    //    //_context.DbContextContacts.Update(t.CompanyContacts[0]);
+                    //company.Contact.ContactName=    t.ContactName = "Terrence";
+                    //    _context.DbContextContacts.Update(company.Contact);
+                    //}
+                    //}
+                    //contact[0].ContactName = "Hector";
+               
+                    //_context.DbContextContacts.Add(contact[0]);
                     _context.DbContextCompany.Update(company);
+                    //foreach (var item in contact)
+                    //{
+                    //    _context.DbContextContacts.Update(company.Contact);
+                    //}
+                    await _context.SaveChangesAsync();
                 }
+             
+                return Content("Success");
             }
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Company), new { id = company.CompanyId }, company);
+
+            return NotFound();
         }
 
         // GET: api/company/erase/id

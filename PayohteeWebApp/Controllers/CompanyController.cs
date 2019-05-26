@@ -25,9 +25,13 @@ namespace PayohteeWebApp
         }
 
         // GET: Companies
-        public IActionResult Index(Company company)
+        [HttpGet]
+        public async Task<ViewResult> Index(string companyname)
         {
-            return View(company);
+            //var company = await _context.DbContextCompany.FindAsync(5);
+            var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
+            var model = company;
+            return View(model);
         }
 
         // GET: Companies/Details/5
@@ -49,22 +53,28 @@ namespace PayohteeWebApp
         //}
 
         // GET: Companies/Details/companyname
-        //public async Task<IActionResult> Details(string name)
-        //{
-        //    if (name == null)
-        //    {
-        //        return NotFound();
-        //    }
+        [HttpGet]
+        public async Task<IActionResult> DetailsName(string companyname)
+        {
+            //var company = await _context.DbContextCompany.FindAsync(5);
+            //if (companyname == null)
+            //{
+            //    return NotFound();
+            //}
 
-        //    var company = await _context.DbContextCompany
-        //        .FirstOrDefaultAsync(m => m.CompanyName == name);
-        //    if (company == null)
-        //    {
-        //        return NotFound();
-        //    }
+            var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
 
-        //    return View(company);
-        //}
+            //if (company == null)
+            //{
+            //    return View("Index");
+            //}
+            var model = company;
+            //return RedirectToAction(nameof(Index), model);
+            return View(model);
+            //PartialViewResult viewResult = new PartialViewResult();
+            //viewResult.ViewName = "_CompanyCardPartial";
+            //return PartialView("~/Views/Shared/_CompanyCardPartial.cshtml");
+        }
 
         // GET: Companies/Create
         public IActionResult Create()
@@ -99,6 +109,21 @@ namespace PayohteeWebApp
             }
 
             var company = await _context.DbContextCompany.FindAsync(id);
+            if (company == null)
+            {
+                return NotFound();
+            }
+            return View(company);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Edit(string companyname)
+        {
+            //if (id == null)
+            //{
+            //    return NotFound();
+            //}
+            var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
+            //var company = await _context.DbContextCompany.FindAsync(id);
             if (company == null)
             {
                 return NotFound();
@@ -175,19 +200,6 @@ namespace PayohteeWebApp
             return _context.DbContextCompany.Any(e => e.CompanyId == id);
         }
 
-        [HttpGet]
-        public ActionResult Lookup(string charinput)
-        {
-            var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
-            var request = payohteerest.PayohteeRestRequest("/company/suggestive/" + charinput);
-            request.Method = Method.GET;
-            IRestResponse Iresponse = client.Execute(request);
-            var response = Iresponse.Content;
-            var result = JsonConvert.DeserializeObject<List<String>>(response);
-            return Json(result);
-        }
-
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Register(string companyjson)
@@ -197,8 +209,8 @@ namespace PayohteeWebApp
             companyjson = JsonConvert.SerializeObject(company);
 
             var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
-            var request = payohteerest.PayohteeRestRequest("/company/register/");
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+            var request = payohteerest.PayohteeRestRequest("/company/register/", null);
 
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
@@ -210,11 +222,24 @@ namespace PayohteeWebApp
         }
 
         [HttpGet]
+        public ActionResult Lookup(string charinput)
+        {
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+            var request = payohteerest.PayohteeRestRequest("/company/suggestive/", charinput);
+            request.Method = Method.GET;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+            var result = JsonConvert.DeserializeObject<List<String>>(response);
+            return Json(result);
+        }  
+
+        [HttpGet]
         public ActionResult Details(int? id)
         {
             var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
-            var request = payohteerest.PayohteeRestRequest("/company/fetch/" + id);
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+            var request = payohteerest.PayohteeRestRequest("/company/fetch/", id.ToString());
 
             request.Method = Method.POST;
 
@@ -232,8 +257,8 @@ namespace PayohteeWebApp
             companyjson = JsonConvert.SerializeObject(company);
 
             var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
-            var request = payohteerest.PayohteeRestRequest("/company/update/");
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+            var request = payohteerest.PayohteeRestRequest("/company/update/", null);
 
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
