@@ -145,7 +145,6 @@ $(document).on('click', '.resultcomp p', function () {
 
         //});
         xmlhttp.open("GET", "/Company/DetailsName?companyname=" + result, true);
-        //xmlhttp.open("GET", "../Views/Shared/Controls/CompanySearch/getuserwm.php?q=" + $test, true);
         xmlhttp.send();
     }
     $(this).parent(".result").empty();

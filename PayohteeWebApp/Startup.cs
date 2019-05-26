@@ -190,8 +190,8 @@ namespace PayohteeWebApp
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //CreateRoles(serviceprovider).Wait();
-            //CreateUserRoles(serviceprovider).Wait();
+            CreateRoles(serviceprovider).Wait();
+            CreateUserRoles(serviceprovider).Wait();
         }
     }
 }

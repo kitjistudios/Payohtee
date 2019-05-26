@@ -33,6 +33,7 @@ namespace PayohteeApi.Controllers
             {
                 if (company != null)
                 {
+                    company.Status = "Active";
                     _context.DbContextCompany.Add(company);
                     if (company.Contacts.Count != 0)
                     {
@@ -74,6 +75,24 @@ namespace PayohteeApi.Controllers
         {
             var company = await _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").ToListAsync();
             var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
+
+            if (company.Count == 0)
+            {
+                return Content("Company unavailable");
+            }
+            var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
+            string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
+            return companyjson;
+        }
+
+        // GET: api/company/fetch/id
+        [Route("api/company/[action]/{name}")]
+        [ActionName("fetchname")]
+        [HttpGet("{name}")]
+        public async Task<ActionResult<String>> GetCompany(string name)
+        {
+            var company = await _context.DbContextCompany.Where(x => x.CompanyName == name && x.Status == "Active").ToListAsync();
+            var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyName == name).Include(x => x.Company).ToListAsync<Contact>();
 
             if (company.Count == 0)
             {
