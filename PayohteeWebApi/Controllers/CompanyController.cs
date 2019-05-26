@@ -43,8 +43,10 @@ namespace PayohteeApi.Controllers
                     }
                 }
                 await _context.SaveChangesAsync();
+                return Content("Success");
             }
-            return CreatedAtAction(nameof(Company), new { id = company.CompanyId }, company);
+
+            return Content("Invalid model");
         }
 
         // GET: api/company/fetchall
@@ -55,7 +57,7 @@ namespace PayohteeApi.Controllers
         {
             var company = await _context.DbContextCompany.Where(x => x.Status == "Active").ToListAsync();
             var contact = await _context.DbContextContacts.Include(x => x.Company).ToListAsync<Contact>();
-            if (company == null)
+            if (company.Count == 0)
             {
                 return NotFound();
             }
@@ -73,9 +75,9 @@ namespace PayohteeApi.Controllers
             var company = await _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").ToListAsync();
             var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
 
-            if (company == null)
+            if (company.Count == 0)
             {
-                return NotFound();
+                return Content("Company unavailable");
             }
             var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
             string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
@@ -105,9 +107,10 @@ namespace PayohteeApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (company != null)
+                var comp = _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").FirstOrDefault<Company>();
+                if (comp != null)
                 {
-                    company.CompanyId = id;
+                    comp = company;
                     //var existingParent =  _context.DbContextCompany.Where(p => p.CompanyId == id).Include(p => p.Contact).SingleOrDefault();
                     //if (existingParent != null)
                     //{
@@ -128,7 +131,7 @@ namespace PayohteeApi.Controllers
                     //}
                     //}
                     //contact[0].ContactName = "Hector";
-               
+
                     //_context.DbContextContacts.Add(contact[0]);
                     _context.DbContextCompany.Update(company);
                     //foreach (var item in contact)
@@ -136,12 +139,11 @@ namespace PayohteeApi.Controllers
                     //    _context.DbContextContacts.Update(company.Contact);
                     //}
                     await _context.SaveChangesAsync();
+                    return Content("Company updated");
                 }
-             
-                return Content("Success");
             }
 
-            return NotFound();
+            return Content("Company unavailable or model invalid");
         }
 
         // GET: api/company/erase/id
@@ -150,17 +152,17 @@ namespace PayohteeApi.Controllers
         [HttpPost("{id}")]
         public async Task<ActionResult<Company>> RemoveCompany(int id)
         {
-            var company = await _context.DbContextCompany.FindAsync(id);
-            company.Status = "Inactive";
-            if (ModelState.IsValid)
+            var company = _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").FirstOrDefault<Company>();
+
+            if (company != null)
             {
-                if (company != null)
-                {
-                    _context.DbContextCompany.Update(company);
-                }
+                company.Status = "Inactive";
+                _context.DbContextCompany.Update(company);
+                await _context.SaveChangesAsync();
+                return Content("Company removed");
             }
-            await _context.SaveChangesAsync();
-            return CreatedAtAction(nameof(Company), new { id = company.CompanyId }, company);
+
+            return Content("Company unavailable or removed");
         }
 
     }
