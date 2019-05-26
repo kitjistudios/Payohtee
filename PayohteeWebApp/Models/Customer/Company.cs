@@ -288,12 +288,12 @@ namespace Payohtee.Models.Customer
             throw new NotImplementedException();
         }
 
-        public Task<List<string>> GetAsyncListCompanyName(string c)
+        public async Task<List<string>> GetAsyncListCompanyName(string c)
         {
             var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
             List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c)&& x.Status=="Active")
                                  select a.CompanyName).ToList();
-            return Task.FromResult<List<string>>(list);
+            return await Task.FromResult<List<string>>(list);
         }
 
         public void DeleteCompany(int id)

@@ -1,8 +1,5 @@
 ﻿using RestSharp;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace PayohteeWebApp.Controllers
 {
@@ -18,12 +15,11 @@ namespace PayohteeWebApp.Controllers
             return client;
         }
 
-        public RestRequest PayohteeRestRequest(string resource)
+        public RestRequest PayohteeRestRequest(string resource, string prms)
         {
             var request = new RestRequest
             {
-                Resource = "/company/register/",
-                Method = Method.POST
+                Resource = resource + prms
             };
             return request;
         }
