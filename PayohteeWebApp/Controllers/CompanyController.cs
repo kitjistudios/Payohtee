@@ -24,7 +24,34 @@ namespace PayohteeWebApp
             _context = context;
         }
 
-        // GET: Companies
+        // GET: Companies/Create
+        public IActionResult Create()
+        {
+            return View();
+        }
+
+        [HttpPost]
+        public ActionResult Register(string companyjson)
+        {
+            Company company = JsonConvert.DeserializeObject<Company>(companyjson);
+            if (ModelState.IsValid)
+            {
+                companyjson = JsonConvert.SerializeObject(company);
+
+                var payohteerest = new PayohteeRest();
+                var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+                var request = payohteerest.PayohteeRestRequest("/company/register/", null);
+
+                request.Method = Method.POST;
+                request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
+                request.RequestFormat = DataFormat.Json;
+                IRestResponse Iresponse = client.Execute(request);
+                var response = Iresponse.Content;
+            }
+
+            return View(companyjson);
+        }
+
         [HttpGet]
         public async Task<ViewResult> Index(string companyname)
         {
@@ -34,25 +61,6 @@ namespace PayohteeWebApp
             return View(model);
         }
 
-        // GET: Companies/Details/5
-        //public async Task<IActionResult> Details(int? id)
-        //{
-        //    if (id == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    var company = await _context.DbContextCompany
-        //        .FirstOrDefaultAsync(m => m.CompanyId == id);
-        //    if (company == null)
-        //    {
-        //        return NotFound();
-        //    }
-
-        //    return View(company);
-        //}
-
-        // GET: Companies/Details/companyname
         [HttpGet]
         public async Task<IActionResult> DetailsName(string companyname)
         {
@@ -76,164 +84,6 @@ namespace PayohteeWebApp
             //return PartialView("~/Views/Shared/_CompanyCardPartial.cshtml");
         }
 
-        // GET: Companies/Create
-        public IActionResult Create()
-        {
-            return View();
-        }
-
-        // POST: Companies/Create
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("CompanyId,PayohteeId,CompanyName,CompanyAlias,CompanyTaxId,CompanyIndustry,Address1,Address2,Address3,Address4,Parish,Country,PostalCode,CompanyPhoneNumber,FaxNumber,CompanyEmail,Status")] Company company)
-        {
-            //loop through list of contacts and add to collection of contact in company model
-            //check to see if model is valid
-            if (ModelState.IsValid)
-            {
-                _context.Add(company);
-                await _context.SaveChangesAsync();
-                return RedirectToAction(nameof(Index));
-            }
-            return View(company);
-        }
-
-        // GET: Companies/Edit/5
-        public async Task<IActionResult> Edit(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var company = await _context.DbContextCompany.FindAsync(id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-            return View(company);
-        }
-        [HttpGet]
-        public async Task<IActionResult> Edit(string companyname)
-        {
-            //if (id == null)
-            //{
-            //    return NotFound();
-            //}
-            var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
-            //var company = await _context.DbContextCompany.FindAsync(id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-            return View(company);
-        }
-
-        // POST: Companies/Edit/5
-        // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
-        // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("CompanyId,PayohteeId,CompanyName,CompanyAlias,CompanyTaxId,CompanyIndustry,Address1,Address2,Address3,Address4,Parish,Country,PostalCode,CompanyPhoneNumber,FaxNumber,CompanyEmail,Status")] Company company)
-        {
-            if (id != company.CompanyId)
-            {
-                return NotFound();
-            }
-
-            if (ModelState.IsValid)
-            {
-                try
-                {
-                    _context.Update(company);
-                    await _context.SaveChangesAsync();
-                }
-                catch (DbUpdateConcurrencyException)
-                {
-                    if (!CompanyExists(company.CompanyId))
-                    {
-                        return NotFound();
-                    }
-                    else
-                    {
-                        throw;
-                    }
-                }
-                return RedirectToAction(nameof(Index));
-            }
-            return View(company);
-        }
-
-        // GET: Companies/Delete/5
-        public async Task<IActionResult> Delete(int? id)
-        {
-            if (id == null)
-            {
-                return NotFound();
-            }
-
-            var company = await _context.DbContextCompany
-                .FirstOrDefaultAsync(m => m.CompanyId == id);
-            if (company == null)
-            {
-                return NotFound();
-            }
-
-            return View(company);
-        }
-
-        // POST: Companies/Delete/5
-        [HttpPost, ActionName("Delete")]
-        [ValidateAntiForgeryToken]
-        public async Task<IActionResult> DeleteConfirmed(int id)
-        {
-            var company = await _context.DbContextCompany.FindAsync(id);
-            _context.DbContextCompany.Remove(company);
-            await _context.SaveChangesAsync();
-            return RedirectToAction(nameof(Index));
-        }
-
-        private bool CompanyExists(int id)
-        {
-            return _context.DbContextCompany.Any(e => e.CompanyId == id);
-        }
-
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Register(string companyjson)
-        {
-            Company company = JsonConvert.DeserializeObject<Company>(companyjson);
-            company.Status = "Active";
-            companyjson = JsonConvert.SerializeObject(company);
-
-            var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/register/", null);
-
-            request.Method = Method.POST;
-            request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
-            request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
-            var response = Iresponse.Content;
-
-            return View(companyjson);
-        }
-
-        [HttpGet]
-        public ActionResult Lookup(string charinput)
-        {
-            var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/suggestive/", charinput);
-            request.Method = Method.GET;
-            IRestResponse Iresponse = client.Execute(request);
-            var response = Iresponse.Content;
-            var result = JsonConvert.DeserializeObject<List<String>>(response);
-            return Json(result);
-        }  
-
         [HttpGet]
         public ActionResult Details(int? id)
         {
@@ -248,6 +98,19 @@ namespace PayohteeWebApp
             var response = Iresponse.Content;
             var companyjson = JsonConvert.SerializeObject(response);
             return View(companyjson);
+        }
+
+        [HttpGet]
+        public ActionResult Lookup(string charinput)
+        {
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+            var request = payohteerest.PayohteeRestRequest("/company/suggestive/", charinput);
+            request.Method = Method.GET;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+            var result = JsonConvert.DeserializeObject<List<String>>(response);
+            return Json(result);
         }
 
         [HttpPost]

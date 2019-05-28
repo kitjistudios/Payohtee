@@ -2,6 +2,20 @@
 var contactarr = [];
 var contactarrobj = [];
 
+document.addEventListener('DOMContentLoaded', function (e) {
+    var form = document.getElementById("company");
+    var output = document.getElementById("output");
+
+    $(document).on('click', '#btnSubmit', function (e) {
+        e.preventDefault();
+        var json = toJSONString(form);
+        output.innerHTML = json;
+        //$.post("/Company/Register", { companyjson: json }, function (data) {
+
+        //});
+    });
+});
+
 $('#AddContact').on('click', function () {
 
     var contactrec = [];
@@ -75,24 +89,40 @@ $(document).on('dblclick', '.pillwrapper li', function (event) {
     RemoveInfo(key);
 });
 
-document.addEventListener('DOMContentLoaded', function () {
-    var form = document.getElementById("company");
-    var output = document.getElementById("output");
-    //form.addEventListener("#btnSubmit", function (e) {
-    //    e.preventDefault();
-    //    var json = toJSONString(this);
-    //    output.innerHTML = json;
+$(document).on('click', '.resultcomp p', function () {
 
-    //}, false);
-    $(document).on('click', '#btnSubmit', function (e) {
-        e.preventDefault();
-        var json = toJSONString(form);
-        output.innerHTML = json;
-        $.post("/Company/Register", { companyjson: json }, function (data) {
+    var result = document.getElementById('searchmodel').value = $(this).text();
+    if (result == "") {
+        document.getElementById("txtHintcomp").innerHTML = "";
+        return;
+    } else {
+        if (window.XMLHttpRequest) {
+            // code for IE7+, Firefox, Chrome, Opera, Safari
+            xmlhttp = new XMLHttpRequest();
+        } else {
+            // code for IE6, IE5
+            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
+        }
+        xmlhttp.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                document.getElementById("txtHintcomp").innerHTML = this.responseText;
+            }
+        };
 
+        xmlhttp.open("GET", "/Company/DetailsName?companyname=" + result, false);
+        xmlhttp.send();
+
+        $(document).on('click', '#btnUpdate', function (e) {
+            e.preventDefault();
+            var form_edit = document.getElementById("company_edit");
+            var json = toJSONString(form_edit);
+            output.innerHTML = json;
+            //$.post("/Company/Update", { companyjson: json }, function (data) {
+
+            //});
         });
-    });
-
+    }
+    $(this).parent(".result").empty();
 });
 
 $('#searchmodel').on('keyup input', function () {
@@ -122,35 +152,6 @@ $('#searchmodel').on('keyup input', function () {
     }
 });
 
-$(document).on('click', '.resultcomp p', function () {
-    //alert('hello');
-    var result = document.getElementById('searchmodel').value = $(this).text();
-    if (result == "") {
-        document.getElementById("txtHintcomp").innerHTML = "";
-        return;
-    } else {
-        if (window.XMLHttpRequest) {
-            // code for IE7+, Firefox, Chrome, Opera, Safari
-            xmlhttp = new XMLHttpRequest();
-        } else {
-            // code for IE6, IE5
-            xmlhttp = new ActiveXObject("Microsoft.XMLHTTP");
-        }
-        xmlhttp.onreadystatechange = function () {
-            if (this.readyState == 4 && this.status == 200) {
-                document.getElementById("txtHintcomp").innerHTML = this.responseText;
-            }
-        };
-        //$.get("/Company/Edit", { companyname: result }, function (data) {
-
-        //});
-        xmlhttp.open("GET", "/Company/DetailsName?companyname=" + result, true);
-        //xmlhttp.open("GET", "../Views/Shared/Controls/CompanySearch/getuserwm.php?q=" + $test, true);
-        xmlhttp.send();
-    }
-    $(this).parent(".result").empty();
-});
-
 function RemoveInfo(key) {
 
     var indextoremove;
@@ -166,7 +167,9 @@ function RemoveInfo(key) {
 }
 
 function toJSONString(form) {
+
     var obj = {};
+
     var companyelements = form.querySelectorAll("input, select, textarea");
 
     for (var i = 0; i < companyelements.length; ++i) {

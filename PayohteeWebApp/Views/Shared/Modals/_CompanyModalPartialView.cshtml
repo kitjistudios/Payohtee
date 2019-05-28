@@ -1,10 +1,4 @@
 ﻿@model Payohtee.Models.Customer.Company
-
-@{
-    Layout = null;
-}<br />
-@await Html.PartialAsync("_CompanyCardPartial")
-
 <div class="modal" id="companymodal">
     <div class="modal-dialog">
         <div class="modal-content">
@@ -182,13 +176,3 @@
         </div>
     </div>
 </div>
-
-@await Html.PartialAsync("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts)
-
-
-
-
-
-
-
-
