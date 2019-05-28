@@ -195,14 +195,11 @@
         <div class="col-md-6">
         </div>
         <div class="col-md-6">
-            <a  id="btnSubmit" class="btn btn-info text-white">Submit</a>
+            <a id="btnSubmit" class="btn btn-info text-white">Submit</a>
         </div>
     </div>
 <pre id="output"></pre>
 </div>
 
-@Html.Partial("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts)
+@await Html.PartialAsync("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts)
 
-@*@section Scripts {
-        @{await Html.RenderPartialAsync("_ValidationScriptsPartial");}
-    }*@

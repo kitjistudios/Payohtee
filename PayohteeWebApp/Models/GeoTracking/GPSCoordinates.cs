@@ -1,30 +1,81 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.AccessControl;
-using System.Threading.Tasks;
+﻿using Newtonsoft.Json;
+using System;
+using System.ComponentModel;
+using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Payohtee.Models.GeoTracking
 {
+    [Table("GPSCoordinates")]
+    [JsonObject("GPSCoordinates")]
     public class GPSCoordinates
     {
+        #region Variables
 
-        private string latitude;
+        #endregion
 
-        public string Latitude
+        #region Constructor
+
+        public GPSCoordinates()
         {
-            get { return latitude; }
-            set { latitude = value; }
-        }
-        private string longitude;
 
-        public string Longitude
-        {
-            get { return longitude; }
-            set { longitude = value; }
         }
 
+        #endregion
 
+        #region Properties
+
+        /// <summary>
+        /// Company Identification
+        /// </summary>
+        /// <value>
+        /// Value should be a system generate unique id
+        /// </value>
+        [Key]
+        public int GPSId { get; set; }
+
+        /// <summary>
+        /// Company Identification
+        /// </summary>
+        /// <value>
+        /// Value should be Latitude: 13.091216874999997
+        /// </value>
+        [Required]
+        [StringLength(100)]
+        [DisplayName("Latitude")]
+        [JsonProperty("Latitude")]
+        [JsonRequired]
+        [NotMapped]
+        public string Latitude { get; set; }
+
+        /// <summary>
+        /// Company Identification
+        /// </summary>
+        /// <value>
+        /// Value should be a system generate unique id
+        /// </value>
+        [Required]
+        [StringLength(100)]
+        [DisplayName("Longitude")]
+        [JsonProperty("Longitude")]
+        [JsonRequired]
+        [NotMapped]
+        public string Longitude { get; set; }
+
+        /// <summary>
+        /// Company Identification
+        /// </summary>
+        /// <value>
+        /// Value should be a system generate unique id
+        /// </value>
+        public DateTime Time { get; set; }
+
+        #endregion
+
+        #region Methods
+
+
+        #endregion
 
     }
 }

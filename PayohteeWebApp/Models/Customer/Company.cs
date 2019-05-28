@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
 using System.Threading.Tasks;
 
 namespace Payohtee.Models.Customer
@@ -260,9 +261,6 @@ namespace Payohtee.Models.Customer
             set { recmodifiedDateTime = value; }
         }
 
- 
-
-
         #endregion
 
         #endregion
@@ -291,7 +289,7 @@ namespace Payohtee.Models.Customer
         public async Task<List<string>> GetAsyncListCompanyName(string c)
         {
             var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
-            List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c)&& x.Status=="Active")
+            List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c) && x.Status == "Active")
                                  select a.CompanyName).ToList();
             return await Task.FromResult<List<string>>(list);
         }
@@ -332,6 +330,12 @@ namespace Payohtee.Models.Customer
             var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
 
             return null;
+        }
+
+        public String AddressBuilder()
+        {
+            var address = new StringBuilder();
+            return address.Append(this.Address1).Append(this.Address2).ToString();
         }
 
         #endregion
