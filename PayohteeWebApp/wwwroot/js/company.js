@@ -10,9 +10,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
         e.preventDefault();
         var json = toJSONString(form);
         output.innerHTML = json;
-        //$.post("/Company/Register", { companyjson: json }, function (data) {
+        $.post("/Company/Register", { companyjson: json }, function (data) {
 
-        //});
+        });
     });
 });
 
@@ -116,11 +116,24 @@ $(document).on('click', '.resultcomp p', function () {
             e.preventDefault();
             var form_edit = document.getElementById("company_edit");
             var json = toJSONString(form_edit);
+            var id = document.getElementById("CompanyId").value;
             output.innerHTML = json;
-            //$.post("/Company/Update", { companyjson: json }, function (data) {
+            $.post("/Company/Update", { companyjson: json, id: id }, function (data) {
 
-            //});
+            });
         });
+
+        $(document).on('click', '#btnDelete', function (e) {
+            e.preventDefault();
+            var form_edit = document.getElementById("company_edit");
+            var json = toJSONString(form_edit);
+            var id = document.getElementById("CompanyId").value;
+            output.innerHTML = json;
+            $.post("/Company/Delete", { id: id }, function (data) {
+
+            });
+        });
+
     }
     $(this).parent(".result").empty();
 });

@@ -126,37 +126,20 @@ namespace PayohteeApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                var comp = _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").FirstOrDefault<Company>();
-                if (comp != null)
+                if (company.CompanyId == 0)
                 {
-                    comp = company;
-                    //var existingParent =  _context.DbContextCompany.Where(p => p.CompanyId == id).Include(p => p.Contact).SingleOrDefault();
-                    //if (existingParent != null)
-                    //{
-                    //    _context.Entry(existingParent).CurrentValues.SetValues(company);
-                    //}
-                    //var entity = _context.DbContextCompany.FirstOrDefault(x=>x.CompanyId==id);
-                    //entity = company;
-                    //var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
-                    //foreach (var item in contact)
-                    //{
-                    //foreach (var t in company.Contacts)
-                    //{
-                    //    //var r = t;
-                    //    //r = item;
-                    //    //_context.DbContextContacts.Update(t.CompanyContacts[0]);
-                    //company.Contact.ContactName=    t.ContactName = "Terrence";
-                    //    _context.DbContextContacts.Update(company.Contact);
-                    //}
-                    //}
-                    //contact[0].ContactName = "Hector";
-
-                    //_context.DbContextContacts.Add(contact[0]);
+                    company.CompanyId = id;
+                    company.Status = "Active";
+                    //_context.Entry(company).State = EntityState.Modified;
                     _context.DbContextCompany.Update(company);
-                    //foreach (var item in contact)
-                    //{
-                    //    _context.DbContextContacts.Update(company.Contact);
-                    //}
+                    await _context.SaveChangesAsync();
+                    return Content("Company updated");
+                }
+                else
+                {
+                    company.Status = "Active";
+                    //_context.Entry(company).State = EntityState.Modified;
+                    _context.DbContextCompany.Update(company);
                     await _context.SaveChangesAsync();
                     return Content("Company updated");
                 }
