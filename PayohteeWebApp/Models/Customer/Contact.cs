@@ -94,7 +94,9 @@ namespace Payohtee.Models.Customer
         #endregion
 
         #region Relationships
+
         public Company Company { get; set; }
+
         #endregion
 
         #region Methods

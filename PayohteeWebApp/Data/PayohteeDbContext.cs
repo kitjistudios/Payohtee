@@ -16,7 +16,7 @@ namespace PayohteeWebApp.Data
         public IConfiguration Configuration { get; set; }
         public DbSet<Company> DbContextCompany { get; set; }
         public DbSet<Contact> DbContextContacts { get; set; }
-        public DbSet<GPSCoordinates> DbContextGPS { get; set; }
+        public DbSet<GeoLocate> DbContextGPS { get; set; }
         //public DbSet<PolicePayment> DbContextPolicePayments { get; set; }
         //public DbSet<CustomsPayment> DbContextCustomsPayments { get; set; }
         //public DbSet<CustomsOfficer> DbContextCustomsOfficers { get; set; }
@@ -36,7 +36,7 @@ namespace PayohteeWebApp.Data
                 //use this string to target remote environment
                 var connremote = Resources.connremote;
 #if DEBUG
-                optionsBuilder.UseSqlServer(connremote,
+                optionsBuilder.UseSqlServer(connlocal,
                                provideroptions => provideroptions.CommandTimeout(60))
                            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 #else

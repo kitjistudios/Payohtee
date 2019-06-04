@@ -2,6 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Payohtee.Models.Customer;
+using Payohtee.Models.GeoTracking;
 using PayohteeWebApp.Data;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,7 @@ namespace PayohteeApi.Controllers
         {
             var company = await _context.DbContextCompany.Where(x => x.Status == "Active").ToListAsync();
             var contact = await _context.DbContextContacts.Include(x => x.Company).ToListAsync<Contact>();
+            var coord = await _context.DbContextGPS.Include(x => x.Company).ToListAsync<GeoLocate>();
             if (company.Count == 0)
             {
                 return NotFound();
@@ -75,6 +77,7 @@ namespace PayohteeApi.Controllers
         {
             var company = await _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").ToListAsync();
             var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
+            var coord = await _context.DbContextGPS.Include(x => x.Company).ToListAsync<GeoLocate>();
 
             if (company.Count == 0)
             {
@@ -93,7 +96,7 @@ namespace PayohteeApi.Controllers
         {
             var company = await _context.DbContextCompany.Where(x => x.CompanyName == name && x.Status == "Active").ToListAsync();
             var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyName == name).Include(x => x.Company).ToListAsync<Contact>();
-
+            var coord = await _context.DbContextGPS.Include(x => x.Company).ToListAsync<GeoLocate>();
             if (company.Count == 0)
             {
                 return Content("Company unavailable");
