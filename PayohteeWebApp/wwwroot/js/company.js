@@ -1,6 +1,10 @@
 ﻿var contactcount = 0;
 var contactarr = [];
 var contactarrobj = [];
+var geoarr = [];
+var geoarrobj = [];
+var lat;
+var lon;
 
 document.addEventListener('DOMContentLoaded', function (e) {
     var form = document.getElementById("company");
@@ -8,11 +12,13 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
+        getLocation();
+        //alert(geoarrobj["latitude"]);
         var json = toJSONString(form);
         output.innerHTML = json;
-        //$.post("/Company/Register", { companyjson: json }, function (data) {
+        $.post("/Company/Register", { companyjson: json }, function (data) {
 
-        //});
+        });
     });
 });
 
@@ -116,13 +122,31 @@ $(document).on('click', '.resultcomp p', function () {
             e.preventDefault();
             var form_edit = document.getElementById("company_edit");
             var json = toJSONString(form_edit);
+            var id = document.getElementById("CompanyId").value;
             output.innerHTML = json;
-            //$.post("/Company/Update", { companyjson: json }, function (data) {
+            $.post("/Company/Update", { companyjson: json, id: id }, function (data) {
 
-            //});
+            });
         });
+
+        $(document).on('click', '#btnDelete', function (e) {
+            e.preventDefault();
+            var form_edit = document.getElementById("company_edit");
+            var json = toJSONString(form_edit);
+            var id = document.getElementById("CompanyId").value;
+            output.innerHTML = json;
+            $.post("/Company/Delete", { id: id }, function (data) {
+
+            });
+        });
+
     }
     $(this).parent(".result").empty();
+});
+
+$('#coords').on('click', function () {
+    getLocation();
+    alert(lat + "" + lon)
 });
 
 $('#searchmodel').on('keyup input', function () {
@@ -181,9 +205,31 @@ function toJSONString(form) {
             obj[name] = value;
         }
     }
-
+    getLocation();
     obj["contacts"] = contactarrobj;
+    obj["coordinates"] = { "latitude": lat, "longitude": lon };
 
     return JSON.stringify(obj);
+}
+
+function getLocation() {
+
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+
+    //var geojson = {};
+    lat = position.coords.latitude;
+    lon = position.coords.longitude.toString();
+    //geoarrobj.push(geojson);
+
+    //x.innerHTML = "Latitude: " + position.coords.latitude +
+    //    "<br>Longitude: " + position.coords.longitude;
+
 }
 

@@ -10,22 +10,22 @@ using PayohteeWebApp.Data;
 
 namespace PayohteeWebApp.Controllers
 {
-    public class GPSCoordinatesController : Controller
+    public class GeoController : Controller
     {
         private readonly PayohteeDbContext _context;
 
-        public GPSCoordinatesController(PayohteeDbContext context)
+        public GeoController(PayohteeDbContext context)
         {
             _context = context;
         }
 
-        // GET: GPSCoordinates
+        // GET: GeoLocates
         public async Task<IActionResult> Index()
         {
-            return View();
+            return View(await _context.DbContextGPS.ToListAsync());
         }
 
-        // GET: GPSCoordinates/Details/5
+        // GET: GeoLocates/Details/5
         public async Task<IActionResult> Details(int? id)
         {
             if (id == null)
@@ -33,39 +33,39 @@ namespace PayohteeWebApp.Controllers
                 return NotFound();
             }
 
-            var gPSCoordinates = await _context.DbContextGPS
+            var geoLocate = await _context.DbContextGPS
                 .FirstOrDefaultAsync(m => m.GPSId == id);
-            if (gPSCoordinates == null)
+            if (geoLocate == null)
             {
                 return NotFound();
             }
 
-            return View(gPSCoordinates);
+            return View(geoLocate);
         }
 
-        // GET: GPSCoordinates/Create
+        // GET: GeoLocates/Create
         public IActionResult Create()
         {
             return View();
         }
 
-        // POST: GPSCoordinates/Create
+        // POST: GeoLocates/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Create([Bind("GPSId,Time")] GPSCoordinates gPSCoordinates)
+        public async Task<IActionResult> Create([Bind("GPSId,Latitude,Longitude,Lat,Long")] GeoLocate geoLocate)
         {
             if (ModelState.IsValid)
             {
-                _context.Add(gPSCoordinates);
+                _context.Add(geoLocate);
                 await _context.SaveChangesAsync();
                 return RedirectToAction(nameof(Index));
             }
-            return View(gPSCoordinates);
+            return View(geoLocate);
         }
 
-        // GET: GPSCoordinates/Edit/5
+        // GET: GeoLocates/Edit/5
         public async Task<IActionResult> Edit(int? id)
         {
             if (id == null)
@@ -73,22 +73,22 @@ namespace PayohteeWebApp.Controllers
                 return NotFound();
             }
 
-            var gPSCoordinates = await _context.DbContextGPS.FindAsync(id);
-            if (gPSCoordinates == null)
+            var geoLocate = await _context.DbContextGPS.FindAsync(id);
+            if (geoLocate == null)
             {
                 return NotFound();
             }
-            return View(gPSCoordinates);
+            return View(geoLocate);
         }
 
-        // POST: GPSCoordinates/Edit/5
+        // POST: GeoLocates/Edit/5
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Edit(int id, [Bind("GPSId,Time")] GPSCoordinates gPSCoordinates)
+        public async Task<IActionResult> Edit(int id, [Bind("GPSId,Latitude,Longitude,Lat,Long")] GeoLocate geoLocate)
         {
-            if (id != gPSCoordinates.GPSId)
+            if (id != geoLocate.GPSId)
             {
                 return NotFound();
             }
@@ -97,12 +97,12 @@ namespace PayohteeWebApp.Controllers
             {
                 try
                 {
-                    _context.Update(gPSCoordinates);
+                    _context.Update(geoLocate);
                     await _context.SaveChangesAsync();
                 }
                 catch (DbUpdateConcurrencyException)
                 {
-                    if (!GPSCoordinatesExists(gPSCoordinates.GPSId))
+                    if (!GeoLocateExists(geoLocate.GPSId))
                     {
                         return NotFound();
                     }
@@ -113,10 +113,10 @@ namespace PayohteeWebApp.Controllers
                 }
                 return RedirectToAction(nameof(Index));
             }
-            return View(gPSCoordinates);
+            return View(geoLocate);
         }
 
-        // GET: GPSCoordinates/Delete/5
+        // GET: GeoLocates/Delete/5
         public async Task<IActionResult> Delete(int? id)
         {
             if (id == null)
@@ -124,28 +124,28 @@ namespace PayohteeWebApp.Controllers
                 return NotFound();
             }
 
-            var gPSCoordinates = await _context.DbContextGPS
+            var geoLocate = await _context.DbContextGPS
                 .FirstOrDefaultAsync(m => m.GPSId == id);
-            if (gPSCoordinates == null)
+            if (geoLocate == null)
             {
                 return NotFound();
             }
 
-            return View(gPSCoordinates);
+            return View(geoLocate);
         }
 
-        // POST: GPSCoordinates/Delete/5
+        // POST: GeoLocates/Delete/5
         [HttpPost, ActionName("Delete")]
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var gPSCoordinates = await _context.DbContextGPS.FindAsync(id);
-            _context.DbContextGPS.Remove(gPSCoordinates);
+            var geoLocate = await _context.DbContextGPS.FindAsync(id);
+            _context.DbContextGPS.Remove(geoLocate);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
-        private bool GPSCoordinatesExists(int id)
+        private bool GeoLocateExists(int id)
         {
             return _context.DbContextGPS.Any(e => e.GPSId == id);
         }

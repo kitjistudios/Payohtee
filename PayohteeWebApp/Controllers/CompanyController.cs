@@ -114,14 +114,15 @@ namespace PayohteeWebApp
         }
 
         [HttpPost]
-        public ActionResult Update(int? id, string companyjson)
+        public ActionResult Update(int id, string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
+            company.CompanyId = id;
             companyjson = JsonConvert.SerializeObject(company);
 
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/update/", null);
+            var request = payohteerest.PayohteeRestRequest("/company/update/" + id, null);
 
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
@@ -130,6 +131,21 @@ namespace PayohteeWebApp
             var response = Iresponse.Content;
 
             return View(companyjson);
+        }
+
+        [HttpPost]
+        public ActionResult Delete(int id)
+        {
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/company/erase/" + id, null);
+
+            request.Method = Method.POST;
+            request.RequestFormat = DataFormat.Json;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+
+            return View();
         }
 
     }

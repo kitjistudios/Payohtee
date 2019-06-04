@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Payohtee.Models.GeoTracking;
 using PayohteeWebApp.Data;
 using System;
 using System.Collections.Generic;
@@ -217,10 +218,15 @@ namespace Payohtee.Models.Customer
 
         #region Full Properties
 
-        private string companyaddress;
+        private GeoLocate coord;
         [NotMapped]
         [JsonIgnore]
-        public Contact Contact { get; set; }
+        public GeoLocate Coord
+        {
+            get { return coord; }
+            set { coord = value; }
+        }
+         private string companyaddress;
         [NotMapped]
         [JsonIgnore]
         public string CompanyAddress
@@ -260,6 +266,9 @@ namespace Payohtee.Models.Customer
             get { return recmodifiedDateTime; }
             set { recmodifiedDateTime = value; }
         }
+        [NotMapped]
+        [JsonIgnore]
+        public Contact Contact { get; set; }
 
         #endregion
 
@@ -268,6 +277,7 @@ namespace Payohtee.Models.Customer
         #region Relationship
 
         public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<GeoLocate> Coordinates { get; set; }
         //public ICollection<BankAccount> Banking { get; set; } 
         //public ICollection<PolicePayment> PolicePayments { get; set; }
         //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
