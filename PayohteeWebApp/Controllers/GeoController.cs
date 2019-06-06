@@ -20,9 +20,15 @@ namespace PayohteeWebApp.Controllers
         }
 
         // GET: GeoLocates
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.DbContextGPS.ToListAsync());
+            return View();
+        }
+
+        public IActionResult Tester()
+        {
+
+            return View();
         }
 
         // GET: GeoLocates/Details/5

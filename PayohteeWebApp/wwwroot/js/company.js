@@ -12,13 +12,11 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        getLocation();
-        //alert(geoarrobj["latitude"]);
         var json = toJSONString(form);
         output.innerHTML = json;
-        $.post("/Company/Register", { companyjson: json }, function (data) {
+        //$.post("/Company/Register", { companyjson: json }, function (data) {
 
-        });
+        //});
     });
 });
 
@@ -144,11 +142,6 @@ $(document).on('click', '.resultcomp p', function () {
     $(this).parent(".result").empty();
 });
 
-$('#coords').on('click', function () {
-    getLocation();
-    alert(lat + "" + lon)
-});
-
 $('#searchmodel').on('keyup input', function () {
     /* Get input value on change */
     var inputVal = $(this).val();
@@ -205,31 +198,8 @@ function toJSONString(form) {
             obj[name] = value;
         }
     }
-    getLocation();
     obj["contacts"] = contactarrobj;
-    obj["coordinates"] = { "latitude": lat, "longitude": lon };
 
     return JSON.stringify(obj);
-}
-
-function getLocation() {
-
-    if (navigator.geolocation) {
-        navigator.geolocation.getCurrentPosition(showPosition);
-    } else {
-        x.innerHTML = "Geolocation is not supported by this browser.";
-    }
-}
-
-function showPosition(position) {
-
-    //var geojson = {};
-    lat = position.coords.latitude;
-    lon = position.coords.longitude.toString();
-    //geoarrobj.push(geojson);
-
-    //x.innerHTML = "Latitude: " + position.coords.latitude +
-    //    "<br>Longitude: " + position.coords.longitude;
-
 }
 
