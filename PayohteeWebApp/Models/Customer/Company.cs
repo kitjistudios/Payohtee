@@ -1,13 +1,14 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Payohtee.Data;
-using Payohtee.Models.Banking;
+using Payohtee.Models.GeoTracking;
 using PayohteeWebApp.Data;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Payohtee.Models.Customer
 {
@@ -19,6 +20,7 @@ namespace Payohtee.Models.Customer
     /// the remarks tag.
     /// </remarks>
     [Table("Company")]
+    [JsonObject("Company")]
     public class Company : ICRUDCompany
     {
         #region Variables
@@ -29,7 +31,7 @@ namespace Payohtee.Models.Customer
 
         public Company()
         {
-
+            Contacts = new List<Contact>();
         }
 
         #endregion
@@ -211,12 +213,22 @@ namespace Payohtee.Models.Customer
         /// </value>
         [MaxLength]
         [Display(Name = "Company Status")]
+        [JsonIgnore]
         public string Status { get; set; }
 
         #region Full Properties
 
-        private string companyaddress;
+        private GeoLocate coord;
         [NotMapped]
+        [JsonIgnore]
+        public GeoLocate Coord
+        {
+            get { return coord; }
+            set { coord = value; }
+        }
+         private string companyaddress;
+        [NotMapped]
+        [JsonIgnore]
         public string CompanyAddress
         {
             get { return companyaddress; }
@@ -224,6 +236,7 @@ namespace Payohtee.Models.Customer
         }
         private string recenteredby;
         [NotMapped]
+        [JsonIgnore]
         public string RecEnteredBy
         {
             get { return recenteredby; }
@@ -231,6 +244,7 @@ namespace Payohtee.Models.Customer
         }
         private DateTime recentereDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecEntered
         {
             get { return recentereDateTime; }
@@ -238,6 +252,7 @@ namespace Payohtee.Models.Customer
         }
         private string remodifiedby;
         [NotMapped]
+        [JsonIgnore]
         public string RecModifiedBy
         {
             get { return remodifiedby; }
@@ -245,11 +260,15 @@ namespace Payohtee.Models.Customer
         }
         private DateTime recmodifiedDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecModified
         {
             get { return recmodifiedDateTime; }
             set { recmodifiedDateTime = value; }
         }
+        [NotMapped]
+        [JsonIgnore]
+        public Contact Contact { get; set; }
 
         #endregion
 
@@ -257,8 +276,9 @@ namespace Payohtee.Models.Customer
 
         #region Relationship
 
-        //public ICollection<BankAccount> Banking { get; set; }
-        //public ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<Contact> Contacts { get; set; }
+        public virtual ICollection<GeoLocate> Coordinates { get; set; }
+        //public ICollection<BankAccount> Banking { get; set; } 
         //public ICollection<PolicePayment> PolicePayments { get; set; }
         //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
 
@@ -276,12 +296,12 @@ namespace Payohtee.Models.Customer
             throw new NotImplementedException();
         }
 
-        public List<string> GetAsyncListCompanyName(string c)
+        public async Task<List<string>> GetAsyncListCompanyName(string c)
         {
             var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
-            List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c))
+            List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c) && x.Status == "Active")
                                  select a.CompanyName).ToList();
-            return list;
+            return await Task.FromResult<List<string>>(list);
         }
 
         public void DeleteCompany(int id)
@@ -314,14 +334,6 @@ namespace Payohtee.Models.Customer
             throw new NotImplementedException();
         }
 
-        //public void GetCompany(string companyname)
-        //{
-        //    var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
-        //    List<string> list = (from a in context.DbContextCompany.Where(x => x.CompanyName.Contains(c))
-        //                         select a.CompanyName).ToList();
-        //    return list;
-        //}
-
         Company ICRUDCompany.GetCompany(string companyname)
         {
             Company company = new Company();
@@ -330,9 +342,37 @@ namespace Payohtee.Models.Customer
             return null;
         }
 
+        public String AddressBuilder()
+        {
+            var address = new StringBuilder();
+            return address.Append(this.Address1).Append(this.Address2).ToString();
+        }
+
         #endregion
 
+        #region Snippets
+
+        //    {
+        //    "companyId": 125,
+        //    "payohteeId": "12345",
+        //    "CompanyName": "Kitjimanitou Studios",
+        //    "CompanyAlias": "Kitji Studios",
+        //    "CompanyTaxId": "00000",
+        //    "CompanyIndustry": "IT",
+        //    "Address1": "Breedys Land",
+        //    "Address2": "",
+        //    "Address3": "Silver Sands",
+        //    "Address4": "Silver Sands",
+        //    "Parish": "Christ Church",
+        //    "Country": "Barbados",
+        //    "PostalCode": "",
+        //    "CompanyPhoneNumber": "246-254-5106",
+        //    "FaxNumber": "",
+        //    "CompanyEmail": "smarshall@kitjistudios.com",
+        //    "contacts": []
+        //}
+
+        #endregion
     }
-
-
 }
+

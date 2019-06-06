@@ -1,0 +1,78 @@
+﻿@model Payohtee.Models.Customer.Company
+
+@if (Model != null)
+{
+    <div class="row">
+        <div class="col-2">
+
+        </div>
+        <div class="col-8">
+            <div class="card">
+                <div class="card-header bg-info ">
+                    <div class="row">
+                        <div class="col-sm-2">
+
+                        </div>
+                        <div class="col-sm-6">
+                            <h4 class="text-white">  <i class="fa fa-building text-white" style="font-size:25px"></i>   @Model.CompanyName </h4>
+                        </div>
+                        <div class="col-sm-2">
+                    
+                        </div>
+                        <div class="col-sm-2">
+                            <button type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#companymodal"><i class="fa fa-pen"></i></button>
+                            <button type="button" class="btn btn-outline-light btn-sm" id="btnDelete"><i class="fa fa-trash border-white"></i></button>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-body">
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6><strong>Address</strong></h6>
+                        </div>
+                        <div class="col-sm-8">
+                            <div>
+                                <p>@Model.AddressBuilder()</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <div class="col-sm-3">
+                            <h6><strong>Contact</strong></h6>
+                        </div>
+                        <div class="col-sm-9">
+                            <div>
+                                <i class="fa fa-envelope"></i> <a href="mailto: @Html.DisplayFor(model => model.CompanyEmail)">@Html.DisplayFor(model => model.CompanyEmail)</a><br />
+                                <i class="fa fa-phone"></i> <a href="tel:@Html.DisplayFor(model => model.CompanyPhoneNumber)">@Html.DisplayFor(model => model.CompanyPhoneNumber)</a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="card-footer bg-info ">
+                    <div class="row">
+                        <div class="col-md-4">
+                        </div>
+                        <div class="col-md-4 text-white">
+                            <h4><i class="fa fa-info " style="font-size:15px"></i> @Model.PayohteeId</h4>
+                        </div>
+                        <div class="col-md-4">
+                            <div>
+                                <input type="hidden" asp-for="CompanyId" />
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-2">
+
+        </div>
+        <hr />
+
+    </div>
+
+}
+
+
+

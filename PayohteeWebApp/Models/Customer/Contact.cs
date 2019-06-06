@@ -1,10 +1,9 @@
-﻿using System.Collections.Generic;
+﻿using Newtonsoft.Json;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using Newtonsoft.Json;
-using Payohtee.Models.Customer;
 
-namespace Payohtee.Models
+namespace Payohtee.Models.Customer
 {
     /// <summary>
     /// Class level summary documentation goes here.
@@ -14,7 +13,7 @@ namespace Payohtee.Models
     /// the remarks tag.
     /// </remarks>
     [Table("Contacts")]
-    public class Contact 
+    public class Contact
     {
         #region Constructor
         public Contact()
@@ -85,14 +84,19 @@ namespace Payohtee.Models
         public string SocialMedia { get; set; }
 
         [NotMapped]
+        [JsonIgnore]
         public List<string> SocialMediaHandles { get; set; }
         [NotMapped]
+        [JsonIgnore]
         public List<Contact> CompanyContacts { get; set; }
+
 
         #endregion
 
         #region Relationships
-        public Company  Company { get; set; }
+
+        public Company Company { get; set; }
+
         #endregion
 
         #region Methods

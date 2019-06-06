@@ -39,7 +39,7 @@
             <hr class="sidebar-divider my-0">
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
-                <a class="nav-link" href="index.html">
+                <a class="nav-link" href="/Admin/Index">
                     <i class="fas fa-fw fa-tachometer-alt"></i>
                     <span>Dashboard</span>
                 </a>
@@ -58,92 +58,108 @@
                 </a>
                 <div id="collapseCorporate" class="collapse" aria-labelledby="headingTwo" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Management</h6>
-                        <a class="collapse-item " href="buttons.html"><i class="fas fa-fw fa-pencil-alt"></i> Create</a>
-                        <a class="collapse-item" href="cards.html"><i class="fas fa-fw fa-eye"></i> Directory</a>
+                        <h6 class="collapse-header">Company Management</h6>
+                        <a class="collapse-item" href="/Company/Create"><i class="fas fa-fw fa-pencil-alt"></i> Create</a>
+                        <a class="collapse-item" href="/Company/Index"><i class="fas fa-fw fa-eye"></i> Directory</a>
                     </div>
                 </div>
             </li>
             <!-- Nav Item - Utilities Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomsOfficer" aria-expanded="true" aria-controls="collapseCustomsOfficer">
-                    <i class="fas fa-fw fa-user-shield"></i>
-                    <span>Customs Officer</span>
-                </a>
-                <div id="collapseCustomsOfficer" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"><i class="fas fa-fw fa-door-closed"></i>Customs Officer:</h6>
-                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-fw fa-pencil-alt"></i>Create</a>
-                        <a class="collapse-item" href="utilities-border.html"><i class="fas fa-fw fa-eye"></i>Directory</a>
+            @*<li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseCustomsOfficer" aria-expanded="true" aria-controls="collapseCustomsOfficer">
+                        <i class="fas fa-fw fa-user-shield"></i>
+                        <span>Customs Officer</span>
+                    </a>
+                    <div id="collapseCustomsOfficer" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header"><i class="fas fa-fw fa-door-closed"></i>Customs Officer:</h6>
+                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-fw fa-pencil-alt"></i>Create</a>
+                            <a class="collapse-item" href="utilities-border.html"><i class="fas fa-fw fa-eye"></i>Directory</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePoliceOfficer" aria-expanded="true" aria-controls="collapsePoliceOfficer">
-                    <i class="fas fa-fw fa-user-shield"></i>
-                    <span>Police Officer</span>
-                </a>
-                <div id="collapsePoliceOfficer" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"><i class="fas fa-fw fa-id-badge"></i>Police Officer</h6>
-                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-fw fa-pencil-alt"></i>Create</a>
-                        <a class="collapse-item" href="utilities-border.html"><i class="fas fa-fw fa-eye"></i>Directory</a>
+                </li>*@
+            @*<li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePoliceOfficer" aria-expanded="true" aria-controls="collapsePoliceOfficer">
+                        <i class="fas fa-fw fa-user-shield"></i>
+                        <span>Police Officer</span>
+                    </a>
+                    <div id="collapsePoliceOfficer" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header"><i class="fas fa-fw fa-id-badge"></i>Police Officer</h6>
+                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-fw fa-pencil-alt"></i>Create</a>
+                            <a class="collapse-item" href="utilities-border.html"><i class="fas fa-fw fa-eye"></i>Directory</a>
+                        </div>
                     </div>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAppUser" aria-expanded="true" aria-controls="collapseAppUser">
-                    <i class="fas fa-fw fa-user-friends"></i>
-                    <span>App User</span>
-                </a>
-                <div id="collapseAppUser" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header"><i class="fas fa-fw fa-door-closed"></i>Customs Officer:</h6>
-                        <a class="collapse-item" href="utilities-color.html"><i class="fas fa-fw fa-pencil-alt"></i>New User</a>
-                        <a class="collapse-item" href="utilities-border.html"><i class="fas fa-fw fa-eye"></i>Directory</a>
+                </li>*@
+            @*<li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAppUser" aria-expanded="true" aria-controls="collapseAppUser">
+                        <i class="fas fa-fw fa-user-friends"></i>
+                        <span>App User</span>
+                    </a>
+                    <div id="collapseAppUser" class="collapse" aria-labelledby="headingUtilities" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header"><i class="fas fa-fw fa-door-closed"></i>Customs Officer:</h6>
+                            <a class="collapse-item" href="utilities-color.html"><i class="fas fa-fw fa-pencil-alt"></i>New User</a>
+                            <a class="collapse-item" href="utilities-border.html"><i class="fas fa-fw fa-eye"></i>Directory</a>
+                        </div>
                     </div>
-                </div>
-            </li>
+                </li>*@
             <!-- Divider -->
             <hr class="sidebar-divider">
             <!-- Heading -->
+            @*<div class="sidebar-heading">
+                    Configuration
+                </div>*@
+            <!-- Nav Item - Pages Collapse Menu -->
+            @*<li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccess" aria-expanded="true" aria-controls="collapseAccess">
+                        <i class="fas fa-fw fa-user-lock"></i>
+                        <span>Access</span>
+                    </a>
+                    <div id="collapseAccess" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Login Screens:</h6>
+                            <a class="collapse-item" href="login.html">Login</a>
+                        </div>
+                    </div>
+                </li>*@
+            <!-- Nav Item - Pages Collapse Menu -->
+            @*<li class="nav-item">
+                    <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePermission" aria-expanded="true" aria-controls="collapsePermission">
+                        <i class="fas fa-fw fa-users"></i>      <i class="fas fa-fw fa-eye"></i>
+                        <span>Permission</span>
+                    </a>
+                    <div id="collapsePermission" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                        <div class="bg-white py-2 collapse-inner rounded">
+                            <h6 class="collapse-header">Permissions</h6>
+                            <a class="collapse-item" href="login.html"> <i class="fas fa-fw fa-user-plus"></i> Grant</a>
+                            <a class="collapse-item" href="register.html"> <i class="fas fa-fw fa-user-minus"></i> Revoke</a>
+                            <a class="collapse-item" href="forgot-password.html"> <i class="fas fa-fw fa-eye"></i> Permission Matrix</a>
+                        </div>
+                    </div>
+                </li>*@
+            <!-- Nav Item - Charts -->
+            @*<li class="nav-item">
+                    <a class="nav-link" href="charts.html">
+                        <i class="fas fa-fw fa-chart-area"></i>
+                        <span>Settings</span>
+                    </a>
+                </li>*@
             <div class="sidebar-heading">
-                Configuration
+                Geo Tracking
             </div>
             <!-- Nav Item - Pages Collapse Menu -->
             <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseAccess" aria-expanded="true" aria-controls="collapseAccess">
+                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapseGeo" aria-expanded="true" aria-controls="collapseAccess">
                     <i class="fas fa-fw fa-user-lock"></i>
-                    <span>Access</span>
+                    <span>Geo Tools</span>
                 </a>
-                <div id="collapseAccess" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
+                <div id="collapseGeo" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
                     <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Login Screens:</h6>
-                        <a class="collapse-item" href="login.html">Login</a>
+                        <a class="collapse-item" href="/Geo/Index">Geo Locator</a>  
+                        <a class="collapse-item" href="/Geo/Tester">Geo Tester</a>
                     </div>
                 </div>
-            </li>
-            <!-- Nav Item - Pages Collapse Menu -->
-            <li class="nav-item">
-                <a class="nav-link collapsed" href="#" data-toggle="collapse" data-target="#collapsePermission" aria-expanded="true" aria-controls="collapsePermission">
-                    <i class="fas fa-fw fa-users"></i>      <i class="fas fa-fw fa-eye"></i>
-                    <span>Permission</span>
-                </a>
-                <div id="collapsePermission" class="collapse" aria-labelledby="headingPages" data-parent="#accordionSidebar">
-                    <div class="bg-white py-2 collapse-inner rounded">
-                        <h6 class="collapse-header">Permissions</h6>
-                        <a class="collapse-item" href="login.html"> <i class="fas fa-fw fa-user-plus"></i> Grant</a>
-                        <a class="collapse-item" href="register.html"> <i class="fas fa-fw fa-user-minus"></i> Revoke</a>
-                        <a class="collapse-item" href="forgot-password.html"> <i class="fas fa-fw fa-eye"></i> Permission Matrix</a>
-                    </div>
-                </div>
-            </li>
-            <!-- Nav Item - Charts -->
-            <li class="nav-item">
-                <a class="nav-link" href="charts.html">
-                    <i class="fas fa-fw fa-chart-area"></i>
-                    <span>Settings</span>
-                </a>
             </li>
             <!-- Divider -->
             <hr class="sidebar-divider d-none d-md-block">
@@ -163,17 +179,7 @@
                 <button id="sidebarToggleTop" class="btn btn-link d-md-none rounded-circle mr-3">
                     <i class="fa fa-bars"></i>
                 </button>
-                <!-- Topbar Search -->
-                <form class="d-none d-sm-inline-block form-inline mr-auto ml-md-3 my-2 my-md-0 mw-100 navbar-search">
-                    <div class="input-group">
-                        <input type="text" class="form-control bg-light border-0 small" placeholder="Search for..." aria-label="Search" aria-describedby="basic-addon2">
-                        <div class="input-group-append">
-                            <button class="btn btn-primary" type="button">
-                                <i class="fas fa-search fa-sm"></i>
-                            </button>
-                        </div>
-                    </div>
-                </form>
+
                 <!-- Topbar Navbar -->
                 <ul class="navbar-nav ml-auto">
                     <!-- Nav Item - Search Dropdown (Visible Only XS) -->
@@ -313,7 +319,7 @@
             <footer class="sticky-footer bg-white">
                 <div class="container my-auto">
                     <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Your Website 2019</span>
+                        <span>Copyright &copy;Kitjimanitou Studios 2019</span>
                     </div>
                 </div>
             </footer>
@@ -327,7 +333,7 @@
     <script src="~/js/sb-admin-2.js"></script>
     <script src="~/vendor/chart.js/Chart.min.js"></script>
     <script src="~/js/demo/chart-area-demo.js"></script>
-
+    <script src="~/js/company.js"></script>
     <script src="~/js/demo/chart-pie-demo.js"></script>
 </body>
 </html>

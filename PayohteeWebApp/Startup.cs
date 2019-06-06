@@ -133,7 +133,7 @@ namespace PayohteeWebApp
                 options.Password.RequiredUniqueChars = 1;
 
                 // Lockout settings.
-                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(5);
+                options.Lockout.DefaultLockoutTimeSpan = TimeSpan.FromMinutes(20);
                 options.Lockout.MaxFailedAccessAttempts = 5;
                 options.Lockout.AllowedForNewUsers = true;
 
@@ -190,8 +190,8 @@ namespace PayohteeWebApp
                     template: "{controller=Home}/{action=Index}/{id?}");
             });
 
-            //CreateRoles(serviceprovider).Wait();
-            //CreateUserRoles(serviceprovider).Wait();
+            CreateRoles(serviceprovider).Wait();
+            CreateUserRoles(serviceprovider).Wait();
         }
     }
 }

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Payohtee.Models.Customer;
+using Payohtee.Models.GeoTracking;
 using PayohteeWebApp.Properties;
 
 namespace PayohteeWebApp.Data
@@ -14,7 +15,8 @@ namespace PayohteeWebApp.Data
 
         public IConfiguration Configuration { get; set; }
         public DbSet<Company> DbContextCompany { get; set; }
-        //public DbSet<Contact> DbContextContacts { get; set; }
+        public DbSet<Contact> DbContextContacts { get; set; }
+        public DbSet<GeoLocate> DbContextGPS { get; set; }
         //public DbSet<PolicePayment> DbContextPolicePayments { get; set; }
         //public DbSet<CustomsPayment> DbContextCustomsPayments { get; set; }
         //public DbSet<CustomsOfficer> DbContextCustomsOfficers { get; set; }
