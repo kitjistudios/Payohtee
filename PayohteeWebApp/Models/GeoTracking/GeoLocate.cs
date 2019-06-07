@@ -68,7 +68,7 @@ namespace Payohtee.Models.GeoTracking
         /// <value>
         /// Value should be a decimal Latitude value
         /// </value>
-        [Range(10, 8)]
+        //[Range(10, 8)]
         [Column(TypeName = "decimal(10,8)")]
         [DisplayName("Lat")]
         [JsonProperty("Lat")]
@@ -81,12 +81,12 @@ namespace Payohtee.Models.GeoTracking
         /// <value>
         /// Value should be a decimal Longitude value
         /// </value>
-        [Range(11, 8)]
+        //[Range(11, 8)]
         [Column(TypeName = "decimal(11,8)")]
-        [DisplayName("Lng")]
-        [JsonProperty("Lng")]
+        [DisplayName("Lon")]
+        [JsonProperty("Lon")]
         [JsonRequired]
-        public decimal Lng { get; set; }
+        public decimal Lon { get; set; }
 
         /// <summary>
         /// Company Coord time stamp

@@ -226,7 +226,7 @@ namespace Payohtee.Models.Customer
             get { return coord; }
             set { coord = value; }
         }
-         private string companyaddress;
+        private string companyaddress;
         [NotMapped]
         [JsonIgnore]
         public string CompanyAddress
@@ -351,7 +351,7 @@ namespace Payohtee.Models.Customer
         #endregion
 
         #region Snippets
-
+        //fetch result json schema
         //    {
         //    "companyId": 125,
         //    "payohteeId": "12345",
@@ -371,6 +371,45 @@ namespace Payohtee.Models.Customer
         //    "CompanyEmail": "smarshall@kitjistudios.com",
         //    "contacts": []
         //}
+
+
+        //register json schema
+        //        {"CompanyId":0,
+        //        "PayohteeId":"256",
+        //        "CompanyName":"Disney Corp LLC",
+        //        "CompanyAlias":"Disney",
+        //        "CompanyTaxId":"000",
+        //        "CompanyIndustry":"Entertainment",
+        //        "Address1":"Mickey",
+        //        "Address2":"Apt 234",
+        //        "Address3":"Donald",
+        //        "Address4":"Uncle Scrooge",
+        //        "Parish":"St.Lucy",
+        //        "Country":"Barbados",
+        //        "PostalCode":"BB23554",
+        //        "CompanyPhoneNumber":"246 965-8547",
+        //        "FaxNumber":"",
+        //        "CompanyEmail":"support@disney.com",
+        //    "Contacts":[
+        //      {"ContactId":0,
+        //              "ContactName":"Donald",
+        //              "ContactMobile":"245 854-8745",
+        //              "ContactEmail":"dduck@gmail.com",
+        //              "ContactTitle":"Mascot",
+        //              "SocialMedia":null,
+        //              "Company":null},
+        //      {"ContactId":0,
+        //              "ContactName":"Goofy",
+        //              "ContactMobile":"256 854-8745",
+        //              "ContactEmail":"goofy@gmail.com",
+        //              "ContactTitle":"Icon",
+        //              "SocialMedia":null,"Company":null}],
+        //    "Coordinates":[{"GPSId":0,
+        //              "Latitude":"13.060505599999999",
+        //              "Longitude":"-59.506688",
+        //              "Lat":13.060505599999999,
+        //              "Lon":-59.506688,
+        //              "Company":null}]}
 
         #endregion
     }
