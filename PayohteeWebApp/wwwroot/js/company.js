@@ -5,18 +5,58 @@ var geoarr = [];
 var geoarrobj = [];
 var lat;
 var lon;
+var coords = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        coords.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    coords.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
+    lat = position.coords.latitude;
+    lon = position.coords.longitude;
+    var coordrec = [];
+    var coordjson = {};
+
+    coordrec.push(lat);
+    coordjson["Latitude"] = lat.toString();
+    coordjson["Lat"] = lat;
+    coordrec.push(lon);
+    coordjson["Longitude"] = lon.toString();
+    coordjson["Lon"] = lon;
+
+    geoarr.push(coordrec);
+    geoarrobj.push(coordjson);
+
+}
 
 document.addEventListener('DOMContentLoaded', function (e) {
     var form = document.getElementById("company");
     var output = document.getElementById("output");
+    $(".check-icon").hide();
 
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
         var json = toJSONString(form);
         output.innerHTML = json;
-        //$.post("/Company/Register", { companyjson: json }, function (data) {
 
+        //$.post("/Company/Register", { companyjson: json }, function (data, status) {
+        //    if (data == "Success") {
+        //        $(".check-icon").hide();
+        //        setTimeout(function () {
+        //            $(".check-icon").show();
+        //        }, 10);
+        //    }
+        //    else {
+
+        //    }
         //});
+
     });
 });
 
@@ -83,6 +123,12 @@ $('#AddContact').on('click', function () {
     contactarrobj.push(contactjson);
 
     contactcount++;
+});
+
+$('#AddLocation').on('click', function () {
+    getLocation();
+
+
 });
 
 $(document).on('dblclick', '.pillwrapper li', function (event) {
@@ -183,6 +229,19 @@ function RemoveInfo(key) {
     contactarr.splice(indextoremove, 1);
 }
 
+function RemoveCoord(key) {
+    var indextoremove;
+    for (i = 0; i < geoarr.length; i++) {
+
+        if (geoarr[i][0] === key) {
+
+            indextoremove = i;
+        }
+    }
+    geoarrobj.splice(indextoremove, 1);
+    geoarr.splice(indextoremove, 1);
+}
+
 function toJSONString(form) {
 
     var obj = {};
@@ -198,7 +257,8 @@ function toJSONString(form) {
             obj[name] = value;
         }
     }
-    obj["contacts"] = contactarrobj;
+    obj["Contacts"] = contactarrobj;
+    obj["Coordinates"] = geoarrobj;
 
     return JSON.stringify(obj);
 }

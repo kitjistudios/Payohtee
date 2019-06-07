@@ -34,22 +34,22 @@ namespace PayohteeWebApp
         public ActionResult Register(string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
-            if (ModelState.IsValid)
-            {
-                companyjson = JsonConvert.SerializeObject(company);
 
-                var payohteerest = new PayohteeRest();
-                var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-                var request = payohteerest.PayohteeRestRequest("/company/register/", null);
+            companyjson = JsonConvert.SerializeObject(company);
 
-                request.Method = Method.POST;
-                request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
-                request.RequestFormat = DataFormat.Json;
-                IRestResponse Iresponse = client.Execute(request);
-                var response = Iresponse.Content;
-            }
+            var payohteerest = new PayohteeRest();
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/company/register/", null);
 
-            return View(companyjson);
+            request.Method = Method.POST;
+            request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
+            request.RequestFormat = DataFormat.Json;
+            IRestResponse Iresponse = client.Execute(request);
+            var response = Iresponse.Content;
+            //Invalid model 
+            //Success
+            return Content(response);
+
         }
 
         [HttpGet]

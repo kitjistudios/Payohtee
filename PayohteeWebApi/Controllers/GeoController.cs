@@ -51,7 +51,7 @@ namespace PayohteeWebApi.Controllers
             {
                 if (geolocate != null)
                 {
-                    _context.DbContextGPS.Add(geolocate);
+                    _context.DbContextGeo.Add(geolocate);
                     await _context.SaveChangesAsync();
                 }
                 return Content("Success");
@@ -65,7 +65,7 @@ namespace PayohteeWebApi.Controllers
         [HttpGet]
         public async Task<ActionResult<String>> GetCoords()
         {
-            var coords = await _context.DbContextGPS.ToListAsync();
+            var coords = await _context.DbContextGeo.ToListAsync();
 
             if (coords.Count == 0)
             {
@@ -82,7 +82,7 @@ namespace PayohteeWebApi.Controllers
         [HttpGet("{id}")]
         public async Task<ActionResult<String>> GetCoord(int id)
         {
-            var geo = await _context.DbContextGPS.Where(t => t.Company.CompanyId == id).ToListAsync<GeoLocate>();
+            var geo = await _context.DbContextGeo.Where(t => t.Company.CompanyId == id).ToListAsync<GeoLocate>();
             //var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyName == name).Include(x => x.Company).ToListAsync<Contact>();
             //var company = await _context.DbContextCompany.Where(t => t.CompanyId == id).Include(x => x.Company).ToListAsync<Company>();
             if (geo.Count == 0)
@@ -107,7 +107,7 @@ namespace PayohteeWebApi.Controllers
                     //company.CompanyId = id;
                     //company.Status = "Active";
                     //_context.Entry(company).State = EntityState.Modified;
-                    _context.DbContextGPS.Update(geoLocate);
+                    _context.DbContextGeo.Update(geoLocate);
                     await _context.SaveChangesAsync();
                     return Content("Coords updated");
                 }
@@ -115,7 +115,7 @@ namespace PayohteeWebApi.Controllers
                 {
                     //company.Status = "Active";
                     //_context.Entry(company).State = EntityState.Modified;
-                    _context.DbContextGPS.Update(geoLocate);
+                    _context.DbContextGeo.Update(geoLocate);
                     await _context.SaveChangesAsync();
                     return Content("Coords updated");
                 }
@@ -152,13 +152,13 @@ namespace PayohteeWebApi.Controllers
         [HttpDelete("{id}")]
         public async Task<ActionResult<GeoLocate>> DeleteGeoLocate(int id)
         {
-            var geoLocate = await _context.DbContextGPS.FindAsync(id);
+            var geoLocate = await _context.DbContextGeo.FindAsync(id);
             if (geoLocate == null)
             {
                 return NotFound();
             }
 
-            _context.DbContextGPS.Remove(geoLocate);
+            _context.DbContextGeo.Remove(geoLocate);
             await _context.SaveChangesAsync();
 
             return geoLocate;
@@ -166,7 +166,7 @@ namespace PayohteeWebApi.Controllers
 
         private bool GeoCoordExists(int id)
         {
-            return _context.DbContextGPS.Where(t => t.Company.CompanyId == id).Include(x => x.Company).Any<GeoLocate>();
+            return _context.DbContextGeo.Where(t => t.Company.CompanyId == id).Include(x => x.Company).Any<GeoLocate>();
             //return _context.DbContextGPS.Any(e => e.GPSId == id);
         }
     }
