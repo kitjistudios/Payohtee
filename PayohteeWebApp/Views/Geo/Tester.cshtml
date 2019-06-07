@@ -1,0 +1,37 @@
+﻿
+@{
+    ViewData["Title"] = "Tester";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+
+
+<!DOCTYPE html>
+<html>
+<body>
+    <h1>Tester</h1>
+    <p>Click the button to get your coordinates.</p>
+
+    <a onclick="getLocation()"><i class=" fa fa-map-marker-alt text-success" style="font-size:25px"></i> Try It</a>
+
+    <p id="demo"></p>
+
+    <script>
+var x = document.getElementById("demo");
+
+function getLocation() {
+    if (navigator.geolocation) {
+        navigator.geolocation.getCurrentPosition(showPosition);
+    } else {
+        x.innerHTML = "Geolocation is not supported by this browser.";
+    }
+}
+
+function showPosition(position) {
+    x.innerHTML = "Latitude: " + position.coords.latitude +
+    "<br>Longitude: " + position.coords.longitude;
+}
+    </script>
+
+</body>
+</html>

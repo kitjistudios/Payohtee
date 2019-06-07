@@ -20,9 +20,15 @@ namespace PayohteeWebApp.Controllers
         }
 
         // GET: GeoLocates
-        public async Task<IActionResult> Index()
+        public IActionResult Index()
         {
-            return View(await _context.DbContextGPS.ToListAsync());
+            return View();
+        }
+
+        public IActionResult Tester()
+        {
+
+            return View();
         }
 
         // GET: GeoLocates/Details/5
@@ -33,7 +39,7 @@ namespace PayohteeWebApp.Controllers
                 return NotFound();
             }
 
-            var geoLocate = await _context.DbContextGPS
+            var geoLocate = await _context.DbContextGeo
                 .FirstOrDefaultAsync(m => m.GPSId == id);
             if (geoLocate == null)
             {
@@ -73,7 +79,7 @@ namespace PayohteeWebApp.Controllers
                 return NotFound();
             }
 
-            var geoLocate = await _context.DbContextGPS.FindAsync(id);
+            var geoLocate = await _context.DbContextGeo.FindAsync(id);
             if (geoLocate == null)
             {
                 return NotFound();
@@ -124,7 +130,7 @@ namespace PayohteeWebApp.Controllers
                 return NotFound();
             }
 
-            var geoLocate = await _context.DbContextGPS
+            var geoLocate = await _context.DbContextGeo
                 .FirstOrDefaultAsync(m => m.GPSId == id);
             if (geoLocate == null)
             {
@@ -139,15 +145,15 @@ namespace PayohteeWebApp.Controllers
         [ValidateAntiForgeryToken]
         public async Task<IActionResult> DeleteConfirmed(int id)
         {
-            var geoLocate = await _context.DbContextGPS.FindAsync(id);
-            _context.DbContextGPS.Remove(geoLocate);
+            var geoLocate = await _context.DbContextGeo.FindAsync(id);
+            _context.DbContextGeo.Remove(geoLocate);
             await _context.SaveChangesAsync();
             return RedirectToAction(nameof(Index));
         }
 
         private bool GeoLocateExists(int id)
         {
-            return _context.DbContextGPS.Any(e => e.GPSId == id);
+            return _context.DbContextGeo.Any(e => e.GPSId == id);
         }
     }
 }

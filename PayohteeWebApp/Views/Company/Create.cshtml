@@ -5,6 +5,175 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 <style>
+    /**
+    * Extracted from: SweetAlert
+    * Modified by: Istiak Tridip
+    */
+ 
+    .success-checkmark {
+        width: 80px;
+        height: 115px;
+        margin: 0 auto;
+    }
+
+        .success-checkmark .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid #4CAF50;
+        }
+
+            .success-checkmark .check-icon::before {
+                top: 3px;
+                left: -2px;
+                width: 30px;
+                transform-origin: 100% 50%;
+                border-radius: 100px 0 0 100px;
+            }
+
+            .success-checkmark .check-icon::after {
+                top: 0;
+                left: 30px;
+                width: 60px;
+                transform-origin: 0 50%;
+                border-radius: 0 100px 100px 0;
+                animation: rotate-circle 4.25s ease-in;
+            }
+
+            .success-checkmark .check-icon::before, .success-checkmark .check-icon::after {
+                content: '';
+                height: 100px;
+                position: absolute;
+                background: #FFFFFF;
+                transform: rotate(-45deg);
+            }
+
+            .success-checkmark .check-icon .icon-line {
+                height: 5px;
+                background-color: #4CAF50;
+                display: block;
+                border-radius: 2px;
+                position: absolute;
+                z-index: 10;
+            }
+
+                .success-checkmark .check-icon .icon-line.line-tip {
+                    top: 46px;
+                    left: 14px;
+                    width: 25px;
+                    transform: rotate(45deg);
+                    animation: icon-line-tip 0.75s;
+                }
+
+                .success-checkmark .check-icon .icon-line.line-long {
+                    top: 38px;
+                    right: 8px;
+                    width: 47px;
+                    transform: rotate(-45deg);
+                    animation: icon-line-long 0.75s;
+                }
+
+            .success-checkmark .check-icon .icon-circle {
+                top: -4px;
+                left: -4px;
+                z-index: 10;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                position: absolute;
+                box-sizing: content-box;
+                border: 4px solid rgba(76, 175, 80, 0.5);
+            }
+
+            .success-checkmark .check-icon .icon-fix {
+                top: 8px;
+                width: 5px;
+                left: 26px;
+                z-index: 1;
+                height: 85px;
+                position: absolute;
+                transform: rotate(-45deg);
+                background-color: #FFFFFF;
+            }
+
+    @@keyframes rotate-circle {
+        0% {
+            transform: rotate(-45deg);
+        }
+
+        5% {
+            transform: rotate(-45deg);
+        }
+
+        12% {
+            transform: rotate(-405deg);
+        }
+
+        100% {
+            transform: rotate(-405deg);
+        }
+    }
+
+    @@keyframes icon-line-tip {
+        0% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+        }
+
+        54% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+        }
+
+        70% {
+            width: 50px;
+            left: -8px;
+            top: 37px;
+        }
+
+        84% {
+            width: 17px;
+            left: 21px;
+            top: 48px;
+        }
+
+        100% {
+            width: 25px;
+            left: 14px;
+            top: 45px;
+        }
+    }
+
+    @@keyframes icon-line-long {
+        0% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+        }
+
+        65% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+        }
+
+        84% {
+            width: 55px;
+            right: 0px;
+            top: 35px;
+        }
+
+        100% {
+            width: 47px;
+            right: 8px;
+            top: 38px;
+        }
+    }
+
     .chip {
         display: inline-block;
         padding: 0 25px;
@@ -42,7 +211,7 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header py-3">
-                    <i class="fa fa-building"></i>  Registered Details
+                    <i class="fa fa-building text-info" style="font-size:25px"></i>  Registered Details
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -84,7 +253,7 @@
             </div>
             <div class="card mb-4">
                 <div class="card-header">
-                    <i class="fa fa-phone"></i>  Company Details
+                    <i class="fa fa-phone text-info" style="font-size:25px"></i>  Company Details
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -114,8 +283,14 @@
         <div class="col-md-4">
             <div class="card mb-4">
                 <div class="card-header py-3">
-                    <i class="fa fa-envelope"></i>  Address Details
-                    <a href="" id="coords"><i class=" fa fa-map-marker" style="font-size:25px"></i>Pin location</a>
+                    <i class="fa fa-envelope text-info" style="font-size:25px"></i>  Address Details
+                    <a href="#" id="AddLocation" name="AddLocation"><i class=" fa fa-map-marker-alt text-success" style="font-size:25px"></i> Location </a>
+
+                    <p id="demo"></p>
+
+                    <script>
+
+                    </script>
                 </div>
                 <div class="card-body">
                     <div class="input-group mb-3">
@@ -178,8 +353,8 @@
             </div>
             <div class="row">
                 <div class="col-6">
-                    <a id="addrank" class="btn btn-success text-white" data-toggle="modal" data-target="#contactModal">
-                        <i class="fa fa-id-card"></i>Contact<i class="fa fa-plus"></i>
+                    <a id="addrank" class="btn btn-info text-white" data-toggle="modal" data-target="#contactModal">
+                        <i class="fa fa-id-card"></i>  Contact  <i class="fa fa-plus"></i>
                     </a>
                 </div>
                 <div class="col-6">
@@ -195,13 +370,21 @@
     </div>
     <div class="row">
         <div class="col-md-6">
-       
+
         </div>
         <div class="col-md-6">
             <a id="btnSubmit" class="btn btn-info text-white">Submit</a>
         </div>
     </div>
-<pre id="output"></pre>
+    <pre id="output"></pre>
+    <div class="success-checkmark">
+        <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+        </div>
+    </div>
 </div>
 
 @await Html.PartialAsync("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts)
