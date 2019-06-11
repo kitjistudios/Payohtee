@@ -3,25 +3,12 @@
 @if (Model != null)
 {
     <div class="row">
-        <div class="col-2">
-
-        </div>
-        <div class="col-8">
+        <div class="col-md-12">
             <div class="card">
                 <div class="card-header bg-info ">
                     <div class="row">
-                        <div class="col-sm-2">
-
-                        </div>
-                        <div class="col-sm-6">
-                            <h4 class="text-white">  <i class="fa fa-building text-white" style="font-size:25px"></i>   @Model.CompanyName </h4>
-                        </div>
-                        <div class="col-sm-2">
-                    
-                        </div>
-                        <div class="col-sm-2">
-                            <button type="button" class="btn btn-outline-light btn-sm" data-toggle="modal" data-target="#companymodal"><i class="fa fa-pen"></i></button>
-                            <button type="button" class="btn btn-outline-light btn-sm" id="btnDelete"><i class="fa fa-trash border-white"></i></button>
+                        <div class="col-md-12">
+                            <h4 class="text-white text-md-center">  @Model.CompanyName </h4>
                         </div>
                     </div>
                 </div>
@@ -50,28 +37,25 @@
                 </div>
                 <div class="card-footer bg-info ">
                     <div class="row">
-                        <div class="col-md-4">
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-light btn-lg" id="btnUpdate" data-toggle="modal" data-target="#companymodal"><i class="fa fa-pen"></i></button>
                         </div>
-                        <div class="col-md-4 text-white">
-                            <h4><i class="fa fa-info " style="font-size:15px"></i> @Model.PayohteeId</h4>
+                        <div class="col-md-8 text-white text-md-center">
+                            <h4> @Model.PayohteeId</h4>
                         </div>
-                        <div class="col-md-4">
-                            <div>
-                                <input type="hidden" asp-for="CompanyId" />
-                            </div>
+                        <div class="col-md-2">
+                            <button type="button" class="btn btn-outline-light btn-lg" id="btnDelete"><i class="fa fa-trash"></i></button>
                         </div>
                     </div>
+                    <input type="hidden" asp-for="CompanyId" />
                 </div>
 
             </div>
         </div>
-        <div class="col-2">
 
-        </div>
         <hr />
 
     </div>
-
 }
 
 

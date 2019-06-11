@@ -64,24 +64,11 @@ namespace PayohteeWebApp
         [HttpGet]
         public async Task<IActionResult> DetailsName(string companyname)
         {
-            //var company = await _context.DbContextCompany.FindAsync(5);
-            //if (companyname == null)
-            //{
-            //    return NotFound();
-            //}
-
+            //This is going to get its credentials from the appsettings Json file
+            //Configured in the Startup file
             var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
-
-            //if (company == null)
-            //{
-            //    return View("Index");
-            //}
             var model = company;
-            //return RedirectToAction(nameof(Index), model);
             return View(model);
-            //PartialViewResult viewResult = new PartialViewResult();
-            //viewResult.ViewName = "_CompanyCardPartial";
-            //return PartialView("~/Views/Shared/_CompanyCardPartial.cshtml");
         }
 
         [HttpGet]
@@ -137,7 +124,7 @@ namespace PayohteeWebApp
         public ActionResult Delete(int id)
         {
             var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
             var request = payohteerest.PayohteeRestRequest("/company/erase/" + id, null);
 
             request.Method = Method.POST;

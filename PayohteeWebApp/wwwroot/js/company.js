@@ -16,8 +16,8 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    //coords.innerHTML = "Latitude: " + position.coords.latitude +
-    //    "<br>Longitude: " + position.coords.longitude;
+    coords.innerHTML = "Latitude: " + position.coords.latitude +
+        "<br>Longitude: " + position.coords.longitude;
     lat = position.coords.latitude;
     lon = position.coords.longitude;
     var coordrec = [];
@@ -42,10 +42,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
-        
-        var json = toJSONString(form);
-        //output.innerHTML = json;
 
+        var json = toJSONString(form);
+        output.innerHTML = json;
         //$.post("/Company/Register", { companyjson: json }, function (data, status) {
         //    if (data == "Success") {
         //        $(".check-icon").hide();
@@ -128,8 +127,6 @@ $('#AddContact').on('click', function () {
 
 $('#AddLocation').on('click', function () {
     getLocation();
-
-
 });
 
 $(document).on('dblclick', '.pillwrapper li', function (event) {
@@ -170,7 +167,15 @@ $(document).on('click', '.resultcomp p', function () {
             var id = document.getElementById("CompanyId").value;
             output.innerHTML = json;
             $.post("/Company/Update", { companyjson: json, id: id }, function (data) {
+                if (data == "Success") {
+                    $(".check-icon").hide();
+                    setTimeout(function () {
+                        $(".check-icon").show();
+                    }, 10);
+                }
+                else {
 
+                }
             });
         });
 
