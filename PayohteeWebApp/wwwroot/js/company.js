@@ -16,8 +16,8 @@ function getLocation() {
 }
 
 function showPosition(position) {
-    coords.innerHTML = "Latitude: " + position.coords.latitude +
-        "<br>Longitude: " + position.coords.longitude;
+    //coords.innerHTML = "Latitude: " + position.coords.latitude +
+    //    "<br>Longitude: " + position.coords.longitude;
     lat = position.coords.latitude;
     lon = position.coords.longitude;
     var coordrec = [];
@@ -42,8 +42,9 @@ document.addEventListener('DOMContentLoaded', function (e) {
 
     $(document).on('click', '#btnSubmit', function (e) {
         e.preventDefault();
+        
         var json = toJSONString(form);
-        output.innerHTML = json;
+        //output.innerHTML = json;
 
         //$.post("/Company/Register", { companyjson: json }, function (data, status) {
         //    if (data == "Success") {
