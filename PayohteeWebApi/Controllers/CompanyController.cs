@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace PayohteeApi.Controllers
 {
-
     [ApiController]
     public class CompanyController : ControllerBase
     {
@@ -52,10 +51,9 @@ namespace PayohteeApi.Controllers
                     }
                 }
                 await _context.SaveChangesAsync();
-                return Content("Success");
+                return Content("success");
             }
-
-            return Content("Invalid model");
+            return Content(null);
         }
 
         // GET: api/company/fetchall
@@ -73,7 +71,7 @@ namespace PayohteeApi.Controllers
             }
             var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
             string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
-            return companyjson;
+            return Content(companyjson);
         }
 
         // GET: api/company/fetch/id
@@ -83,7 +81,7 @@ namespace PayohteeApi.Controllers
         public async Task<ActionResult<String>> GetCompany(int id)
         {
             var company = await _context.DbContextCompany.Where(x => x.CompanyId == id && x.Status == "Active").ToListAsync();
-            var contact = await _context.DbContextContacts.Where(t => t.Company.CompanyId == id).Include(x => x.Company).ToListAsync<Contact>();
+            var contact = await _context.DbContextContacts.Include(x => x.Company).ToListAsync<Contact>();
             var coord = await _context.DbContextGeo.Include(x => x.Company).ToListAsync<GeoLocate>();
 
             if (company.Count == 0)
@@ -92,7 +90,7 @@ namespace PayohteeApi.Controllers
             }
             var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
             string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
-            return companyjson;
+            return Content(companyjson);
         }
 
         // GET: api/company/fetch/id
@@ -136,29 +134,22 @@ namespace PayohteeApi.Controllers
         {
             if (ModelState.IsValid)
             {
-                if (company.CompanyId == 0)
+                if (CompanyExists(id))
                 {
                     company.CompanyId = id;
                     company.Status = "Active";
                     //_context.Entry(company).State = EntityState.Modified;
                     _context.DbContextCompany.Update(company);
+                    //_context.DbContextContacts.Include(x => x.Company.Contacts);
                     await _context.SaveChangesAsync();
-                    return Content("Company updated");
-                }
-                else
-                {
-                    company.Status = "Active";
-                    //_context.Entry(company).State = EntityState.Modified;
-                    _context.DbContextCompany.Update(company);
-                    await _context.SaveChangesAsync();
-                    return Content("Company updated");
+                    return Content("success");
                 }
             }
 
             return Content("Company unavailable or model invalid");
         }
 
-        // GET: api/company/erase/id
+        // POST: api/company/erase/id
         [Route("api/company/[action]/{id}")]
         [ActionName("erase")]
         [HttpPost("{id}")]
@@ -171,10 +162,15 @@ namespace PayohteeApi.Controllers
                 company.Status = "Inactive";
                 _context.DbContextCompany.Update(company);
                 await _context.SaveChangesAsync();
-                return Content("Company removed");
+                return Content("success");
             }
 
             return Content("Company unavailable or removed");
+        }
+
+        private bool CompanyExists(int id)
+        {
+            return _context.DbContextCompany.Any(e => e.CompanyId == id);
         }
 
     }

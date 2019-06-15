@@ -1,0 +1,241 @@
+﻿@model Payohtee.Models.Personnel.Customs.CustomsOfficer
+
+@{
+    ViewData["Title"] = "Create";
+    Layout = "~/Views/Shared/_AdminLayout.cshtml";
+}
+
+<div class="form" id="customsofficer">
+    <div class="row">
+        <div class="col-md-2">
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <i class="fa fa-user text-info" style="font-size:25px"></i>  Registered Details
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Customs Officer Number</span>
+                        </div>
+                        <input id="CustomsOfficerNumber" name="CustomsOfficerNumber" class="form-control" placeholder="Registered Officer Id" autocomplete="off" />
+                        @*<span asp-validation-for="PayohteeId" class="text-danger"></span>*@
+                    </div>
+
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">National Registration Number</span>
+                        </div>
+                        <input id="NationalRegNo" name="NationalRegNo" class="form-control" autocomplete="off" />
+                        @*<span asp-validation-for="CompanyAlias" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">NIS Number</span>
+                        </div>
+                        <input id="NISNo" name="NISNo" class="form-control" />
+                        @*<span asp-validation-for="CompanyTaxId" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Tax Identification Number</span>
+                        </div>
+                        <input id="TIN" name="TIN" class="form-control" />
+                        @*<span asp-validation-for="CompanyIndustry" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <i class="fa fa-id-card text-info" style="font-size:25px"></i>  Personal Details
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Title</span>
+                        </div>
+                        <input id="Title" name="Title" class="form-control" />
+                        @*<span asp-validation-for="Address1" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">First Name</span>
+                        </div>
+                        <input id="FirstName" name="FirstName" class="form-control" />
+                        @*<span asp-validation-for="Address2" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Middle Name</span>
+                        </div>
+                        <input id="MiddleName" name="MiddleName" class="form-control" />
+                        @*<span asp-validation-for="Address3" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Last Name</span>
+                        </div>
+                        <input id="LastName" name="LastName" class="form-control" />
+                        @*<span asp-validation-for="Address4" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Initial</span>
+                        </div>
+                        <input id="Initial" name="Initial" class="form-control" />
+                        @*<span asp-validation-for="Address4" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Date Of Birth</span>
+                        </div>
+                        <input id="DateOfBirth" name="DateOfBirth" class="form-control" />
+                        @*<span asp-validation-for="Address4" class="text-danger"></span>*@
+                    </div>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <a id="addrank" class="btn btn-info text-white" data-toggle="modal" data-target="#BankaccountModal">
+                        <i class="fa fa-id-card"></i>  Bank Account  <i class="fa fa-plus"></i>
+                    </a>
+                </div>
+                <div class="col-6">
+
+                </div>
+            </div>
+            <div class="row">
+                <div class="pillwrapper" id="pillcontainer" style="font-size:small">
+                    <ul class="nav nav-pills nav-stacked " id="pillwrapper"></ul>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <div class="card mb-4">
+                <div class="card-header py-3">
+                    <i class="fa fa-envelope text-info" style="font-size:25px"></i>  Address Details
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Street</span>
+                        </div>
+                        <input id="Address1" name="Address1" class="form-control" />
+                        @*<span asp-validation-for="Address1" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Apartment</span>
+                        </div>
+                        <input id="Address2" name="Address2" class="form-control" />
+                        @*<span asp-validation-for="Address2" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">City</span>
+                        </div>
+                        <input id="Address3" name="Address3" class="form-control" />
+                        @*<span asp-validation-for="Address3" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">District</span>
+                        </div>
+                        <input id="Address4" name="Address4" class="form-control" />
+                        @*<span asp-validation-for="Address4" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Parish</span>
+                        </div>
+                        <select class="form-control" id="Parish" name="Parish">
+                            <option>St.Michael</option>
+                            <option>Christ Church</option>
+                            <option>St.Lucy</option>
+                        </select>
+                        @*<span asp-validation-for="Parish" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Country</span>
+                        </div>
+                        <select class="form-control" id="Country" name="Country">
+                            <option>Select Country</option>
+                            <option>Barbados</option>
+                        </select>
+                        @*<span asp-validation-for="Country" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Postal Code</span>
+                        </div>
+                        <input id="PostalCode" name="PostalCode" class="form-control" />
+                        @*<span asp-validation-for="PostalCode" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+            <br />
+            <div class="card mb-4">
+                <div class="card-header">
+                    <i class="fa fa-phone text-info" style="font-size:25px"></i>  Communication Details
+                </div>
+                <div class="card-body">
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Home Phone</span>
+                        </div>
+                        <input id="HomePhone" name="HomePhone" class="form-control" placeholder="(246) 888-8888" />
+                        @*<span asp-validation-for="CompanyPhoneNumber" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Work Phone</span>
+                        </div>
+                        <input id="WorkPhone" name="WorkPhone" class="form-control" placeholder="(246) 888-8888" />
+                        @*<span asp-validation-for="CompanyPhoneNumber" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Mobile</span>
+                        </div>
+                        <input id="Mobile" name="Mobile" class="form-control" placeholder="(246) 888-8888" />
+                        @*<span asp-validation-for="FaxNumber" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Email</span>
+                        </div>
+                        <input id="CompanyEmail" name="CompanyEmail" class="form-control" placeholder="payohtee@payohtee.bb" />
+                        @*<span asp-validation-for="CompanyEmail" class="text-danger"></span>*@
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+        <div class="col-md-2">
+        </div>
+    </div>
+    <br />
+    <div class="row">
+        <div class="col-md-6">
+
+        </div>
+        <div class="col-md-6">
+            <input type="submit" id="btnSubmit" class="btn btn-info text-white" value="Submit" />
+        </div>
+    </div>
+    <pre id="output"></pre>
+    <div class="success-checkmark">
+        <div class="check-icon">
+            <span class="icon-line line-tip"></span>
+            <span class="icon-line line-long"></span>
+            <div class="icon-circle"></div>
+            <div class="icon-fix"></div>
+        </div>
+    </div>
+</div>
+
+
+

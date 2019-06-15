@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
 using Payohtee.Models.Accounting;
+using Payohtee.Models.Banking;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Serialization;
@@ -16,7 +18,6 @@ namespace Payohtee.Models.Personnel
     /// the remarks tag.
     /// </remarks>
     [NotMapped]
-
     [JsonObject(Description = "Employee Base Class", Id = "")]
     public class Employee
     {
@@ -30,13 +31,14 @@ namespace Payohtee.Models.Personnel
         #endregion
 
         #region Properties
-        [Key]
+
         /// <summary>
-        /// Employee Identification
+        /// Employee unique Identification
         /// </summary>
         /// <value>
         /// System generated employee id
         /// </value>
+        [Key]
         public int EmployeeId { get; set; }
 
         /// <summary>
@@ -60,7 +62,7 @@ namespace Payohtee.Models.Personnel
         /// Value should refer to given NIS number
         /// </value>
         [Required]
-        [StringLength(7)]
+        [StringLength(7, ErrorMessage = "NIS must be 6 characters")]
         [Display(Name = "National Insurance #")]
         [JsonProperty("NISNo")]
         [JsonRequired]
@@ -78,6 +80,17 @@ namespace Payohtee.Models.Personnel
         [JsonProperty("TIN")]
         [JsonRequired]
         public string TIN { get; set; }
+
+        /// <summary>
+        /// Title
+        /// </summary>
+        /// <value>
+        /// Value should refer to given title or prefix of employee
+        /// </value>
+        [StringLength(50)]
+        [Display(Name = "Title")]
+        [JsonProperty("Title")]
+        public string Title { get; set; }
 
         /// <summary>
         /// First Name
@@ -125,17 +138,6 @@ namespace Payohtee.Models.Personnel
         [Display(Name = "Initial")]
         [JsonProperty("Initial")]
         public string Initial { get; set; }
-
-        /// <summary>
-        /// Title
-        /// </summary>
-        /// <value>
-        /// Value should refer to given title or prefix of employee
-        /// </value>
-        [StringLength(50)]
-        [Display(Name = "Title")]
-        [JsonProperty("Title")]
-        public string Title { get; set; }
 
         /// <summary>
         /// Address 1
@@ -261,17 +263,6 @@ namespace Payohtee.Models.Personnel
         public string Extension { get; set; }
 
         /// <summary>
-        /// Fax
-        /// </summary>
-        /// <value>
-        /// Value should refer to given Fax
-        /// </value>
-        [StringLength(15)]
-        [Display(Name = "Fax")]
-        [JsonProperty("Fax")]
-        public string Fax { get; set; }
-
-        /// <summary>
         /// Email
         /// </summary>
         /// <value>
@@ -294,6 +285,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [Display(Name = "Birth Date")]
         [JsonProperty("DateOfBirth")]
+        [JsonRequired]
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
@@ -313,6 +305,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(7)]
         [JsonProperty("Gender")]
+        [JsonRequired]
         public string Gender { get; set; }
 
         /// <summary>
@@ -325,6 +318,7 @@ namespace Payohtee.Models.Personnel
         [StringLength(8)]
         [Display(Name = "Rate Code")]
         [JsonProperty("RateCode")]
+        [JsonRequired]
         public string RateCode { get; set; }
 
         /// <summary>
@@ -336,6 +330,7 @@ namespace Payohtee.Models.Personnel
         [Column(TypeName = "decimal(10,2)")]
         [Display(Name = "Pay Rate")]
         [JsonProperty("PayRate")]
+        [JsonRequired]
         public decimal PayRate { get; set; }
 
         /// <summary>
@@ -347,6 +342,7 @@ namespace Payohtee.Models.Personnel
         [StringLength(50)]
         [Display(Name = "Post Name")]
         [JsonProperty("PostName")]
+        [JsonRequired]
         public string PostName { get; set; }
 
         /// <summary>
@@ -429,13 +425,15 @@ namespace Payohtee.Models.Personnel
         /// <value>
         /// Given One to Many Relationship- One Employee to Many Payments
         /// </value>
-        public Payment Payments { get; set; }
+        public virtual ICollection<Payment> Payments { get; set; }
+        public virtual ICollection<BankAccount> BankAccounts { get; set; }
+
         #endregion
 
         #endregion
 
         #region Methods
-    
+
 
         #endregion
 
