@@ -106,7 +106,7 @@ namespace PayohteeWebApp
             //pass connection string from the appsettings.json file
             services.AddDbContext<PayohteeDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("StageConn")));
+                    Configuration.GetConnectionString("LocalConn")));
 #else
     services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(

@@ -1,7 +1,11 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
+using Payohtee.Models.Banking;
 using Payohtee.Models.Customer;
 using Payohtee.Models.GeoTracking;
+using Payohtee.Models.Personnel;
+using Payohtee.Models.Personnel.Customs;
+using PayohteeWebApp.Models.Intents;
 using PayohteeWebApp.Properties;
 
 namespace PayohteeWebApp.Data
@@ -17,6 +21,9 @@ namespace PayohteeWebApp.Data
         public DbSet<Company> DbContextCompany { get; set; }
         public DbSet<Contact> DbContextContacts { get; set; }
         public DbSet<GeoLocate> DbContextGeo { get; set; }
+        public DbSet<CustomsOfficer> DbContextCustomsOfficer { get; set; }
+        public DbSet<Intent> DbContextIntent { get; set; }
+        public DbSet<BankAccount> DbContextBankAccount { get; set; }
         //public DbSet<PolicePayment> DbContextPolicePayments { get; set; }
         //public DbSet<CustomsPayment> DbContextCustomsPayments { get; set; }
         //public DbSet<CustomsOfficer> DbContextCustomsOfficers { get; set; }
@@ -36,7 +43,7 @@ namespace PayohteeWebApp.Data
                 //use this string to target remote environment
                 var connremote = Resources.connremote;
 #if DEBUG
-                optionsBuilder.UseSqlServer(connremote,
+                optionsBuilder.UseSqlServer(connlocal,
                                provideroptions => provideroptions.CommandTimeout(60))
                            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 #else

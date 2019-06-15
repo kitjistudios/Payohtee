@@ -1,7 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
+using Payohtee.Models.Banking;
 using Payohtee.Models.GeoTracking;
 using PayohteeWebApp.Data;
+using PayohteeWebApp.Models.Intents;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -44,7 +46,9 @@ namespace Payohtee.Models.Customer
         /// <value>
         /// Value should be a system generate unique id
         /// </value>
+        [Key]
         public int CompanyId { get; set; }
+
         /// <summary>
         /// Company Identification
         /// </summary>
@@ -52,54 +56,59 @@ namespace Payohtee.Models.Customer
         /// Value should be a system generate unique id
         /// </value>
         public string PayohteeId { get; set; }
+
         /// <summary>
         /// Company Name
         /// </summary>
         /// <value>
         /// Value should be a single string name. Special characters are allowed
         /// </value>
-        [Required]
+        [Required(ErrorMessage = "Company name is required")]
         [StringLength(50)]
         [Display(Name = "Company Name")]
         [JsonProperty("CompanyName")]
         [JsonRequired]
         public string CompanyName { get; set; }
+
         /// <summary>
         /// Company Alias
         /// </summary>
         /// <value>
         /// Value should be a single string name. Special characters are allowed
         /// </value>
-        [Required]
-        [StringLength(50)]
+        [Required(ErrorMessage = "Company alias is required")]
+        [StringLength(50, ErrorMessage = "Company name longer than 50 characters not allowed")]
         [Display(Name = "Company Alias")]
         [JsonProperty("CompanyAlias")]
         [JsonRequired]
         public string CompanyAlias { get; set; }
+
         /// <summary>
         /// Company Tax Number
         /// </summary>
         /// <value>
         /// Value should be a single string name. Special characters are allowed
         /// </value>
-        [Required]
+        [Required(ErrorMessage = "Company tax id is required")]
         [StringLength(50)]
         [Display(Name = "Company Tax Id")]
         [JsonProperty("CompanyTaxId")]
         [JsonRequired]
         public string CompanyTaxId { get; set; }
+
         /// <summary>
         /// Company Industry
         /// </summary>
         /// <value>
         /// Value should be a single string name. Special characters are allowed
         /// </value>
-        [Required]
+        [Required(ErrorMessage = "Company industry is required")]
         [StringLength(50)]
         [Display(Name = "Company Industry")]
         [JsonProperty("CompanyIndustry")]
         [JsonRequired]
         public string CompanyIndustry { get; set; }
+
         /// <summary>
         /// Address 1
         /// </summary>
@@ -110,6 +119,7 @@ namespace Payohtee.Models.Customer
         [Display(Name = "Street Address")]
         [JsonProperty("Address1")]
         public string Address1 { get; set; }
+
         /// <summary>
         /// Address 2
         /// </summary>
@@ -120,6 +130,7 @@ namespace Payohtee.Models.Customer
         [Display(Name = "Apartment")]
         [JsonProperty("Address2")]
         public string Address2 { get; set; }
+
         /// <summary>
         /// Address 3
         /// </summary>
@@ -130,6 +141,7 @@ namespace Payohtee.Models.Customer
         [Display(Name = "City")]
         [JsonProperty("Address3")]
         public string Address3 { get; set; }
+
         /// <summary>
         /// Address 4
         /// </summary>
@@ -140,6 +152,7 @@ namespace Payohtee.Models.Customer
         [Display(Name = "District")]
         [JsonProperty("Address4")]
         public string Address4 { get; set; }
+
         /// <summary>
         /// Parish
         /// </summary>
@@ -150,6 +163,7 @@ namespace Payohtee.Models.Customer
         [Display(Name = "Parish")]
         [JsonProperty("Parish")]
         public string Parish { get; set; }
+
         /// <summary>
         /// Country
         /// </summary>
@@ -160,27 +174,31 @@ namespace Payohtee.Models.Customer
         [Display(Name = "Country")]
         [JsonProperty("Country")]
         public string Country { get; set; }
-        [StringLength(10)]
+
         /// <summary>
         /// Postal Code
         /// </summary>
         /// <value>
         /// Value should refer to given country postal code
-        /// </value>
+        /// </value> 
+        [StringLength(10)]
         [Display(Name = "Postal Code")]
         [JsonProperty("PostalCode")]
         public string PostalCode { get; set; }
+
         /// <summary>
         /// Company Phone Number
         /// </summary>
         /// <value>
         /// Value should refer to given company phone number
         /// </value>
-        [Required]
+        [Required(ErrorMessage = "Company phone number is required")]
         [StringLength(15)]
+        [Phone(ErrorMessage = "Invalid phone number")]
         [Display(Name = "Company Phone")]
         [JsonProperty("CompanyPhoneNumber")]
         public string CompanyPhoneNumber { get; set; }
+
         /// <summary>
         /// Company Fax Number
         /// </summary>
@@ -192,18 +210,21 @@ namespace Payohtee.Models.Customer
         [Display(Name = "Fax")]
         [JsonProperty("FaxNumber")]
         public string FaxNumber { get; set; }
+
         /// <summary>
         /// Company Email address
         /// </summary>
         /// <value>
         /// Value should refer to given email address
         /// </value>
-        [Required]
+        [Required(ErrorMessage = "Company email is required")]
         [StringLength(50)]
+        [EmailAddress(ErrorMessage = "Invalid email")]
         [Display(Name = "Business Email")]
         [JsonProperty("CompanyEmail")]
         [JsonRequired]
         public string CompanyEmail { get; set; }
+
         /// <summary>
         /// Company Status
         /// </summary>
@@ -269,6 +290,9 @@ namespace Payohtee.Models.Customer
         [NotMapped]
         [JsonIgnore]
         public Contact Contact { get; set; }
+        [NotMapped]
+        [JsonIgnore]
+        public Intent Intent { get; set; }
 
         #endregion
 
@@ -278,7 +302,8 @@ namespace Payohtee.Models.Customer
 
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<GeoLocate> Coordinates { get; set; }
-        //public ICollection<BankAccount> Banking { get; set; } 
+        public virtual ICollection<Intent> Intents { get; set; }
+        public virtual ICollection<BankAccount> BankAccounts { get; set; }
         //public ICollection<PolicePayment> PolicePayments { get; set; }
         //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
 
@@ -346,6 +371,11 @@ namespace Payohtee.Models.Customer
         {
             var address = new StringBuilder();
             return address.Append(this.Address1).Append(this.Address2).ToString();
+        }
+
+        public string GetListKeyValueErrors()
+        {
+            return null;
         }
 
         #endregion

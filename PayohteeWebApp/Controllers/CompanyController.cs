@@ -31,7 +31,7 @@ namespace PayohteeWebApp
         }
 
         [HttpPost]
-        public ActionResult Register(string companyjson)
+        public async Task<ActionResult> Register(string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
 
@@ -44,7 +44,7 @@ namespace PayohteeWebApp
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
             //Invalid model 
             //Success
@@ -72,7 +72,7 @@ namespace PayohteeWebApp
         }
 
         [HttpGet]
-        public ActionResult Details(int? id)
+        public async Task<ActionResult> Details(int? id)
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
@@ -81,27 +81,27 @@ namespace PayohteeWebApp
             request.Method = Method.POST;
 
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
             var companyjson = JsonConvert.SerializeObject(response);
             return View(companyjson);
         }
 
         [HttpGet]
-        public ActionResult Lookup(string charinput)
+        public async Task<ActionResult> Lookup(string charinput)
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
             var request = payohteerest.PayohteeRestRequest("/company/suggestive/", charinput);
             request.Method = Method.GET;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
             var result = JsonConvert.DeserializeObject<List<String>>(response);
             return Json(result);
         }
 
         [HttpPost]
-        public ActionResult Update(int id, string companyjson)
+        public async Task<ActionResult> Update(int id, string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
             company.CompanyId = id;
@@ -114,14 +114,14 @@ namespace PayohteeWebApp
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
 
             return View(companyjson);
         }
 
         [HttpPost]
-        public ActionResult Delete(int id)
+        public async Task<ActionResult> Delete(int id)
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
@@ -129,7 +129,7 @@ namespace PayohteeWebApp
 
             request.Method = Method.POST;
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
 
             return View();

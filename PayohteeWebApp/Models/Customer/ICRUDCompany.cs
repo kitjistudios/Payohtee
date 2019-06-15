@@ -1,9 +1,10 @@
-﻿using System.Collections.Generic;
+﻿using PayohteeWebApp.Models;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Payohtee.Models.Customer
 {
-    interface ICRUDCompany
+    internal interface ICRUDCompany
     {
         /// <summary>
         /// My contract should create a new company record
@@ -52,7 +53,7 @@ namespace Payohtee.Models.Customer
         /// <value>
         /// this should select the record to be edited by id
         /// </value>
-        void EditCompany(int id);
+        void EditCompany(int id, Company company);
 
         /// <summary>
         /// My contract should flag a company for deletion

@@ -38,24 +38,29 @@ function showPosition(position) {
 document.addEventListener('DOMContentLoaded', function (e) {
     var form = document.getElementById("company");
     var output = document.getElementById("output");
-    $(".check-icon").hide();
+    $(".success-checkmark").hide();
 
     $(document).on('click', '#btnSubmit', function (e) {
-        e.preventDefault();
+        //e.preventDefault();
 
         var json = toJSONString(form);
         output.innerHTML = json;
-        //$.post("/Company/Register", { companyjson: json }, function (data, status) {
-        //    if (data == "Success") {
-        //        $(".check-icon").hide();
-        //        setTimeout(function () {
-        //            $(".check-icon").show();
-        //        }, 10);
-        //    }
-        //    else {
-
-        //    }
-        //});
+        $.post("/Company/Register", { companyjson: json }, function (data, status) {
+            if (data == "Success" && status == 200) {
+                $(".check-icon").hide();
+                setTimeout(function () {
+                    $(".check-icon").show();
+                }, 10);
+            }
+            else {
+                //alert(data);
+                errors = JSON.parse(data);
+                alert(errors);
+                //for (item in errors) {
+                //    alert(item);
+                //}
+            }
+        });
 
     });
 });
