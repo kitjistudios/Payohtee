@@ -46,19 +46,15 @@ document.addEventListener('DOMContentLoaded', function (e) {
         var json = toJSONString(form);
         output.innerHTML = json;
         $.post("/Company/Register", { companyjson: json }, function (data, status) {
-            if (data == "Success" && status == 200) {
-                $(".check-icon").hide();
+            if (data == "success") {
+                $(".success-checkmark").hide();
                 setTimeout(function () {
-                    $(".check-icon").show();
+                    $(".success-checkmark").show();
                 }, 10);
             }
             else {
-                //alert(data);
                 errors = JSON.parse(data);
-                alert(errors);
-                //for (item in errors) {
-                //    alert(item);
-                //}
+                alert(data);
             }
         });
 

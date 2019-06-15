@@ -11,7 +11,6 @@ using System.Threading.Tasks;
 
 namespace PayohteeApi.Controllers
 {
-
     [ApiController]
     public class CompanyController : ControllerBase
     {
@@ -52,7 +51,7 @@ namespace PayohteeApi.Controllers
                     }
                 }
                 await _context.SaveChangesAsync();
-                return Content("Success");
+                return Content("success");
             }
             return Content(null);
         }
@@ -143,7 +142,7 @@ namespace PayohteeApi.Controllers
                     _context.DbContextCompany.Update(company);
                     //_context.DbContextContacts.Include(x => x.Company.Contacts);
                     await _context.SaveChangesAsync();
-                    return Content("Company updated");
+                    return Content("success");
                 }
             }
 
@@ -163,7 +162,7 @@ namespace PayohteeApi.Controllers
                 company.Status = "Inactive";
                 _context.DbContextCompany.Update(company);
                 await _context.SaveChangesAsync();
-                return Content("Company removed");
+                return Content("success");
             }
 
             return Content("Company unavailable or removed");

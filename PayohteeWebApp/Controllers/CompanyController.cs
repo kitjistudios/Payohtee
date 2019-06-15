@@ -31,7 +31,7 @@ namespace PayohteeWebApp
         }
 
         [HttpPost]
-        public async Task<ActionResult> Register(string companyjson)
+        public ActionResult Register(string companyjson)
         {
             Company company = JsonConvert.DeserializeObject<Company>(companyjson);
 
@@ -44,7 +44,7 @@ namespace PayohteeWebApp
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
+            IRestResponse Iresponse = client.Execute(request);
             var response = Iresponse.Content;
             //Invalid model 
             //Success
