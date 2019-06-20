@@ -6,10 +6,11 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Payohtee.Models.Settings.Rates
 {
     [NotMapped]
-    public class PayRate
+    [JsonObject(Description = "Pay Rate Base Class", Id = "")]
+    public class PayRates
     {
         #region Constructor
-        public PayRate()
+        public PayRates()
         {
 
 
@@ -36,6 +37,7 @@ namespace Payohtee.Models.Settings.Rates
         [Required]
         [StringLength(10)]
         [JsonProperty("RateCode")]
+        [JsonRequired]
         public string RateCode { get; set; }
 
         /// <summary>
@@ -45,7 +47,7 @@ namespace Payohtee.Models.Settings.Rates
         /// Value should refer to given distinguishing Rate Group  
         /// </value>
         [Required]
-        [StringLength(10)]
+        [StringLength(50)]
         [JsonProperty("RateGroup")]
         public string RateGroup { get; set; }
 
@@ -58,6 +60,7 @@ namespace Payohtee.Models.Settings.Rates
         [Column(TypeName = "decimal(10,2)")]
         [Display(Name = "Rate Amount")]
         [JsonProperty("RateAmount")]
+        [JsonRequired]
         public decimal RateAmount { get; set; }
 
         public DateTime DateModified { get; set; }

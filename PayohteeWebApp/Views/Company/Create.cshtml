@@ -322,9 +322,12 @@
                             <span class="input-group-text">Parish</span>
                         </div>
                         <select class="form-control" id="Parish" name="Parish">
-                            <option>St.Michael</option>
-                            <option>Christ Church</option>
-                            <option>St.Lucy</option>
+                            @foreach (var item in Model.Parishes)
+                            {
+                                <option>
+                                    @item
+                                </option>
+                            }
                         </select>
                         @*<span asp-validation-for="Parish" class="text-danger"></span>*@
                     </div>
@@ -385,6 +388,6 @@
         </div>
     </div>
 </div>
-
+<script src="~/js/company.js"></script>
 @await Html.PartialAsync("Modals/_ContactModalPartialView", new Payohtee.Models.Customer.Company().Contacts)
 

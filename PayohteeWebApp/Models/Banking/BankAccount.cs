@@ -1,12 +1,8 @@
 ﻿using Newtonsoft.Json;
 using Payohtee.Models.Customer;
 using Payohtee.Models.Personnel;
-using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Payohtee.Models.Banking
 {
@@ -17,8 +13,8 @@ namespace Payohtee.Models.Banking
     /// Longer comments can be associated with a type or member through
     /// the remarks tag.
     /// </remarks>
-    [Table("BankAccounts")]
-    [JsonObject("BankAccounts")]
+    [NotMapped]
+    [JsonObject(Description = "Bank Account Base Class", Id = "")]
     public class BankAccount
     {
         #region Constructor
@@ -34,15 +30,33 @@ namespace Payohtee.Models.Banking
 
         [Key]
         public int AccountId { get; set; }
-        [JsonProperty]
+
+        /// <summary>
+        /// Bank name 
+        /// </summary>
+        /// <value>
+        /// Value should be name of bank
+        /// </value>
+        [Required(ErrorMessage = "Bank name is required")]
+        [StringLength(50)]
+        [Display(Name = "Bank Name")]
+        [JsonProperty("BankName")]
+        [JsonRequired]
+        public string BankName { get; set; }
+
+        /// <summary>
+        /// Account number
+        /// </summary>
+        /// <value>
+        /// Value should be a valid account number
+        /// </value>
+        [Required(ErrorMessage = "Account number is required")]
+        [StringLength(50)]
+        [Display(Name = "Account Number")]
+        [JsonProperty("AccountNumber")]
+        [JsonRequired]
         public string AccountNumber { get; set; }
 
-        #endregion
-
-        #region Relationships
-
-        public Employee Employee { get; set; }
-        public Company  Company { get; set; }
         #endregion
     }
 }
