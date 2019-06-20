@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
 using Payohtee.Models.Personnel.Customs;
@@ -12,7 +13,8 @@ using System.Threading.Tasks;
 
 namespace PayohteeWebApp.Controllers
 {
-    public class CustomsOfficerController : Controller, IPayohteeController
+    [Authorize(Roles = "Admin")]
+    public class CustomsOfficerController : Controller
     {
         private readonly PayohteeDbContext _context;
 
@@ -23,12 +25,15 @@ namespace PayohteeWebApp.Controllers
 
 
         // GET: CustomsOfficer/Create
+        [HttpGet]
         public IActionResult Create()
         {
-            return View();
+            var model = new CustomsOfficer();
+            return View(model);
         }
 
-        public async Task<ActionResult> Register(string customsofficerjson)
+        [HttpPost]
+        public ActionResult Register(string customsofficerjson)
         {
             CustomsOfficer customsofficer = JsonConvert.DeserializeObject<CustomsOfficer>(customsofficerjson);
 
@@ -41,13 +46,14 @@ namespace PayohteeWebApp.Controllers
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", customsofficerjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse =  client.Execute(request);
             var response = Iresponse.Content;
             //Invalid model 
             //Success
             return Content(response);
         }
 
+        [HttpGet]
         public async Task<ViewResult> Index(string name)
         {
             var customsofficer = await _context.DbContextCustomsOfficer.Where(x => x.FirstName + " " + x.LastName == name).FirstOrDefaultAsync<CustomsOfficer>();
@@ -55,15 +61,17 @@ namespace PayohteeWebApp.Controllers
             return View(model);
         }
 
+        [HttpGet]
         public async Task<IActionResult> DetailsName(string name)
         {
             //This is going to get its credentials from the appsettings Json file
             //Configured in the Startup file
-            var company = await _context.DbContextCustomsOfficer.Where(x => x.FirstName + " " + x.LastName == name).FirstOrDefaultAsync<CustomsOfficer>();
-            var model = company;
+            var customsofficer = await _context.DbContextCustomsOfficer.Where(x => x.FirstName + " " + x.LastName == name).FirstOrDefaultAsync<CustomsOfficer>();
+            var model = customsofficer;
             return View(model);
         }
 
+        [HttpGet]
         public async Task<ActionResult> Details(int? id)
         {
             var payohteerest = new PayohteeRest();
@@ -73,24 +81,26 @@ namespace PayohteeWebApp.Controllers
             request.Method = Method.POST;
 
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
             var customsofficerjson = JsonConvert.SerializeObject(response);
             return View(customsofficerjson);
         }
 
+        [HttpGet]
         public async Task<ActionResult> Lookup(string charinput)
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
             var request = payohteerest.PayohteeRestRequest("/customsofficer/suggestive/", charinput);
             request.Method = Method.GET;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
             var result = JsonConvert.DeserializeObject<List<String>>(response);
             return Json(result);
         }
 
+        [HttpPost]
         public async Task<ActionResult> Update(int id, string customsofficerjson)
         {
             CustomsOfficer customsofficer = JsonConvert.DeserializeObject<CustomsOfficer>(value: customsofficerjson);
@@ -104,12 +114,13 @@ namespace PayohteeWebApp.Controllers
             request.Method = Method.POST;
             request.AddParameter("application/json; charset=utf-8", customsofficerjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
 
             return Content(response);
         }
 
+        [HttpPost]
         public async Task<ActionResult> Delete(int id)
         {
             var payohteerest = new PayohteeRest();
@@ -118,7 +129,7 @@ namespace PayohteeWebApp.Controllers
 
             request.Method = Method.POST;
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
 
             return View();

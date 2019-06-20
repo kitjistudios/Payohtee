@@ -86,7 +86,7 @@ namespace PayohteeApi.Controllers
 
             if (company.Count == 0)
             {
-                return Content("Company unavailable");
+                return NotFound();
             }
             var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
             string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
@@ -108,7 +108,7 @@ namespace PayohteeApi.Controllers
             }
             var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
             string companyjson = JsonConvert.SerializeObject(company, Formatting.Indented, setting);
-            return companyjson;
+            return Content(companyjson);
         }
 
         // GET: api/company/suggestive/<char>
@@ -166,6 +166,15 @@ namespace PayohteeApi.Controllers
             }
 
             return Content("Company unavailable or removed");
+        }
+
+        // POST: api/company/erase/id
+        [Route("api/company/[action]")]
+        [ActionName("test")]
+        [HttpGet]
+        public ActionResult<Company> CompanyTest(int id)
+        {
+            return Content("Company api working");
         }
 
         private bool CompanyExists(int id)

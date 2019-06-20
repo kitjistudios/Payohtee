@@ -5,6 +5,205 @@
     Layout = "~/Views/Shared/_AdminLayout.cshtml";
 }
 
+<style>
+    /**
+    * Extracted from: SweetAlert
+    * Modified by: Istiak Tridip
+    */
+
+    .success-checkmark {
+        width: 80px;
+        height: 115px;
+        margin: 0 auto;
+    }
+
+        .success-checkmark .check-icon {
+            width: 80px;
+            height: 80px;
+            position: relative;
+            border-radius: 50%;
+            box-sizing: content-box;
+            border: 4px solid #4CAF50;
+        }
+
+            .success-checkmark .check-icon::before {
+                top: 3px;
+                left: -2px;
+                width: 30px;
+                transform-origin: 100% 50%;
+                border-radius: 100px 0 0 100px;
+            }
+
+            .success-checkmark .check-icon::after {
+                top: 0;
+                left: 30px;
+                width: 60px;
+                transform-origin: 0 50%;
+                border-radius: 0 100px 100px 0;
+                animation: rotate-circle 4.25s ease-in;
+            }
+
+            .success-checkmark .check-icon::before, .success-checkmark .check-icon::after {
+                content: '';
+                height: 100px;
+                position: absolute;
+                background: #FFFFFF;
+                transform: rotate(-45deg);
+            }
+
+            .success-checkmark .check-icon .icon-line {
+                height: 5px;
+                background-color: #4CAF50;
+                display: block;
+                border-radius: 2px;
+                position: absolute;
+                z-index: 10;
+            }
+
+                .success-checkmark .check-icon .icon-line.line-tip {
+                    top: 46px;
+                    left: 14px;
+                    width: 25px;
+                    transform: rotate(45deg);
+                    animation: icon-line-tip 0.75s;
+                }
+
+                .success-checkmark .check-icon .icon-line.line-long {
+                    top: 38px;
+                    right: 8px;
+                    width: 47px;
+                    transform: rotate(-45deg);
+                    animation: icon-line-long 0.75s;
+                }
+
+            .success-checkmark .check-icon .icon-circle {
+                top: -4px;
+                left: -4px;
+                z-index: 10;
+                width: 80px;
+                height: 80px;
+                border-radius: 50%;
+                position: absolute;
+                box-sizing: content-box;
+                border: 4px solid rgba(76, 175, 80, 0.5);
+            }
+
+            .success-checkmark .check-icon .icon-fix {
+                top: 8px;
+                width: 5px;
+                left: 26px;
+                z-index: 1;
+                height: 85px;
+                position: absolute;
+                transform: rotate(-45deg);
+                background-color: #FFFFFF;
+            }
+
+    @@keyframes rotate-circle {
+        0% {
+            transform: rotate(-45deg);
+        }
+
+        5% {
+            transform: rotate(-45deg);
+        }
+
+        12% {
+            transform: rotate(-405deg);
+        }
+
+        100% {
+            transform: rotate(-405deg);
+        }
+    }
+
+    @@keyframes icon-line-tip {
+        0% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+        }
+
+        54% {
+            width: 0;
+            left: 1px;
+            top: 19px;
+        }
+
+        70% {
+            width: 50px;
+            left: -8px;
+            top: 37px;
+        }
+
+        84% {
+            width: 17px;
+            left: 21px;
+            top: 48px;
+        }
+
+        100% {
+            width: 25px;
+            left: 14px;
+            top: 45px;
+        }
+    }
+
+    @@keyframes icon-line-long {
+        0% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+        }
+
+        65% {
+            width: 0;
+            right: 46px;
+            top: 54px;
+        }
+
+        84% {
+            width: 55px;
+            right: 0px;
+            top: 35px;
+        }
+
+        100% {
+            width: 47px;
+            right: 8px;
+            top: 38px;
+        }
+    }
+
+    .chip {
+        display: inline-block;
+        padding: 0 25px;
+        height: 50px;
+        font-size: 16px;
+        line-height: 50px;
+        border-radius: 25px;
+        background-color: #f1f1f1;
+        margin: 2px 0 2px 0;
+    }
+
+        .chip img {
+            float: left;
+            margin: 0 10px 0 -25px;
+            height: 50px;
+            width: 50px;
+            border-radius: 50%;
+        }
+
+        .chip i, i {
+            margin: 0 5px 0 5px;
+            font-size: 20px;
+        }
+
+        .chip a {
+            margin: 0 5px 0 5px;
+        }
+</style>
+
 <div class="form" id="customsofficer">
     <div class="row">
         <div class="col-md-2">
@@ -19,7 +218,7 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Customs Officer Number</span>
                         </div>
-                        <input id="CustomsOfficerNumber" name="CustomsOfficerNumber" class="form-control" placeholder="Registered Officer Id" autocomplete="off" />
+                        <input id="CustomsOfficerNumber" name="CustomsOfficerNumber" class="form-control" placeholder="Officer Number" autocomplete="off" />
                         @*<span asp-validation-for="PayohteeId" class="text-danger"></span>*@
                     </div>
 
@@ -44,6 +243,19 @@
                         <input id="TIN" name="TIN" class="form-control" />
                         @*<span asp-validation-for="CompanyIndustry" class="text-danger"></span>*@
                     </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text">Officer Role</span>
+                        </div>
+                        <select id="RateCode" name="RateCode" class="form-control">
+                            <option>Select</option>
+                            <option value="01" data-RateAmount="50">Role 1</option>
+                            <option value="02">Role 2</option>
+                            <option value="03">Role 3</option>
+                        </select>
+                    </div>
+                    <input id="PayRate" name="PayRate" type="hidden" value="20" />
+                    <input id="PostName" name="PostName" type="hidden" value="Cleaner" />
                 </div>
             </div>
             <div class="card mb-4">
@@ -88,17 +300,30 @@
                     </div>
                     <div class="input-group mb-3">
                         <div class="input-group-prepend">
+                            <span class="input-group-text">Gender</span>
+                        </div>
+                        <select id="Gender" name="Gender" class="form-control">
+                            <option>Select</option>
+                            <option value="Male">Male</option>
+                            <option value="Female">Female</option>
+                        </select>
+
+                        @*<span asp-validation-for="Address4" class="text-danger"></span>*@
+                    </div>
+                    <div class="input-group mb-3">
+                        <div class="input-group-prepend">
                             <span class="input-group-text">Date Of Birth</span>
                         </div>
-                        <input id="DateOfBirth" name="DateOfBirth" class="form-control" />
+                        <input value="01-28-1981" id="DateOfBirth" name="DateOfBirth" class="form-control" type="date" />
                         @*<span asp-validation-for="Address4" class="text-danger"></span>*@
+
                     </div>
                 </div>
 
             </div>
             <div class="row">
                 <div class="col-6">
-                    <a id="addrank" class="btn btn-info text-white" data-toggle="modal" data-target="#BankaccountModal">
+                    <a id="btnAddAccount" class="btn btn-info text-white" data-toggle="modal" data-target="#BankAccountModal">
                         <i class="fa fa-id-card"></i>  Bank Account  <i class="fa fa-plus"></i>
                     </a>
                 </div>
@@ -151,9 +376,12 @@
                             <span class="input-group-text">Parish</span>
                         </div>
                         <select class="form-control" id="Parish" name="Parish">
-                            <option>St.Michael</option>
-                            <option>Christ Church</option>
-                            <option>St.Lucy</option>
+                            @foreach (var item in Model.Parishes)
+                            {
+                                <option>
+                                    @item
+                                </option>
+                            }
                         </select>
                         @*<span asp-validation-for="Parish" class="text-danger"></span>*@
                     </div>
@@ -207,12 +435,12 @@
                         <div class="input-group-prepend">
                             <span class="input-group-text">Email</span>
                         </div>
-                        <input id="CompanyEmail" name="CompanyEmail" class="form-control" placeholder="payohtee@payohtee.bb" />
+                        <input id="Email" name="Email" class="form-control" placeholder="payohtee@payohtee.bb" />
                         @*<span asp-validation-for="CompanyEmail" class="text-danger"></span>*@
                     </div>
                 </div>
             </div>
-        
+
         </div>
         <div class="col-md-2">
         </div>
@@ -236,6 +464,7 @@
         </div>
     </div>
 </div>
-
+<script src="~/js/customsofficer.js"></script>
+@await Html.PartialAsync("Modals/_AccountModalPartialView", new Payohtee.Models.Personnel.Customs.CustomsOfficer().BankAccounts)
 
 

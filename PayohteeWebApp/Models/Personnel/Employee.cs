@@ -1,9 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using Payohtee.Models.Accounting;
-using Payohtee.Models.Banking;
 using System;
-using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Xml.Serialization;
@@ -158,7 +155,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(50)]
         [Display(Name = "Apartment")]
-        [JsonProperty("Apartment")]
+        [JsonProperty("Address2")]
         public string Address2 { get; set; }
 
         /// <summary>
@@ -169,7 +166,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(50)]
         [Display(Name = "City")]
-        [JsonProperty("City")]
+        [JsonProperty("Address3")]
         public string Address3 { get; set; }
 
         /// <summary>
@@ -180,7 +177,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(50)]
         [Display(Name = "District")]
-        [JsonProperty("District")]
+        [JsonProperty("Address4")]
         public string Address4 { get; set; }
 
         /// <summary>
@@ -383,6 +380,7 @@ namespace Payohtee.Models.Personnel
         #region Full Properties
         private string employeeaddress;
         [NotMapped]
+        [JsonIgnore]
         public string EmployeeAddress
         {
             get { return employeeaddress; }
@@ -390,6 +388,7 @@ namespace Payohtee.Models.Personnel
         }
         private string recenteredby;
         [NotMapped]
+        [JsonIgnore]
         public string RecEnteredBy
         {
             get { return recenteredby; }
@@ -397,6 +396,7 @@ namespace Payohtee.Models.Personnel
         }
         private DateTime recentereDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecEntered
         {
             get { return recentereDateTime; }
@@ -404,6 +404,7 @@ namespace Payohtee.Models.Personnel
         }
         private string remodifiedby;
         [NotMapped]
+        [JsonIgnore]
         public string RecModifiedBy
         {
             get { return remodifiedby; }
@@ -411,6 +412,7 @@ namespace Payohtee.Models.Personnel
         }
         private DateTime recmodifiedDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecModified
         {
             get { return recmodifiedDateTime; }
@@ -425,8 +427,8 @@ namespace Payohtee.Models.Personnel
         /// <value>
         /// Given One to Many Relationship- One Employee to Many Payments
         /// </value>
-        public virtual ICollection<Payment> Payments { get; set; }
-        public virtual ICollection<BankAccount> BankAccounts { get; set; }
+        //public virtual ICollection<Payment> Payments { get; set; }
+
 
         #endregion
 

@@ -24,10 +24,18 @@ namespace PayohteeWebApp
             _context = context;
         }
 
-        // GET: Companies/Create
-        public IActionResult Create()
+        [HttpGet]
+        public ActionResult Success()
         {
             return View();
+        }
+
+        // GET: Companies/Create
+        [HttpGet]
+        public IActionResult Create()
+        {
+            var model = new Company();
+            return View(model);
         }
 
         [HttpPost]
@@ -38,7 +46,7 @@ namespace PayohteeWebApp
             companyjson = JsonConvert.SerializeObject(company);
 
             var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
             var request = payohteerest.PayohteeRestRequest("/company/register/", null);
 
             request.Method = Method.POST;
@@ -133,6 +141,11 @@ namespace PayohteeWebApp
             var response = Iresponse.Content;
 
             return View();
+        }
+
+        public bool CompanyExists(int id)
+        {
+            throw new NotImplementedException();
         }
 
     }

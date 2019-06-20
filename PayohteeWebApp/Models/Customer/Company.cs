@@ -3,6 +3,8 @@ using Newtonsoft.Json;
 using Payohtee.Models.Banking;
 using Payohtee.Models.GeoTracking;
 using PayohteeWebApp.Data;
+using PayohteeWebApp.Models.Banking;
+using PayohteeWebApp.Models.Geo;
 using PayohteeWebApp.Models.Intents;
 using System;
 using System.Collections.Generic;
@@ -34,6 +36,7 @@ namespace Payohtee.Models.Customer
         public Company()
         {
             Contacts = new List<Contact>();
+            Parishes = new Places().GetParishList();
         }
 
         #endregion
@@ -293,6 +296,9 @@ namespace Payohtee.Models.Customer
         [NotMapped]
         [JsonIgnore]
         public Intent Intent { get; set; }
+        [NotMapped]
+        [JsonIgnore]
+        public List<String> Parishes { get; set; }
 
         #endregion
 
@@ -303,9 +309,6 @@ namespace Payohtee.Models.Customer
         public virtual ICollection<Contact> Contacts { get; set; }
         public virtual ICollection<GeoLocate> Coordinates { get; set; }
         public virtual ICollection<Intent> Intents { get; set; }
-        public virtual ICollection<BankAccount> BankAccounts { get; set; }
-        //public ICollection<PolicePayment> PolicePayments { get; set; }
-        //public ICollection<EquipmentPayment> EquipmentPayments { get; set; }
 
         #endregion
 

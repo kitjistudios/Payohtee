@@ -22,7 +22,7 @@ namespace Payohtee.Areas.Identity
    builder.ConfigureServices((context, services) => {
                 services.AddDbContext<ApplicationUserContext>(options =>
                     options.UseSqlServer(
-                        context.Configuration.GetConnectionString("StageConn")));
+                        context.Configuration.GetConnectionString("LocalConn")));
             });
 #endif
 

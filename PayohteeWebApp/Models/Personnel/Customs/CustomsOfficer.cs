@@ -1,7 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Payohtee.Models.Banking;
 using PayohteeWebApp.Data;
+using PayohteeWebApp.Models.Banking.Customs;
+using PayohteeWebApp.Models.Geo;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
@@ -33,7 +34,8 @@ namespace Payohtee.Models.Personnel.Customs
 
         public CustomsOfficer()
         {
-
+            DateOfBirth = DateTime.Now;
+            Parishes = new Places().GetParishList();
         }
 
         #endregion
@@ -68,13 +70,17 @@ namespace Payohtee.Models.Personnel.Customs
 
         [NotMapped]
         [JsonIgnore]
-        public BankAccount BankDetails { get; set; }
+        public CustomsBankAccount BankDetails { get; set; }
 
+        [NotMapped]
+        [JsonIgnore]
+        public List<String> Parishes { get; set; }
         #endregion
 
         #region Relationship
 
-        public virtual ICollection<BankAccount> BankInfo { get; set; }
+        public virtual ICollection<CustomsBankAccount> BankAccounts { get; set; }
+
         #endregion
 
         #region Methods
