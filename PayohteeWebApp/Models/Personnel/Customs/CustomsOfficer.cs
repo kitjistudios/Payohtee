@@ -7,6 +7,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Payohtee.Models.Personnel.Customs
@@ -159,9 +160,12 @@ namespace Payohtee.Models.Personnel.Customs
             throw new NotImplementedException();
         }
 
-        public Task<List<string>> GetAsyncListEmployeeName(string c)
+        public async Task<List<string>> GetAsyncListEmployeeName(string c)
         {
-            throw new NotImplementedException();
+            var context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
+            List<string> list = (from a in context.DbContextCustomsOfficer.Where(x => (x.FirstName+' '+x.LastName).Contains(c) && x.Status == "Active")
+                                 select (a.FirstName+' '+a.LastName)).ToList();
+            return await Task.FromResult<List<string>>(list);
         }
 
         public Employee GetEmployee(string employeename)

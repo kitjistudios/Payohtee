@@ -31,7 +31,7 @@ namespace PayohteeWebApi
 #else
  services.AddDbContext<PayohteeDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("LocalConn")));
+                    Configuration.GetConnectionString("StageConn")));
 #endif
 
 

@@ -43,7 +43,7 @@ namespace PayohteeWebApp.Models.Settings.Roles.Customs
         [JsonIgnore]
         public List<String> CustomsRateList { get; set; }
         [NotMapped]
-  
+
         public List<CustomsRates> RateList { get; set; }
         #endregion
 
@@ -66,6 +66,18 @@ namespace PayohteeWebApp.Models.Settings.Roles.Customs
         }
 
 
+        #endregion
+
+        #region Snippet
+        //        {   
+        //      "PayRoleName": "Customs Officer 2",
+        //      "ShortName": "CO2",
+        //      "CustomsRates":{
+        //      	"RateCode":"CC2",
+        //      	"RateGroup":"GRP2",
+        //      	"RateAmount":20
+        //      }
+        //}
         #endregion
     }
 }

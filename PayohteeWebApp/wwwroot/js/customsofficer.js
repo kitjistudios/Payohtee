@@ -125,6 +125,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
     });
 
     $('#searchmodel').on('keyup input', function () {
+
         /* Get input value on change */
         var inputVal = $(this).val();
         var resultdropdown = $(this).siblings(".resultoffcr");

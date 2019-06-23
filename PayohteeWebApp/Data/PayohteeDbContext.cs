@@ -52,7 +52,7 @@ namespace PayohteeWebApp.Data
                                provideroptions => provideroptions.CommandTimeout(60))
                            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 #else
-                optionsBuilder.UseSqlServer(connlocal,
+                optionsBuilder.UseSqlServer(connremote,
                                provideroptions => provideroptions.CommandTimeout(60))
                            .UseQueryTrackingBehavior(QueryTrackingBehavior.NoTracking);
 #endif
