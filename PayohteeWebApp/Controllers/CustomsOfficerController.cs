@@ -2,8 +2,7 @@
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using Newtonsoft.Json;
-using Payohtee.Models.Customer;
-using PayohteeWebApp.Controllers;
+using Payohtee.Models.Personnel.Customs;
 using PayohteeWebApp.Data;
 using PayohteeWebApp.Properties;
 using RestSharp;
@@ -12,70 +11,63 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace PayohteeWebApp
+namespace PayohteeWebApp.Controllers
 {
     [Authorize(Roles = "Admin")]
-    public class CompanyController : Controller
+    public class CustomsOfficerController : Controller
     {
         private readonly PayohteeDbContext _context;
 
-        public CompanyController(PayohteeDbContext context)
+        public CustomsOfficerController(PayohteeDbContext context)
         {
             _context = context;
         }
 
-        [HttpGet]
-        public ActionResult Success()
-        {
-            return View();
-        }
 
-        // GET: Companies/Create
+        // GET: CustomsOfficer/Create
         [HttpGet]
         public IActionResult Create()
         {
-            var model = new Company();
+            var model = new CustomsOfficer();
             return View(model);
         }
 
         [HttpPost]
-        public ActionResult Register(string companyjson)
+        public ActionResult Register(string customsofficerjson)
         {
-            Company company = JsonConvert.DeserializeObject<Company>(companyjson);
+            CustomsOfficer customsofficer = JsonConvert.DeserializeObject<CustomsOfficer>(customsofficerjson);
 
-            companyjson = JsonConvert.SerializeObject(company);
+            customsofficerjson = JsonConvert.SerializeObject(customsofficer);
 
             var payohteerest = new PayohteeRest();
-            var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/register/", null);
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+            var request = payohteerest.PayohteeRestRequest("/customsofficer/register/", null);
 
             request.Method = Method.POST;
-            request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
+            request.AddParameter("application/json; charset=utf-8", customsofficerjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = client.Execute(request);
+            IRestResponse Iresponse =  client.Execute(request);
             var response = Iresponse.Content;
             //Invalid model 
             //Success
             return Content(response);
-
         }
 
         [HttpGet]
-        public async Task<ViewResult> Index(string companyname)
+        public async Task<ViewResult> Index(string name)
         {
-            //var company = await _context.DbContextCompany.FindAsync(5);
-            var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
-            var model = company;
+            var customsofficer = await _context.DbContextCustomsOfficer.Where(x => x.FirstName + " " + x.LastName == name).FirstOrDefaultAsync<CustomsOfficer>();
+            var model = customsofficer;
             return View(model);
         }
 
         [HttpGet]
-        public async Task<IActionResult> DetailsName(string companyname)
+        public async Task<IActionResult> DetailsName(string name)
         {
             //This is going to get its credentials from the appsettings Json file
             //Configured in the Startup file
-            var company = await _context.DbContextCompany.Where(x => x.CompanyName == companyname).FirstOrDefaultAsync<Company>();
-            var model = company;
+            var customsofficer = await _context.DbContextCustomsOfficer.Where(x => x.FirstName + " " + x.LastName == name).FirstOrDefaultAsync<CustomsOfficer>();
+            var model = customsofficer;
             return View(model);
         }
 
@@ -84,15 +76,15 @@ namespace PayohteeWebApp
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/fetch/", id.ToString());
+            var request = payohteerest.PayohteeRestRequest("/customsofficer/fetch/", id.ToString());
 
             request.Method = Method.POST;
 
             request.RequestFormat = DataFormat.Json;
             IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
-            var companyjson = JsonConvert.SerializeObject(response);
-            return View(companyjson);
+            var customsofficerjson = JsonConvert.SerializeObject(response);
+            return View(customsofficerjson);
         }
 
         [HttpGet]
@@ -100,32 +92,32 @@ namespace PayohteeWebApp
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/suggestive/", charinput);
+            var request = payohteerest.PayohteeRestRequest("/customsofficer/suggestive/", charinput);
             request.Method = Method.GET;
-            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
             var result = JsonConvert.DeserializeObject<List<String>>(response);
             return Json(result);
         }
 
         [HttpPost]
-        public async Task<ActionResult> Update(int id, string companyjson)
+        public async Task<ActionResult> Update(int id, string customsofficerjson)
         {
-            Company company = JsonConvert.DeserializeObject<Company>(companyjson);
-            company.CompanyId = id;
-            companyjson = JsonConvert.SerializeObject(company);
+            CustomsOfficer customsofficer = JsonConvert.DeserializeObject<CustomsOfficer>(value: customsofficerjson);
+            customsofficer.EmployeeId = id;
+            customsofficerjson = JsonConvert.SerializeObject(customsofficer);
 
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/update/" + id, null);
+            var request = payohteerest.PayohteeRestRequest("/customsofficer/update/" + id, null);
 
             request.Method = Method.POST;
-            request.AddParameter("application/json; charset=utf-8", companyjson, ParameterType.RequestBody);
+            request.AddParameter("application/json; charset=utf-8", customsofficerjson, ParameterType.RequestBody);
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
 
-            return View(companyjson);
+            return Content(response);
         }
 
         [HttpPost]
@@ -133,20 +125,21 @@ namespace PayohteeWebApp
         {
             var payohteerest = new PayohteeRest();
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
-            var request = payohteerest.PayohteeRestRequest("/company/erase/" + id, null);
+            var request = payohteerest.PayohteeRestRequest("/customsofficer/erase/" + id, null);
 
             request.Method = Method.POST;
             request.RequestFormat = DataFormat.Json;
-            IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
+            IRestResponse Iresponse =await client.ExecuteTaskAsync(request);
             var response = Iresponse.Content;
 
             return View();
         }
 
-        public bool CompanyExists(int id)
+        public bool EmployeeExists(int id)
         {
             throw new NotImplementedException();
         }
+
 
     }
 }

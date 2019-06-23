@@ -24,6 +24,7 @@ namespace Payohtee.Models.Customer
 
         #region Properties
 
+        [Key]
         public int ContactId { get; set; }
         /// <summary>
         /// Contact Name

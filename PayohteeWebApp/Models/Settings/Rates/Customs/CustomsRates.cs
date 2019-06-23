@@ -1,11 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using Payohtee.Data;
+using Newtonsoft.Json;
 using PayohteeWebApp.Data;
+using PayohteeWebApp.Models.Settings.Roles.Customs;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Payohtee.Models.Settings.Rates.Customs
 {
-    public class CustomsRates : PayRate
+    [Table("CustomsRates")]
+    [JsonObject("CustomsRates")]
+    public class CustomsRates : PayRates
     {
         #region Constructor
         public CustomsRates()
@@ -13,26 +17,37 @@ namespace Payohtee.Models.Settings.Rates.Customs
             this.RateGroup = "CSTM";
         }
         #endregion
+
         #region Variables
 
         readonly PayohteeDbContext _context = new PayohteeDbContext(options: new DbContextOptions<PayohteeDbContext>());
 
         #endregion
+
         #region Properties
+
         /// <summary>
         /// Rate Code
         /// </summary>
         /// <value>
         /// Value should refer to given organisation Rate Code assignment 
         /// </value>
-        public List<PayRate> ListCustomsPayRate { get; set; }
+        [NotMapped]
+        [JsonIgnore]
+        public List<PayRates> ListCustomsPayRate { get; set; }
+
+        public int RoleId { get; set; }
+        [NotMapped]
+        [ForeignKey("RoleId")]
+        public  CustomsRoles CustomsRoles { get; set; }
 
         #endregion
 
+
         #region Methods
-        public List<PayRate> GetListOfPayRates()
+        public List<PayRates> GetListOfPayRates()
         {
-      
+
             return this.ListCustomsPayRate;
         }
 

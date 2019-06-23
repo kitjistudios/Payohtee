@@ -288,7 +288,7 @@ namespace Payohtee.Models.Accounting
 
         public void GetEmployeePayRate(Employee employee)
         {
-            var payrate = new PayRate();
+            var payrate = new PayRates();
             var context = new PayohteeDbContext(null);
             try
             {

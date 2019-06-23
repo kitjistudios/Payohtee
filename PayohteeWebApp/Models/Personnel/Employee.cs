@@ -1,6 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Newtonsoft.Json;
-using Payohtee.Models.Accounting;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,7 +15,6 @@ namespace Payohtee.Models.Personnel
     /// the remarks tag.
     /// </remarks>
     [NotMapped]
-
     [JsonObject(Description = "Employee Base Class", Id = "")]
     public class Employee
     {
@@ -30,13 +28,14 @@ namespace Payohtee.Models.Personnel
         #endregion
 
         #region Properties
-        [Key]
+
         /// <summary>
-        /// Employee Identification
+        /// Employee unique Identification
         /// </summary>
         /// <value>
         /// System generated employee id
         /// </value>
+        [Key]
         public int EmployeeId { get; set; }
 
         /// <summary>
@@ -60,7 +59,7 @@ namespace Payohtee.Models.Personnel
         /// Value should refer to given NIS number
         /// </value>
         [Required]
-        [StringLength(7)]
+        [StringLength(7, ErrorMessage = "NIS must be 6 characters")]
         [Display(Name = "National Insurance #")]
         [JsonProperty("NISNo")]
         [JsonRequired]
@@ -78,6 +77,17 @@ namespace Payohtee.Models.Personnel
         [JsonProperty("TIN")]
         [JsonRequired]
         public string TIN { get; set; }
+
+        /// <summary>
+        /// Title
+        /// </summary>
+        /// <value>
+        /// Value should refer to given title or prefix of employee
+        /// </value>
+        [StringLength(50)]
+        [Display(Name = "Title")]
+        [JsonProperty("Title")]
+        public string Title { get; set; }
 
         /// <summary>
         /// First Name
@@ -127,17 +137,6 @@ namespace Payohtee.Models.Personnel
         public string Initial { get; set; }
 
         /// <summary>
-        /// Title
-        /// </summary>
-        /// <value>
-        /// Value should refer to given title or prefix of employee
-        /// </value>
-        [StringLength(50)]
-        [Display(Name = "Title")]
-        [JsonProperty("Title")]
-        public string Title { get; set; }
-
-        /// <summary>
         /// Address 1
         /// </summary>
         /// <value>
@@ -156,7 +155,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(50)]
         [Display(Name = "Apartment")]
-        [JsonProperty("Apartment")]
+        [JsonProperty("Address2")]
         public string Address2 { get; set; }
 
         /// <summary>
@@ -167,7 +166,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(50)]
         [Display(Name = "City")]
-        [JsonProperty("City")]
+        [JsonProperty("Address3")]
         public string Address3 { get; set; }
 
         /// <summary>
@@ -178,7 +177,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(50)]
         [Display(Name = "District")]
-        [JsonProperty("District")]
+        [JsonProperty("Address4")]
         public string Address4 { get; set; }
 
         /// <summary>
@@ -261,17 +260,6 @@ namespace Payohtee.Models.Personnel
         public string Extension { get; set; }
 
         /// <summary>
-        /// Fax
-        /// </summary>
-        /// <value>
-        /// Value should refer to given Fax
-        /// </value>
-        [StringLength(15)]
-        [Display(Name = "Fax")]
-        [JsonProperty("Fax")]
-        public string Fax { get; set; }
-
-        /// <summary>
         /// Email
         /// </summary>
         /// <value>
@@ -294,6 +282,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [Display(Name = "Birth Date")]
         [JsonProperty("DateOfBirth")]
+        [JsonRequired]
         public DateTime DateOfBirth { get; set; }
 
         /// <summary>
@@ -313,6 +302,7 @@ namespace Payohtee.Models.Personnel
         /// </value>
         [StringLength(7)]
         [JsonProperty("Gender")]
+        [JsonRequired]
         public string Gender { get; set; }
 
         /// <summary>
@@ -325,6 +315,7 @@ namespace Payohtee.Models.Personnel
         [StringLength(8)]
         [Display(Name = "Rate Code")]
         [JsonProperty("RateCode")]
+        [JsonRequired]
         public string RateCode { get; set; }
 
         /// <summary>
@@ -336,6 +327,7 @@ namespace Payohtee.Models.Personnel
         [Column(TypeName = "decimal(10,2)")]
         [Display(Name = "Pay Rate")]
         [JsonProperty("PayRate")]
+        [JsonRequired]
         public decimal PayRate { get; set; }
 
         /// <summary>
@@ -347,6 +339,7 @@ namespace Payohtee.Models.Personnel
         [StringLength(50)]
         [Display(Name = "Post Name")]
         [JsonProperty("PostName")]
+        [JsonRequired]
         public string PostName { get; set; }
 
         /// <summary>
@@ -387,6 +380,7 @@ namespace Payohtee.Models.Personnel
         #region Full Properties
         private string employeeaddress;
         [NotMapped]
+        [JsonIgnore]
         public string EmployeeAddress
         {
             get { return employeeaddress; }
@@ -394,6 +388,7 @@ namespace Payohtee.Models.Personnel
         }
         private string recenteredby;
         [NotMapped]
+        [JsonIgnore]
         public string RecEnteredBy
         {
             get { return recenteredby; }
@@ -401,6 +396,7 @@ namespace Payohtee.Models.Personnel
         }
         private DateTime recentereDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecEntered
         {
             get { return recentereDateTime; }
@@ -408,6 +404,7 @@ namespace Payohtee.Models.Personnel
         }
         private string remodifiedby;
         [NotMapped]
+        [JsonIgnore]
         public string RecModifiedBy
         {
             get { return remodifiedby; }
@@ -415,6 +412,7 @@ namespace Payohtee.Models.Personnel
         }
         private DateTime recmodifiedDateTime;
         [NotMapped]
+        [JsonIgnore]
         public DateTime RecModified
         {
             get { return recmodifiedDateTime; }
@@ -429,13 +427,15 @@ namespace Payohtee.Models.Personnel
         /// <value>
         /// Given One to Many Relationship- One Employee to Many Payments
         /// </value>
-        public Payment Payments { get; set; }
+        //public virtual ICollection<Payment> Payments { get; set; }
+
+
         #endregion
 
         #endregion
 
         #region Methods
-    
+
 
         #endregion
 
