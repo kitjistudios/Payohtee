@@ -32,12 +32,12 @@ namespace PayohteeWebApi.Controllers
             {
                 return NotFound();
             }
+            foreach (var item in rate)
+            {
+                payrole.RolesList = role;
+                payrole.RateList = rate;
+            }
 
-            payrole.RolesList = role;
-            payrole.RateList = rate;
-            payrole.PayRoleName = role[0].PayRoleName;
-            payrole.ShortName = role[0].ShortName;
-            payrole.RoleId = role[0].RoleId;
             //payrole.RateAmount = rate[0].RateAmount;
 
             var setting = new JsonSerializerSettings { PreserveReferencesHandling = PreserveReferencesHandling.Objects };
@@ -85,11 +85,11 @@ namespace PayohteeWebApi.Controllers
                 if (customsrole != null)
                 {
                     _context.DbContextCustomsRoles.Add(customsrole);
-                    if (customsrole.CustomsRates!= null)
+                    if (customsrole.CustomsRates != null)
                     {
                         //foreach (var rate in customsrole.RateList)
                         //{
-                            _context.DbContextCustomsRates.Add(customsrole.CustomsRates);
+                        _context.DbContextCustomsRates.Add(customsrole.CustomsRates);
                         //}
                     }
 

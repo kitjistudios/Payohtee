@@ -110,12 +110,12 @@ namespace PayohteeWebApp
 #else
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("LocalConn")));
+                    Configuration.GetConnectionString("StageConn")));
       //add service for the payohtee app db context
             //pass connection string from the appsettings.json file
             services.AddDbContext<PayohteeDbContext>(options =>
                 options.UseSqlServer(
-                    Configuration.GetConnectionString("LocalConn")));
+                    Configuration.GetConnectionString("StageConn")));
 #endif
 
             services.AddIdentity<IdentityUser, IdentityRole>(options => { })

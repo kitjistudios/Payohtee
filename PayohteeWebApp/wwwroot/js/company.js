@@ -130,7 +130,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 }
             };
 
-            xmlhttp.open("GET", "/Company/DetailsName?companyname=" + result, false);
+            xmlhttp.open("GET", "/Company/DetailsName?companyname=" + result, true);
             xmlhttp.send();
 
             $(document).on('click', '#btnUpdate', function (e) {
