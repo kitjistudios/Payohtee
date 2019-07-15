@@ -10,6 +10,7 @@ using Payohtee.Areas.Identity;
 using Payohtee.Data;
 using PayohteeWebApp.Data;
 using System;
+using System.ComponentModel.DataAnnotations;
 using System.Threading.Tasks;
 using static Payohtee.Areas.Identity.PayohteeApplicationUser;
 
@@ -17,6 +18,7 @@ namespace PayohteeWebApp
 {
     public class Startup
     {
+
         public Startup(IConfiguration configuration)
         {
             Configuration = configuration;
@@ -43,25 +45,6 @@ namespace PayohteeWebApp
                     roleresult = await rolemanager.CreateAsync(new IdentityRole(rolename.ToString()));
                 }
             }
-
-            //creating a super user who could maintain the web app
-            var poweruser = new PayohteeApplicationUser
-            {
-                UserName = Configuration.GetSection("UserSettings")["UserEmail"],
-                Email = Configuration.GetSection("UserSettings")["UserEmail"]
-            };
-            var userpassword = Configuration.GetSection("UserSettings")["UserPassword"];
-            var username = Configuration.GetSection("UserSettings")["UserName"];
-            var user = await usermanager.FindByEmailAsync(username.ToString());
-
-            if (user == null)
-            {
-                var createpoweruser = await usermanager.CreateAsync(poweruser, userpassword);
-                if (createpoweruser.Succeeded)
-                {
-                    await usermanager.AddToRoleAsync(poweruser, "Admin");
-                }
-            }
         }
 
 
@@ -71,21 +54,36 @@ namespace PayohteeWebApp
             var rolemanager = serviceProvider.GetRequiredService<RoleManager<IdentityRole>>();
             var usermanager = serviceProvider.GetRequiredService<UserManager<IdentityUser>>();
 
-            IdentityResult roleResult;
-            //Adding Admin Role
-            var roleCheck = await rolemanager.RoleExistsAsync("Admin");
-            if (!roleCheck)
+            //get list of users from appsettings and make them super users
+            var valuesSection = Configuration.GetSection("Admin:UserSettings");
+            foreach (IConfigurationSection section in valuesSection.GetChildren())
             {
-                //create the roles and seed them to the database
-                roleResult = await rolemanager.CreateAsync(new IdentityRole("Admin"));
-            }
-            var useremail = Configuration.GetSection("UserSettings")["UserEmail"];
-            //Assign Admin role to the main User here we have given our newly registered 
-            //login id for Admin management
-            IdentityUser user = await usermanager.FindByEmailAsync(useremail.ToString());
-            if (user != null)
-            {
-                await usermanager.AddToRoleAsync(user, "Admin");
+
+                var useremail = section.GetValue<string>("UserEmail");
+                var username = section.GetValue<string>("UserName");
+                var password = section.GetValue<string>("UserPassword");
+
+                var user = await usermanager.FindByEmailAsync(useremail);
+                if (user == null)
+                {
+                    //creating a super user instance 
+                    var poweruser = new PayohteeApplicationUser
+                    {
+                        UserName = username,
+                        Email = useremail
+                    };
+
+                    var createpoweruser = await usermanager.CreateAsync(poweruser,password);
+                    if (createpoweruser.Succeeded)
+                    {
+                        await usermanager.AddToRoleAsync(poweruser, "Admin");
+
+                    }
+                    else
+                    {
+                        //let me know why the instantiation wasnt successful
+                    }
+                }
             }
         }
 

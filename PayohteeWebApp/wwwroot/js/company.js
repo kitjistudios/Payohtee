@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function (e) {
         //e.preventDefault();
 
         var json = toJSONString(form);
-        //output.innerHTML = json;
+        output.innerHTML = json;
         $.post("/Company/Register", { companyjson: json }, function (data, status) {
             if (data == "success") {
                 $(".success-checkmark").hide();
@@ -26,8 +26,8 @@ document.addEventListener('DOMContentLoaded', function (e) {
                 }, 10);
             }
             else {
-                errors = JSON.parse(data);
-                alert(data);
+
+                alert(JSON.stringify(data));
             }
         });
 

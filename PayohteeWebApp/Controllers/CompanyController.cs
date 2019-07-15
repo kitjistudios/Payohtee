@@ -46,7 +46,12 @@ namespace PayohteeWebApp
             companyjson = JsonConvert.SerializeObject(company);
 
             var payohteerest = new PayohteeRest();
+#if DEBUG
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+#else
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+#endif
+
             var request = payohteerest.PayohteeRestRequest("/company/register/", null);
 
             request.Method = Method.POST;
@@ -83,7 +88,11 @@ namespace PayohteeWebApp
         public async Task<ActionResult> Details(int? id)
         {
             var payohteerest = new PayohteeRest();
+#if DEBUG
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+#else
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+#endif
             var request = payohteerest.PayohteeRestRequest("/company/fetch/", id.ToString());
 
             request.Method = Method.POST;
@@ -99,7 +108,11 @@ namespace PayohteeWebApp
         public async Task<ActionResult> Lookup(string charinput)
         {
             var payohteerest = new PayohteeRest();
+#if DEBUG
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+#else
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+#endif
             var request = payohteerest.PayohteeRestRequest("/company/suggestive/", charinput);
             request.Method = Method.GET;
             IRestResponse Iresponse = await client.ExecuteTaskAsync(request);
@@ -116,7 +129,11 @@ namespace PayohteeWebApp
             companyjson = JsonConvert.SerializeObject(company);
 
             var payohteerest = new PayohteeRest();
+#if DEBUG
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+#else
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+#endif
             var request = payohteerest.PayohteeRestRequest("/company/update/" + id, null);
 
             request.Method = Method.POST;
@@ -132,7 +149,11 @@ namespace PayohteeWebApp
         public async Task<ActionResult> Delete(int id)
         {
             var payohteerest = new PayohteeRest();
+#if DEBUG
+            var client = payohteerest.PayohteeRestClient(Resources.baseurllocal);
+#else
             var client = payohteerest.PayohteeRestClient(Resources.baseurlremote);
+#endif
             var request = payohteerest.PayohteeRestRequest("/company/erase/" + id, null);
 
             request.Method = Method.POST;
